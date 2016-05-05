@@ -88,7 +88,7 @@ class CitySViewController: UIViewController, UITableViewDataSource, UITableViewD
        let progressHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
        progressHUD.labelText = "Loading..."
         
-           dispatch_async(dispatch_get_main_queue()) {
+           dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)) {
            self.arrCity = self.city.searchCity(searchBar.text!, json: self.city.getCity())
            dispatch_async(dispatch_get_main_queue()) {
                 MBProgressHUD.hideAllHUDsForView(self.view, animated: true)

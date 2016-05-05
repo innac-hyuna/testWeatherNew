@@ -53,10 +53,9 @@ class WeatherGet {
                 return
             }
             
-            if let httpResponse = response as? NSHTTPURLResponse {// where httpResponse.statusCode == 200 {
-                
-                if httpResponse.statusCode == 200 {
-                    print("update ui")
+       if let httpResponse = response as? NSHTTPURLResponse {
+        if httpResponse.statusCode == 200 {
+                   
                     let parsedData = self.getDataFromJson(data!)
                     
                     dispatch_async(dispatch_get_main_queue()) {
