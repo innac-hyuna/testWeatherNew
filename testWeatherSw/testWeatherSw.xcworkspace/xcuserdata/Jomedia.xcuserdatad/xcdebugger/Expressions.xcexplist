@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "CitySViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:CitySViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "WeatherGet.(downloadImage in _275F473912AC853B5E027F0B60C150BC)(String) -&gt; UIImage?:WeatherGet.swift">
+      </ContextState>
+      <ContextState
+         contextName = "WeatherCityViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:WeatherCityViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "(WeatherData)[0]">
+            </PersistentString>
+            <PersistentString
+               value = "(_TtC13testWeatherSw11WeatherData *)[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
