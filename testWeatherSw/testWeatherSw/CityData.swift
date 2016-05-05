@@ -16,4 +16,12 @@ class CityData {
     var lon = 0.0
     var lat = 0.0
     
+    init () {
+    
+         id = 0
+         name = "Not found"
+         country = ""
+         lon = 0.0
+         lat = 0.0
+    }
 }

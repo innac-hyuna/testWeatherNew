@@ -89,57 +89,74 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pods/SRKControls/SRKControls/CustomComboBoxVCtr.swift"
-            timestampString = "483979116.227828"
+            filePath = "Pods/SRKControls/SRKControls/ComboBoxVCtr.swift"
+            timestampString = "483984917.580241"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "11"
-            endingLineNumber = "11">
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "SRKComboBox"
+            landmarkType = "3">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "SRKControls.SRKCustomComboBox.__deallocating_deinit"
+                  symbolName = "SRKControls.SRKComboBox.objComboBoxVCtr.getter : Swift.Optional&lt;SRKControls.ComboBoxVCtr&gt;"
                   moduleName = "SRKControls"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Jomedia/Documents/testWeatherSw/Pods/SRKControls/SRKControls/CustomComboBoxVCtr.swift"
-                  timestampString = "484140848.406415"
+                  urlString = "file:///Users/Jomedia/Documents/UI/testWeatherSw_/Pods/SRKControls/SRKControls/ComboBoxVCtr.swift"
+                  timestampString = "483984917.582782"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "16">
+                  startingLineNumber = "30"
+                  endingLineNumber = "30"
+                  offsetFromSymbolStart = "35">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "SRKControls.SRKCustomComboBox.init (frame : __C.CGRect) -&gt; SRKControls.SRKCustomComboBox"
+                  symbolName = "SRKControls.SRKComboBox.objComboBoxVCtr.setter : Swift.Optional&lt;SRKControls.ComboBoxVCtr&gt;"
                   moduleName = "SRKControls"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Jomedia/Documents/testWeatherSw/Pods/SRKControls/SRKControls/CustomComboBoxVCtr.swift"
-                  timestampString = "484140848.406829"
+                  urlString = "file:///Users/Jomedia/Documents/UI/testWeatherSw_/Pods/SRKControls/SRKControls/ComboBoxVCtr.swift"
+                  timestampString = "483984917.582997"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31"
-                  offsetFromSymbolStart = "75">
+                  startingLineNumber = "30"
+                  endingLineNumber = "30"
+                  offsetFromSymbolStart = "65">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "SRKControls.SRKCustomComboBox.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;SRKControls.SRKCustomComboBox&gt;"
+                  symbolName = "SRKControls.SRKComboBox.init (frame : __C.CGRect) -&gt; SRKControls.SRKComboBox"
                   moduleName = "SRKControls"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Jomedia/Documents/testWeatherSw/Pods/SRKControls/SRKControls/CustomComboBoxVCtr.swift"
-                  timestampString = "484140848.407078"
+                  urlString = "file:///Users/Jomedia/Documents/UI/testWeatherSw_/Pods/SRKControls/SRKControls/ComboBoxVCtr.swift"
+                  timestampString = "483984917.583175"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31"
-                  offsetFromSymbolStart = "37">
+                  startingLineNumber = "30"
+                  endingLineNumber = "30"
+                  offsetFromSymbolStart = "152">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SRKControls.SRKComboBox.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;SRKControls.SRKComboBox&gt;"
+                  moduleName = "SRKControls"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Jomedia/Documents/UI/testWeatherSw_/Pods/SRKControls/SRKControls/ComboBoxVCtr.swift"
+                  timestampString = "483984917.583354"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "30"
+                  endingLineNumber = "30"
+                  offsetFromSymbolStart = "85">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -151,12 +168,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/SRKControls/SRKControls/ComboBoxVCtr.swift"
-            timestampString = "483986084.44128"
+            timestampString = "483985049.601262"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "showOptions()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

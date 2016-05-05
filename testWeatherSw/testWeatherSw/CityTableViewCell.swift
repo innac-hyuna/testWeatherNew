@@ -11,68 +11,15 @@ import UIKit
 class CityTableViewCell: UITableViewCell {
 
   
-   // @IBOutlet weak var cityLabel: UILabel!
-   // @IBOutlet weak var countryLabel: UILabel!
-  //  @IBOutlet weak var idLabel: UILabel!
-    
-    var cityLabel = UILabel()
-    var countryLabel = UILabel()
-    var idLabel = UILabel()
-   
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var countryLabel: UILabel!
+    @IBOutlet weak var idLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-   
-  
+        // Initialization code
     }
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        cityLabel.textColor = UIColor.blackColor()
-        countryLabel.textColor = UIColor.blackColor()
-        idLabel.textColor = UIColor.blackColor()
-        
-        self.contentView.addSubview(cityLabel)
-        self.contentView.addSubview(countryLabel)
-        self.contentView.addSubview(idLabel)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        cityLabel.translatesAutoresizingMaskIntoConstraints = false
-        countryLabel.translatesAutoresizingMaskIntoConstraints = false
-        idLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        cityLabel.font =  UIFont (name: "Helvetica Neue", size: 14)
-        countryLabel.font =  UIFont (name: "Helvetica Neue", size: 12)
-        idLabel.font =  UIFont (name: "Helvetica Neue", size: 10)
-        
-        let viewsDict = [
-            "city" : cityLabel,
-            "country" : countryLabel,
-            "id" : idLabel ]
-        
-        cityLabel.translatesAutoresizingMaskIntoConstraints = false
-        countryLabel.translatesAutoresizingMaskIntoConstraints = false
-        idLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-[city]-[country]-[id]-|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-[city]-|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-[country]-|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-[id]-|", options: [], metrics: nil, views: viewsDict))
-      
-    }
-    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

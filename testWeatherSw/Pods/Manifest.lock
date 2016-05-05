@@ -1,7 +1,6 @@
 PODS:
   - Alamofire (3.3.1)
   - MBProgressHUD (0.9.2)
-  - SevenSwitch (2.0.0)
   - SRKControls (3.0.5):
     - SRKControls/Controls (= 3.0.5)
   - SRKControls/Controls (3.0.5)
@@ -10,7 +9,6 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 3.0)
   - MBProgressHUD (~> 0.9.2)
-  - SevenSwitch (~> 2.0)
   - SRKControls (~> 3.0.1)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
 
@@ -26,7 +24,6 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
-  SevenSwitch: 4ae92ffcad0ef93b38553b39a25e753c94eb7847
   SRKControls: ef82f31f3bdea31ab8ec5d36057f553c8b8815a5
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 

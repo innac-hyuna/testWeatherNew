@@ -16,7 +16,7 @@ class CityGet {
     
     private var city = CityData()
     
-    func getCity() -> JSON {
+    func getCity() -> JSON{
         
         guard let path = NSBundle.mainBundle().pathForResource("city", ofType: "JSON")  else {
             return true
@@ -27,10 +27,7 @@ class CityGet {
         }
         
         let dictionary =  JSON(data:data)
-       
-        //let json = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions())
         
-      
         return dictionary
     
     }
@@ -39,37 +36,7 @@ class CityGet {
         
        var arrCity = [CityData]()
         
-       /* if let nodes = (json as? [[String: AnyObject]])
-            
-        {
-            for item in nodes
-            {
-                    if item["name"] as? String  == city{
-                    
-                    let cityD:CityData = CityData.init()
-                    
-                    if let name = item["name"] as? String {
-                        cityD.name = name
-                    }
-                    
-                        if let _id = item["_id"] as? Int {
-                        cityD.id = _id
-                    }
-                    
-                    if let country = item["country"] as? String {
-                        cityD.country = country
-                    }
-                    
-                    arrCity.append(cityD)
-                    
-                   }
-              }
-        }*/
-        
-        
-        
-        
-        for (_,subJson):(String, JSON) in json {
+        for (index,subJson):(String, JSON) in json {
             
             if subJson["name"].string == city{
                 
@@ -85,7 +52,8 @@ class CityGet {
              
                if let country = subJson["country"].string {
                   cityD.country = country
-               }
+                }
+              
               
                arrCity.append(cityD)
             

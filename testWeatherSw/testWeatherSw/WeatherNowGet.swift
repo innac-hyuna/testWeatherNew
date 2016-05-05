@@ -16,6 +16,7 @@ class WeatherNowGet {
     private var weather = WeatherData()
     
    
+    
     func getWeatherCity(cityID: Int) {
         let url = NSURL(string: stringWeather(cityID))
         
@@ -35,8 +36,11 @@ class WeatherNowGet {
                     dispatch_async(dispatch_get_main_queue()) {
                         NSNotificationCenter.defaultCenter().postNotificationName(constNotification.WeatherNowChange, object: parsedData, userInfo: nil)
                     }
+                    
                 }
-            }            
+                
+            }
+            
         }
         
         task.resume()
@@ -45,32 +49,35 @@ class WeatherNowGet {
     func getDataFromJson(data: NSData) -> Array  <WeatherData>  {
         
         var arrWeather = [WeatherData]()
+        
         let json = JSON(data: data)
+        
         let weather = WeatherData()
+        
         
         if let name = json["name"].string {
             weather.name = name
-        }
+           }
             
         if let mainMinTemp = json["main"]["temp_min"].double {
             weather.minValue = mainMinTemp
-        }
+          }
             
         if let mainMaxTemp = json["main"]["temp_max"].double{
             weather.maxValue = mainMaxTemp
-        }
+            }
             
-        if let windS = json["wind"]["speed"].double {
+         if let windS = json["wind"]["speed"].double {
                 weather.windS = windS
-        }
+            }
         
         if let weatherMain = json["weather"][0]["main"].string {
                 weather.main = weatherMain
-        }
+            }
       
         if let weatherDescription = json["weather"][0]["description"].string {
                 weather.desription = weatherDescription
-        }
+            }
         
         if let weatherImg =  downloadImage("http://openweathermap.org/img/w/\(json["weather"][0]["icon"].string!).png"){
                weather.imgW = weatherImg
@@ -94,7 +101,7 @@ class WeatherNowGet {
     }
     
     private func stringWeather(cityID: Int) -> String {
-        let requestString = "http://api.openweathermap.org/data/2.5/weather?id=\(String(cityID))&APPID=6a700a1e919dc96b0a98901c9f4bec47"
+           let requestString = "http://api.openweathermap.org/data/2.5/weather?id=\(String(cityID))&APPID=6a700a1e919dc96b0a98901c9f4bec47"
         return requestString
     }
     

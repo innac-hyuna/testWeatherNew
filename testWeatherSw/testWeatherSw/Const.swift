@@ -11,7 +11,8 @@ import Foundation
 
 struct constNotification {
     
-    static let WeatherChange = "WeatherChange"    
+    static let WeatherChange = "WeatherChange"
+    
     static let WeatherNowChange = "WeatherNowChange"
    
 }

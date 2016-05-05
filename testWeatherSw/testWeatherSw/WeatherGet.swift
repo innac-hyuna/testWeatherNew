@@ -39,6 +39,7 @@ class WeatherGet {
     
     private var weather = WeatherData()
     
+   
     
     func getWeatherCity(cityID: Int, dayCount: String, view: UIView) {
         let url = NSURL(string: stringWeather(cityID, dayCount: dayCount))
@@ -64,6 +65,9 @@ class WeatherGet {
                         MBProgressHUD.hideAllHUDsForView(view, animated: true)
                     }
                     
+                    
+            
+                    
                 }
                 
             }
@@ -73,7 +77,6 @@ class WeatherGet {
         task.resume()
     }
     
-    
     func getDataFromJson(data: NSData) -> Array  <WeatherData> {
         
         var arrWather = [WeatherData]()
@@ -81,7 +84,9 @@ class WeatherGet {
         let json = JSON(data: data)
         
         
-        for (_,subJson):(String, JSON) in json["list"] {
+        
+        
+        for (index,subJson):(String, JSON) in json["list"] {
           
             let weatherD:WeatherData = WeatherData.init()
             
@@ -116,9 +121,12 @@ class WeatherGet {
             if let weatherImg =  downloadImage("http://openweathermap.org/img/w/\(subJson["weather"][0]["icon"].string!).png"){
                 weatherD.imgW = weatherImg
             }
+         
            
             arrWather.append(weatherD)
-        }        
+            
+        }
+        
      
         return arrWather
     }

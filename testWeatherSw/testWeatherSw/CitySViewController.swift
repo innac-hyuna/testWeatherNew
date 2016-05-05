@@ -11,57 +11,29 @@ import MBProgressHUD
 
 class CitySViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate{
 
-   // @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     
-  //  @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBar: UISearchBar!
     
-    var tableView =  UITableView()
-    var searchBar =  UISearchBar()
     var city = CityGet()
+   
     var arrCity: Array<CityData> = []
     
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        self.title = "Weather"
-        searchBar.delegate = self
-        tableView.delegate = self
-        tableView.dataSource = self
         
-        self.view.addSubview(searchBar)
-        self.view.addSubview(tableView)
-        
-        
-        tableView.registerClass(CityTableViewCell.self, forCellReuseIdentifier: "Cell")
-        
-        let  viewsDict = [
-            "searchBar" : searchBar,
-            "tableView" : tableView]
-        
-        
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-       
-        
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-0-[searchBar]-0-|", options: [], metrics: nil, views: viewsDict))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-0-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-60-[searchBar]-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
-        
-    }
+       tableView.delegate = self
+       tableView.dataSource = self
+       searchBar.delegate = self
     
-    func pressed(sender: UIButton) {
         
-        let newVC = WeatherCityViewController()
-        self.navigationController?.pushViewController(newVC, animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
-        
         super.viewWillAppear(animated)
+        
     }
     
     
@@ -72,7 +44,6 @@ class CitySViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        
     }
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
@@ -85,16 +56,15 @@ class CitySViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
       
-       let progressHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-       progressHUD.labelText = "Loading..."
+        let progressHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        progressHUD.labelText = "Loading..."
         
-           dispatch_async(dispatch_get_main_queue()) {
-           self.arrCity = self.city.searchCity(searchBar.text!, json: self.city.getCity())
-           dispatch_async(dispatch_get_main_queue()) {
-                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+            dispatch_async(dispatch_get_main_queue()) {
+            self.arrCity = self.city.searchCity(searchBar.text!, json: self.city.getCity())
+            dispatch_async(dispatch_get_main_queue()) {
                 self.view.endEditing(true)
                 self.tableView.reloadData()
-              }
+                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)}
         }
     }
     
@@ -111,41 +81,26 @@ class CitySViewController: UIViewController, UITableViewDataSource, UITableViewD
     
    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     
-       let cell:CityTableViewCell  = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CityTableViewCell
-   
-       cell.cityLabel.text = arrCity[indexPath.row].name;
-       cell.countryLabel.text = arrCity[indexPath.row].country;
-       cell.idLabel.text = String(arrCity[indexPath.row].id);
+         let cell:CityTableViewCell  = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CityTableViewCell
+         
+         cell.cityLabel.text = arrCity[indexPath.row].name;
+         cell.countryLabel.text = arrCity[indexPath.row].country;
+         cell.idLabel.text = String(arrCity[indexPath.row].id);
     
-       return cell
+         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-     
-        let MyDetView: WeatherCityViewController = WeatherCityViewController()
-        MyDetView.cityId = self.arrCity[indexPath.row].id
-       // self.presentViewController(MyDetView, animated: true,completion: nil)
-        self.navigationController?.pushViewController(MyDetView, animated: true)
-        
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        return 50.0
-    }
-    
+
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
-               
         if segue!.identifier == "Push" {
-            let indexPath = sender as! NSIndexPath
-            let MyDetView: WeatherCityViewController = segue!.destinationViewController as! WeatherCityViewController
             
-            MyDetView.cityId = self.arrCity[indexPath.row].id
+            let MyDetView: WeatherCityViewController = segue!.destinationViewController as! WeatherCityViewController
+            let indexPath = self.tableView.indexPathForSelectedRow
+            
+            MyDetView.cityId = self.arrCity[indexPath!.row].id
             
         }
     }
-    
-   
     
    
 }
