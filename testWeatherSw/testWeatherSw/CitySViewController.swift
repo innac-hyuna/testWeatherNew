@@ -16,7 +16,8 @@ class CitySViewController: UIViewController{
     var searchBar: UISearchBar!
     var city: CityGet!
     var arrCity: [CityData] = []
-    
+    var searchActive: Bool = false
+    var filteredArray: [CityData] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,14 +35,32 @@ class CitySViewController: UIViewController{
     }
     
     override func viewWillAppear(animated: Bool) {
-        
         super.viewWillAppear(animated)
+        
+        if arrCity.count == 0 {
+            loatData()}
+        
     }
    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
         
+    }
+    
+    func loatData() {
+        
+        let progressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
+        progressHUD.labelText = "Loading..."
+
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+            self.arrCity = self.city.getCityArray()
+            dispatch_async(dispatch_get_main_queue()) {
+                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                self.view.endEditing(true)
+                self.tableView.reloadData()
+            }
+        }
     }
     
     func setupLayout() {
@@ -87,18 +106,28 @@ class CitySViewController: UIViewController{
 extension CitySViewController: UITableViewDataSource {
     
       func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-          return arrCity.count
+        if(searchActive) {
+            return filteredArray.count
+        }
+        return arrCity.count
       }
         
     
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             
           let cell:CityTableViewCell  = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CityTableViewCell
-          cell.cityLabel.text = arrCity[indexPath.row].name;
-          cell.countryLabel.text = arrCity[indexPath.row].country;
-          cell.idLabel.text = String(arrCity[indexPath.row].id);
-            
-          return cell
+        if(searchActive){
+            cell.cityLabel.text = filteredArray[indexPath.row].name;
+            cell.countryLabel.text = filteredArray[indexPath.row].country;
+            cell.idLabel.text = String(filteredArray[indexPath.row].id);
+
+        } else {
+            cell.cityLabel.text = arrCity[indexPath.row].name;
+            cell.countryLabel.text = arrCity[indexPath.row].country;
+            cell.idLabel.text = String(arrCity[indexPath.row].id);
+
+        }
+        return cell
       }
         
       func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -124,31 +153,41 @@ extension CitySViewController: UITableViewDelegate {
 extension CitySViewController: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+         searchActive = true;
     }
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+         searchActive = false;
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+         searchActive = false;
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        
-        let progressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
-        progressHUD.labelText = "Loading..."
-        
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            self.arrCity = self.city.searchCity(searchBar.text!, json: self.city.getCity())
-            dispatch_async(dispatch_get_main_queue()) {
-                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                self.view.endEditing(true)
-                self.tableView.reloadData()
-            }
-        }
+        searchActive = false;
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-  }
+    
+        filteredArray.removeAll()
+        for cityFor in arrCity {
+     
+       
+        if (cityFor.name.hasPrefix(searchText))  {
+                filteredArray.append(cityFor)
+            }
+        }
+        
+        if(filteredArray.count == 0){
+            searchActive = false;
+        } else {
+            searchActive = true;
+        }
+        self.tableView.reloadData()
+        
+    }
+    
     
 }
 

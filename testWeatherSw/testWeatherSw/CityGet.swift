@@ -34,30 +34,26 @@ class CityGet {
     }
    
     
-    func searchCity(city: String, json: JSON) -> Array<CityData> {
+    func getCityArray() -> Array<CityData> {
         
        var arrCity = [CityData]()
+       let  json = getCity()
        
       for (_,subJson):(String, JSON) in json {
-         if subJson["name"].string == city{
+    
             let cityD:CityData = CityData.init()
             if let name = subJson["name"].string {
                   cityD.name = name
                }
-                
                if let _id = subJson["_id"].int {
                   cityD.id = _id
                }
-             
                if let country = subJson["country"].string {
                   cityD.country = country
                }
-              
                arrCity.append(cityD)
             
-            }
-            
-        }
+                }
         
        return arrCity
     }
