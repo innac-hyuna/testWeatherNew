@@ -15,27 +15,31 @@ class CityTableViewCell: UITableViewCell {
    // @IBOutlet weak var countryLabel: UILabel!
   //  @IBOutlet weak var idLabel: UILabel!
     
-    var cityLabel = UILabel()
-    var countryLabel = UILabel()
-    var idLabel = UILabel()
+    var cityLabel: UILabel!
+    var countryLabel: UILabel!
+    var idLabel: UILabel!
    
     
     override func awakeFromNib() {
         super.awakeFromNib()
-   
   
     }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        cityLabel = UILabel()
+        countryLabel = UILabel()
+        idLabel = UILabel()
+        
         cityLabel.textColor = UIColor.blackColor()
         countryLabel.textColor = UIColor.blackColor()
         idLabel.textColor = UIColor.blackColor()
         
-        self.contentView.addSubview(cityLabel)
-        self.contentView.addSubview(countryLabel)
-        self.contentView.addSubview(idLabel)
+        contentView.addSubview(cityLabel)
+        contentView.addSubview(countryLabel)
+        contentView.addSubview(idLabel)
+        setupLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -43,7 +47,11 @@ class CityTableViewCell: UITableViewCell {
     }
     
     override func layoutSubviews() {
-        super.layoutSubviews()
+        super.layoutSubviews()      
+        
+    }
+    
+    func setupLayout() {
         
         cityLabel.translatesAutoresizingMaskIntoConstraints = false
         countryLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -70,7 +78,6 @@ class CityTableViewCell: UITableViewCell {
             "V:|-[country]-|", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "V:|-[id]-|", options: [], metrics: nil, views: viewsDict))
-      
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

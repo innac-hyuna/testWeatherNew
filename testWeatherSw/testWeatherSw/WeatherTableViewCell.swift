@@ -11,12 +11,12 @@ import UIKit
 class WeatherTableViewCell: UITableViewCell {
 
     
-    var mainLabel = UILabel()
-    var minvalLabel = UILabel()
-    var maxvalLabel = UILabel()
-    var windsLabel = UILabel()
-    var dateLabel = UILabel()
-    var weatherImg = UIImageView()
+    var mainLabel: UILabel!
+    var minvalLabel: UILabel!
+    var maxvalLabel: UILabel!
+    var windsLabel: UILabel!
+    var dateLabel: UILabel!
+    var weatherImg: UIImageView!
    
     
     override func awakeFromNib() {
@@ -27,18 +27,26 @@ class WeatherTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        mainLabel = UILabel()
+        minvalLabel = UILabel()
+        maxvalLabel = UILabel()
+        windsLabel = UILabel()
+        dateLabel = UILabel()
+        weatherImg = UIImageView()
+        
         mainLabel.textColor = UIColor.blackColor()
         minvalLabel.textColor = UIColor.blackColor()
         maxvalLabel.textColor = UIColor.blackColor()
         windsLabel.textColor = UIColor.blackColor()
         dateLabel.textColor = UIColor.blackColor()
        
-        self.contentView.addSubview(mainLabel)
-        self.contentView.addSubview(minvalLabel)
-        self.contentView.addSubview(maxvalLabel)
-        self.contentView.addSubview(windsLabel)
-        self.contentView.addSubview(dateLabel)
-        self.contentView.addSubview(weatherImg)  
+        contentView.addSubview(mainLabel)
+        contentView.addSubview(minvalLabel)
+        contentView.addSubview(maxvalLabel)
+        contentView.addSubview(windsLabel)
+        contentView.addSubview(dateLabel)
+        contentView.addSubview(weatherImg)
+        setupLayout()
 
     }
     
@@ -46,8 +54,19 @@ class WeatherTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     
+    
     override func layoutSubviews() {
         super.layoutSubviews()
+     
+        
+    }
+    
+    override func setSelected(selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+    }
+    
+    func setupLayout() {
         
         mainLabel.translatesAutoresizingMaskIntoConstraints = false
         minvalLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -70,7 +89,7 @@ class WeatherTableViewCell: UITableViewCell {
             "maxvalLabel" : maxvalLabel,
             "dateLabel" : dateLabel,
             "windsLabel" : windsLabel,
-            "mainLabel" : mainLabel ]        
+            "mainLabel" : mainLabel ]
         
         weatherImg.translatesAutoresizingMaskIntoConstraints = false
         minvalLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -92,14 +111,7 @@ class WeatherTableViewCell: UITableViewCell {
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "V:|-[maxvalLabel]", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-[dateLabel]-[mainLabel]-[windsLabel]", options: [], metrics: nil, views: viewsDict))
-        
-        
-    }
+            "V:|-[dateLabel]-[mainLabel]-[windsLabel]", options: [], metrics: nil, views: viewsDict))}    
     
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-    }
 
 }

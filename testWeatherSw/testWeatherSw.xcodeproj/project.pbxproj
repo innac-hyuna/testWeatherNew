@@ -18,12 +18,12 @@
 		DA4E45671CCFC62900F44E81 /* CityGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4E45661CCFC62900F44E81 /* CityGet.swift */; };
 		DA4E456B1CCFCF3B00F44E81 /* city.JSON in Resources */ = {isa = PBXBuildFile; fileRef = DA4E456A1CCFCF3B00F44E81 /* city.JSON */; };
 		DA6BAF561CD0EB72005DF506 /* CitySViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6BAF551CD0EB72005DF506 /* CitySViewController.swift */; };
+		DA729F891CDB9DA100683417 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA729F881CDB9DA100683417 /* Downloader.swift */; };
 		DABFA3461CDB4F4900E38332 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DABFA3451CDB4F4900E38332 /* Default-568h@2x.png */; };
 		DAD13A111CCF5C470035AE55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD13A101CCF5C470035AE55 /* AppDelegate.swift */; };
 		DAD13A181CCF5C470035AE55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAD13A171CCF5C470035AE55 /* Assets.xcassets */; };
 		DAD13A261CCF5C470035AE55 /* testWeatherSwTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD13A251CCF5C470035AE55 /* testWeatherSwTests.swift */; };
 		DAD13A311CCF5C470035AE55 /* testWeatherSwUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD13A301CCF5C470035AE55 /* testWeatherSwUITests.swift */; };
-		DAEC516A1CD79C71008A7ADD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAEC51681CD79C71008A7ADD /* Main.storyboard */; };
 		DAEF74151CD0DC6B00CCB88F /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF74141CD0DC6B00CCB88F /* CityTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +58,7 @@
 		DA4E456A1CCFCF3B00F44E81 /* city.JSON */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = city.JSON; sourceTree = "<group>"; };
 		DA6BAF551CD0EB72005DF506 /* CitySViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitySViewController.swift; sourceTree = "<group>"; };
 		DA6BAF5C1CD11BF5005DF506 /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
+		DA729F881CDB9DA100683417 /* Downloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		DA9443F61CDA31F7005C31A2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DABFA3451CDB4F4900E38332 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		DAD13A0D1CCF5C470035AE55 /* testWeatherSw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testWeatherSw.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,7 +71,6 @@
 		DAD13A2C1CCF5C470035AE55 /* testWeatherSwUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testWeatherSwUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAD13A301CCF5C470035AE55 /* testWeatherSwUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testWeatherSwUITests.swift; sourceTree = "<group>"; };
 		DAD13A321CCF5C470035AE55 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DAEC51691CD79C71008A7ADD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = testWeatherSw/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DAEF74141CD0DC6B00CCB88F /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
 		E8ED2C2D403F10B83B2EF5D5 /* Pods_testWeatherSw.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_testWeatherSw.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -133,7 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				DABFA3451CDB4F4900E38332 /* Default-568h@2x.png */,
-				DAEC51681CD79C71008A7ADD /* Main.storyboard */,
 				DAD13A0F1CCF5C470035AE55 /* testWeatherSw */,
 				DAD13A241CCF5C470035AE55 /* testWeatherSwTests */,
 				DAD13A2F1CCF5C470035AE55 /* testWeatherSwUITests */,
@@ -164,6 +163,7 @@
 				DAD13A171CCF5C470035AE55 /* Assets.xcassets */,
 				DAD13A1C1CCF5C470035AE55 /* Info.plist */,
 				DA4E45551CCFA36E00F44E81 /* Const.swift */,
+				DA729F881CDB9DA100683417 /* Downloader.swift */,
 			);
 			path = testWeatherSw;
 			sourceTree = "<group>";
@@ -314,7 +314,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAEC516A1CD79C71008A7ADD /* Main.storyboard in Resources */,
 				DABFA3461CDB4F4900E38332 /* Default-568h@2x.png in Resources */,
 				DA4E456B1CCFCF3B00F44E81 /* city.JSON in Resources */,
 				DAD13A181CCF5C470035AE55 /* Assets.xcassets in Resources */,
@@ -392,6 +391,7 @@
 			files = (
 				DA2F00801CD203F1005ACCC2 /* WeatherTableViewCell.swift in Sources */,
 				DA6BAF561CD0EB72005DF506 /* CitySViewController.swift in Sources */,
+				DA729F891CDB9DA100683417 /* Downloader.swift in Sources */,
 				DAEF74151CD0DC6B00CCB88F /* CityTableViewCell.swift in Sources */,
 				DA4E45651CCFC50000F44E81 /* CityData.swift in Sources */,
 				DAD13A111CCF5C470035AE55 /* AppDelegate.swift in Sources */,
@@ -434,17 +434,6 @@
 			targetProxy = DAD13A2D1CCF5C470035AE55 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		DAEC51681CD79C71008A7ADD /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DAEC51691CD79C71008A7ADD /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DAD13A331CCF5C470035AE55 /* Debug */ = {

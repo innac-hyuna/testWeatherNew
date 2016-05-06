@@ -16,20 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var navController: UINavigationController?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
        
         navController = UINavigationController()
-        
         let viewController: CitySViewController = CitySViewController()
-        
         self.navController!.pushViewController(viewController, animated: false)
-        
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)       
-        
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.rootViewController = navController
-        
         self.window!.backgroundColor = UIColor.whiteColor()
-        
         self.window!.makeKeyAndVisible()
     
         return true

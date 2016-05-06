@@ -10,43 +10,47 @@ import UIKit
 import SRKControls
 
 
-extension NSDate {
-    func dateStringWithFormat(format: String) -> String {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = format
-        return dateFormatter.stringFromDate(self)
-    }
-}
 
-
-
-class WeatherCityViewController:  UIViewController, UITableViewDataSource, UITableViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class WeatherCityViewController:  UIViewController{
     
     
-   var weathrSwitch = UISwitch()
-   var tableViewWeather = UITableView()
-   var nameCityLabel = UILabel()
-   var tempLabel = UILabel()
-   var weatherImg = UIImageView()
-   var pickerTextfield = UITextField()
-   var itemPicker = UIPickerView()
-   var celLabel = UILabel()
-   var farLabel = UILabel()
-   var dayLabel = UILabel()
-   var getWeather = WeatherGet()
-   var getWeatherNow = WeatherNowGet()
-   var arrW: Array<WeatherData> = []
-   var arrWNow: Array<WeatherData> = []
-   var wea: WeatherData = WeatherData()
-   var cityId = 0
-   let arrayForComboBox = ["1","5","7","10","16"]
+    var weathrSwitch: UISwitch!
+    var tableViewWeather: UITableView!
+    var nameCityLabel: UILabel!
+    var tempLabel: UILabel!
+    var weatherImg: UIImageView!
+    var pickerTextfield: UITextField!
+    var itemPicker: UIPickerView!
+    var celLabel: UILabel!
+    var farLabel:UILabel!
+    var dayLabel: UILabel!
+    var getWeather: WeatherGet!
+    var getWeatherNow: WeatherNowGet!
+    var arrW: [WeatherData] = []
+    var arrWNow: [WeatherData] = []
+    var wea: WeatherData!
+    var cityId = 0
+    let arrayForComboBox = ["1","5","7","10","16"]
     
     
    override func viewDidLoad() {
     
     super.viewDidLoad()
-            
-     self.title = ""
+    
+     weathrSwitch = UISwitch()
+     tableViewWeather = UITableView()
+     nameCityLabel = UILabel()
+     tempLabel = UILabel()
+     weatherImg = UIImageView()
+     pickerTextfield = UITextField()
+     itemPicker = UIPickerView()
+     celLabel = UILabel()
+     farLabel = UILabel()
+     dayLabel = UILabel()
+     getWeather = WeatherGet()
+     getWeatherNow = WeatherNowGet()
+     wea = WeatherData()
+     title = ""
     
      tableViewWeather.delegate = self
      tableViewWeather.dataSource = self
@@ -54,7 +58,7 @@ class WeatherCityViewController:  UIViewController, UITableViewDataSource, UITab
      itemPicker.dataSource = self
     
     
-     self.view.backgroundColor = UIColor.grayColor()
+     view.backgroundColor = UIColor.grayColor()
      tableViewWeather.backgroundColor = UIColor.grayColor()
      itemPicker.backgroundColor = UIColor.whiteColor()
      pickerTextfield.inputView = itemPicker
@@ -68,23 +72,20 @@ class WeatherCityViewController:  UIViewController, UITableViewDataSource, UITab
      let navigationItem = UINavigationItem()
       navigationBar.items = [navigationItem]
     
-     self.view.addSubview(navigationBar)
-     self.view.addSubview(weatherImg)
-     self.view.addSubview(nameCityLabel)
-     self.view.addSubview(tempLabel)
-     self.view.addSubview(pickerTextfield)
-     self.view.addSubview(weathrSwitch)
-     self.view.addSubview(tableViewWeather)
-     self.view.addSubview(celLabel)
-     self.view.addSubview(farLabel)
-     self.view.addSubview(dayLabel)
-    
+     view.addSubview(navigationBar)
+     view.addSubview(weatherImg)
+     view.addSubview(nameCityLabel)
+     view.addSubview(tempLabel)
+     view.addSubview(pickerTextfield)
+     view.addSubview(weathrSwitch)
+     view.addSubview(tableViewWeather)
+     view.addSubview(celLabel)
+     view.addSubview(farLabel)
+     view.addSubview(dayLabel)
     
      weathrSwitch.addTarget(self, action: #selector(WeatherCityViewController.switchIsChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
-
     
      tableViewWeather.registerClass(WeatherTableViewCell.self, forCellReuseIdentifier: "CellWeather")
-   
     
      let viewsDict = [
         "navigationBar" : navigationBar,
@@ -110,27 +111,27 @@ class WeatherCityViewController:  UIViewController, UITableViewDataSource, UITab
       farLabel.translatesAutoresizingMaskIntoConstraints = false
       dayLabel.translatesAutoresizingMaskIntoConstraints = false
     
-      self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "H:|-0-[navigationBar]-0-|", options: [], metrics: nil, views: viewsDict))
-      self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "H:|-0-[weatherImg(60)]-[nameCityLabel]-[dayLabel]-[pickerTextfield]-[celLabel]-[weathrSwitch]-[farLabel]-0-|", options: [], metrics: nil, views: viewsDict))
-      self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "H:|-0-[tableViewWeather]-0-|", options: [], metrics: nil, views: viewsDict))
-      self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "H:|[weatherImg(60)]-[tempLabel]-0-|", options: [], metrics: nil, views: viewsDict))
-      self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "V:|-20-[navigationBar]-30-[nameCityLabel]-[tempLabel]-20-[tableViewWeather]-|", options: [], metrics: nil, views: viewsDict))
-      self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "V:|-80-[weathrSwitch]", options: [], metrics: nil, views: viewsDict))
-      self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "V:|-80-[celLabel]", options: [], metrics: nil, views: viewsDict))
-      self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "V:|-80-[farLabel]", options: [], metrics: nil, views: viewsDict))
-      self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "V:|-80-[dayLabel]", options: [], metrics: nil, views: viewsDict))
-      self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "V:|-80-[pickerTextfield]", options: [], metrics: nil, views: viewsDict))
-      self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "V:|-80-[weatherImg(60)]", options: [], metrics: nil, views: viewsDict))
     
       nameCityLabel.textColor = UIColor.blueColor()
@@ -145,7 +146,7 @@ class WeatherCityViewController:  UIViewController, UITableViewDataSource, UITab
     func pressed(sender: UIButton) {
         
         let newVC = CitySViewController()
-        self.navigationController?.pushViewController(newVC, animated: true)
+        navigationController?.pushViewController(newVC, animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -162,29 +163,29 @@ class WeatherCityViewController:  UIViewController, UITableViewDataSource, UITab
         getWeather.getWeatherCity(cityId, dayCount: self.pickerTextfield.text!, view: self.view)
         setupObservers()
         
-      }
+     }
         
     private func setupObservers() {
        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WeatherCityViewController.weatherData(_:)), name: constNotification.WeatherChange, object: nil)
-       }
+     }
     
     private func setupObserversNow() {
             
          NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WeatherCityViewController.weatherNowData(_:)), name: constNotification.WeatherNowChange, object: nil)
-       
-       }
+      
+     }
     
     func weatherData(notificaion: NSNotification) {
         
         guard let arrWeather = notificaion.object as? Array<WeatherData> else {
-                 return
+            return
         }
         arrW = arrWeather
         
         setDataWeatherToday()
          
-    }
+     }
     
     func weatherNowData(notificaion: NSNotification) {
         
@@ -195,27 +196,56 @@ class WeatherCityViewController:  UIViewController, UITableViewDataSource, UITab
         
         setDataWeatherToday()
         
-    }
+     }
     
     func setDataWeatherToday() -> Void {
         
         if arrWNow.count > 0 {
-          self.nameCityLabel.text = arrWNow[0].name
-          self.tempLabel.text =  convertToTemp(Int(arrWNow[0].maxValue))
-          self.weatherImg.image = arrWNow[0].imgW}
+          nameCityLabel.text = arrWNow[0].name
+          tempLabel.text =  convertToTemp(Int(arrWNow[0].maxValue))
+          weatherImg.image = arrWNow[0].imgW}
           
         tableViewWeather.reloadData()
-    }
+     }
     
+  
+    func convertToTemp(kelvin: Int) -> String {
+        
+        if weathrSwitch.on {
+            return String(format:"%.0f F", Double(kelvin) * 9.0/5.0 - 459.67) // F
+        }
+        else  {
+            return String(format:"%.0f C", Double(kelvin) - 273.15) // to C
+        }
+     }
+    
+    func switchIsChanged(weathrSwitch: UISwitch) {
+       setDataWeatherToday()
+    }
+
+}
+
+
+extension NSDate {
+    func dateStringWithFormat(format: String) -> String {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.stringFromDate(self)
+    }
+}
+
+
+// MARK: - UITableViewDelegate
+extension WeatherCityViewController: UITableViewDataSource {
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-           return arrW.count
+        return arrW.count
     }
     
     func tableView(tableViewWeather: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell:WeatherTableViewCell  = tableViewWeather.dequeueReusableCellWithIdentifier("CellWeather", forIndexPath: indexPath) as! WeatherTableViewCell
-       
         let weatherDay = arrW[indexPath.row]
         
         cell.dateLabel.text =  weatherDay.date.dateStringWithFormat("yyyy-MM-dd");
@@ -229,48 +259,58 @@ class WeatherCityViewController:  UIViewController, UITableViewDataSource, UITab
         
         return cell
     }
+
+}
+
+// MARK: - UITableViewDelegate
+extension WeatherCityViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-  
+        
         return 100.0
     }
     
-    func convertToTemp(kelvin: Int) -> String {
-        
-        if weathrSwitch.on {
-            return String(format:"%.0f F", Double(kelvin) * 9.0/5.0 - 459.67) // F
-        }
-        else  {
-            return String(format:"%.0f C", Double(kelvin) - 273.15) // to C
-        }
+}
+
+// MARK: - UIPickerViewDelegate
+extension WeatherCityViewController: UIPickerViewDelegate {
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        pickerTextfield.text = arrayForComboBox[row]
+        view.endEditing(true)
+        reloadData()
     }
     
-    func switchIsChanged(weathrSwitch: UISwitch) {
-       setDataWeatherToday()
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return arrayForComboBox[row]
     }
+    
+}
 
-      func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int{
-        return 1
-    }
+// MARK: - UIPickerViewDataSource
+extension WeatherCityViewController: UIPickerViewDataSource {
     
     // returns the # of rows in each component..
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return arrayForComboBox.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.arrayForComboBox[row]
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int{
+        return 1
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        pickerTextfield.text = arrayForComboBox[row]
-        self.view.endEditing(true)
-        reloadData()
-    }
+}
+
+// MARK: - UIPickerViewDelegate
+extension WeatherCityViewController: UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        self.view.endEditing(false)
+        view.endEditing(false)
         return false
     }
+    
 }
+
+
+
 
