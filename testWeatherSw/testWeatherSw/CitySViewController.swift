@@ -165,6 +165,7 @@ extension CitySViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        self.view.endEditing(true)
         searchActive = false;
     }
     

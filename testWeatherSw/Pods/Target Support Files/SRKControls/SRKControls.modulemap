@@ -1,6 +1,0 @@
-framework module SRKControls {
-  umbrella header "SRKControls-umbrella.h"
-
-  export *
-  module * { export * }
-}

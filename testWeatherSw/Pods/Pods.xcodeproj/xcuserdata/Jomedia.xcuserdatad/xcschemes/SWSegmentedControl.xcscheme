@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'CEF3BE7D20DF8B257F4E2F6D'
-               BlueprintName = 'SRKControls'
+               BlueprintIdentifier = '9976C91FBFA89C832A6A7A8F'
+               BlueprintName = 'SWSegmentedControl'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'SRKControls.framework'>
+               BuildableName = 'SWSegmentedControl.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

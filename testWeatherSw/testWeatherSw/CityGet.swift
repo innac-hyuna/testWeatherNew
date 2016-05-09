@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import Foundation
 import SwiftyJSON
 import Alamofire
-import Foundation
+
 
 
 class CityGet {
@@ -19,14 +20,27 @@ class CityGet {
     func getCity() -> JSON {
         
         
-        guard let path = NSBundle.mainBundle().pathForResource("city", ofType: "JSON")  else {
+       guard let path = NSBundle.mainBundle().pathForResource("city", ofType: "JSON")  else {
             return true
         }
         
         guard let data = try? NSData(contentsOfFile: path, options:.DataReadingUncached)   else {
             return true
         }
+      
         
+      /*  HttpDownloader.loadFileSync("http://bulk.openweathermap.org/sample/city.list.json.gz")
+        
+       
+        let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.ApplicationDirectory, inDomains: .UserDomainMask)[0]
+       
+        let fileURL = documentsURL.URLByAppendingPathComponent("city.list.json.gz")
+        
+        guard let data = try? NSData(contentsOfFile: fileURL.path!, options:.DataReadingUncached)   else {
+            return true
+        }
+       let decompressedData : NSData = try! data.gunzippedData()*/
+       
         let dictionary =  JSON(data:data)
         
         return dictionary

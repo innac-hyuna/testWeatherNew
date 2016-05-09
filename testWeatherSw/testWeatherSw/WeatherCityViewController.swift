@@ -7,14 +7,13 @@
 //
 
 import UIKit
-import SRKControls
-
+import SWSegmentedControl
 
 
 class WeatherCityViewController:  UIViewController{
     
     
-    var weathrSwitch: UISwitch!
+    var weathrSwitch: SWSegmentedControl!
     var tableViewWeather: UITableView!
     var nameCityLabel: UILabel!
     var tempLabel: UILabel!
@@ -36,8 +35,13 @@ class WeatherCityViewController:  UIViewController{
    override func viewDidLoad() {
     
     super.viewDidLoad()
-    
-     weathrSwitch = UISwitch()
+   
+     weathrSwitch = SWSegmentedControl(items: ["C", "F"])
+     weathrSwitch.frame =  CGRectMake(0, 0, 44, 24)
+     var center = self.view.center;
+     center.y = 40
+     weathrSwitch.center = center
+     weathrSwitch.autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin]
      tableViewWeather = UITableView()
      nameCityLabel = UILabel()
      tempLabel = UILabel()
@@ -56,16 +60,16 @@ class WeatherCityViewController:  UIViewController{
      tableViewWeather.dataSource = self
      itemPicker.delegate = self
      itemPicker.dataSource = self
-    
-    
      view.backgroundColor = UIColor.grayColor()
      tableViewWeather.backgroundColor = UIColor.grayColor()
      itemPicker.backgroundColor = UIColor.whiteColor()
      pickerTextfield.inputView = itemPicker
      pickerTextfield.text = arrayForComboBox[0]
-     celLabel.text = "C"
-     farLabel.text = "F"
+    // celLabel.text = "C"
+    // farLabel.text = "F"
      dayLabel.text = "Day"
+    
+    
     
      let navigationBar = UINavigationBar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44)) // Offset by 20 pixels vertically to take
       navigationBar.backgroundColor = UIColor.grayColor()
@@ -138,7 +142,6 @@ class WeatherCityViewController:  UIViewController{
       nameCityLabel.font = UIFont (name: "Helvetica Neue", size: 14)
       tempLabel.font = UIFont (name: "Helvetica Neue", size: 14)
       pickerTextfield.borderStyle = UITextBorderStyle.Line
-      weathrSwitch.onTintColor = UIColor.blueColor()
       dayLabel.font =  UIFont (name: "Helvetica Neue", size: 12)
     
     }
@@ -211,19 +214,21 @@ class WeatherCityViewController:  UIViewController{
   
     func convertToTemp(kelvin: Int) -> String {
         
-        if weathrSwitch.on {
+        if weathrSwitch.selectedSegmentIndex == 1 {
             return String(format:"%.0f F", Double(kelvin) * 9.0/5.0 - 459.67) // F
         }
         else  {
             return String(format:"%.0f C", Double(kelvin) - 273.15) // to C
         }
-     }
+    }
     
     func switchIsChanged(weathrSwitch: UISwitch) {
        setDataWeatherToday()
     }
 
 }
+
+
 
 
 extension NSDate {
