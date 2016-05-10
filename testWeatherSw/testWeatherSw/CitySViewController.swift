@@ -133,7 +133,14 @@ extension CitySViewController: UITableViewDataSource {
       func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
             
           let MyDetView: WeatherCityViewController = WeatherCityViewController()
-          MyDetView.cityId = arrCity[indexPath.row].id
+        
+        if(searchActive){
+             MyDetView.cityId = filteredArray[indexPath.row].id
+            
+        } else {
+             MyDetView.cityId = arrCity[indexPath.row].id
+            
+        }
             // self.presentViewController(MyDetView, animated: true,completion: nil)
           navigationController?.pushViewController(MyDetView, animated: true)
             
