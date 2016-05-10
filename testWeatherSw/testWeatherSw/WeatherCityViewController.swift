@@ -8,7 +8,7 @@
 
 import UIKit
 import SWSegmentedControl
-
+import SRKControls
 
 class WeatherCityViewController:  UIViewController{
     
@@ -18,8 +18,6 @@ class WeatherCityViewController:  UIViewController{
     var nameCityLabel: UILabel!
     var tempLabel: UILabel!
     var weatherImg: UIImageView!
-    var pickerTextfield: UITextField!
-    var itemPicker: UIPickerView!
     var celLabel: UILabel!
     var farLabel:UILabel!
     var dayLabel: UILabel!
@@ -29,61 +27,52 @@ class WeatherCityViewController:  UIViewController{
     var arrWNow: [WeatherData] = []
     var wea: WeatherData!
     var cityId = 0
+    var myComboBox: SRKComboBox!
     let arrayForComboBox = ["1","5","7","10","16"]
     
     
    override func viewDidLoad() {
     
     super.viewDidLoad()
+    
+    tableViewWeather = UITableView()
+    nameCityLabel = UILabel()
+    tempLabel = UILabel()
+    weatherImg = UIImageView()
+    celLabel = UILabel()
+    farLabel = UILabel()
+    dayLabel = UILabel()
+    getWeather = WeatherGet()
+    getWeatherNow = WeatherNowGet()
+    wea = WeatherData()
+    myComboBox = SRKComboBox()
+    
    
-     weathrSwitch = SWSegmentedControl(items: ["C", "F"])
-     weathrSwitch.frame =  CGRectMake(0, 0, 44, 24)
-     var center = self.view.center;
-     center.y = 40
-     weathrSwitch.center = center
-     weathrSwitch.autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin]
-     tableViewWeather = UITableView()
-     nameCityLabel = UILabel()
-     tempLabel = UILabel()
-     weatherImg = UIImageView()
-     pickerTextfield = UITextField()
-     itemPicker = UIPickerView()
-     celLabel = UILabel()
-     farLabel = UILabel()
-     dayLabel = UILabel()
-     getWeather = WeatherGet()
-     getWeatherNow = WeatherNowGet()
-     wea = WeatherData()
-     title = ""
+    weathrSwitch = SWSegmentedControl(items: ["C", "F"])
+    weathrSwitch.setBackColor("#0066ff")
+    weathrSwitch.setTinColor("#000066")
+    myComboBox.setBorder("#000066")
+    view.backgroundColor = UIColor.grayColor()
+    tableViewWeather.backgroundColor = UIColor.grayColor()
+    dayLabel.text = "Day"
+    myComboBox.text = arrayForComboBox[0]
     
-     tableViewWeather.delegate = self
-     tableViewWeather.dataSource = self
-     itemPicker.delegate = self
-     itemPicker.dataSource = self
-     view.backgroundColor = UIColor.grayColor()
-     tableViewWeather.backgroundColor = UIColor.grayColor()
-     itemPicker.backgroundColor = UIColor.whiteColor()
-     pickerTextfield.inputView = itemPicker
-     pickerTextfield.text = arrayForComboBox[0]
-    // celLabel.text = "C"
-    // farLabel.text = "F"
-     dayLabel.text = "Day"
+    tableViewWeather.delegate = self
+    tableViewWeather.dataSource = self
+    myComboBox.delegate = self
     
-    
-    
-     let navigationBar = UINavigationBar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44)) // Offset by 20 pixels vertically to take
+    let navigationBar = UINavigationBar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44)) // Offset by 20 pixels vertically to take
       navigationBar.backgroundColor = UIColor.grayColor()
-     let navigationItem = UINavigationItem()
+    let navigationItem = UINavigationItem()
       navigationBar.items = [navigationItem]
     
      view.addSubview(navigationBar)
      view.addSubview(weatherImg)
      view.addSubview(nameCityLabel)
      view.addSubview(tempLabel)
-     view.addSubview(pickerTextfield)
+     view.addSubview(myComboBox)
      view.addSubview(weathrSwitch)
      view.addSubview(tableViewWeather)
-     view.addSubview(celLabel)
      view.addSubview(farLabel)
      view.addSubview(dayLabel)
     
@@ -95,30 +84,27 @@ class WeatherCityViewController:  UIViewController{
         "navigationBar" : navigationBar,
         "nameCityLabel" : nameCityLabel,
         "tempLabel" : tempLabel,
-        "pickerTextfield" : pickerTextfield,
+        "myComboBox" : myComboBox,
         "weatherImg" : weatherImg,
         "weathrSwitch" : weathrSwitch,
         "tableViewWeather" : tableViewWeather,
-        "celLabel" : celLabel,
         "farLabel" : farLabel,
         "dayLabel" : dayLabel]
-    
     
       tableViewWeather.translatesAutoresizingMaskIntoConstraints = false
       weatherImg.translatesAutoresizingMaskIntoConstraints = false
       nameCityLabel.translatesAutoresizingMaskIntoConstraints = false
       tempLabel.translatesAutoresizingMaskIntoConstraints = false
-      pickerTextfield.translatesAutoresizingMaskIntoConstraints = false
+      myComboBox.translatesAutoresizingMaskIntoConstraints = false
       weathrSwitch.translatesAutoresizingMaskIntoConstraints = false
       navigationBar.translatesAutoresizingMaskIntoConstraints = false
-      celLabel.translatesAutoresizingMaskIntoConstraints = false
       farLabel.translatesAutoresizingMaskIntoConstraints = false
       dayLabel.translatesAutoresizingMaskIntoConstraints = false
-    
+   
       view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "H:|-0-[navigationBar]-0-|", options: [], metrics: nil, views: viewsDict))
       view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-        "H:|-0-[weatherImg(60)]-[nameCityLabel]-[dayLabel]-[pickerTextfield]-[celLabel]-[weathrSwitch]-[farLabel]-0-|", options: [], metrics: nil, views: viewsDict))
+        "H:|-0-[weatherImg(60)]-[nameCityLabel]-[dayLabel]-[myComboBox]-[weathrSwitch]-[farLabel]-0-|", options: [], metrics: nil, views: viewsDict))
       view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "H:|-0-[tableViewWeather]-0-|", options: [], metrics: nil, views: viewsDict))
       view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
@@ -128,20 +114,17 @@ class WeatherCityViewController:  UIViewController{
       view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "V:|-80-[weathrSwitch]", options: [], metrics: nil, views: viewsDict))
       view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-        "V:|-80-[celLabel]", options: [], metrics: nil, views: viewsDict))
-      view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "V:|-80-[farLabel]", options: [], metrics: nil, views: viewsDict))
       view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "V:|-80-[dayLabel]", options: [], metrics: nil, views: viewsDict))
       view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-        "V:|-80-[pickerTextfield]", options: [], metrics: nil, views: viewsDict))
+        "V:|-80-[myComboBox]", options: [], metrics: nil, views: viewsDict))
       view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "V:|-80-[weatherImg(60)]", options: [], metrics: nil, views: viewsDict))
     
       nameCityLabel.textColor = UIColor.blueColor()
       nameCityLabel.font = UIFont (name: "Helvetica Neue", size: 14)
       tempLabel.font = UIFont (name: "Helvetica Neue", size: 14)
-      pickerTextfield.borderStyle = UITextBorderStyle.Line
       dayLabel.font =  UIFont (name: "Helvetica Neue", size: 12)
     
     }
@@ -163,7 +146,7 @@ class WeatherCityViewController:  UIViewController{
 
     func reloadData() {
         
-        getWeather.getWeatherCity(cityId, dayCount: self.pickerTextfield.text!, view: self.view)
+        getWeather.getWeatherCity(cityId, dayCount: self.myComboBox.text!, view: self.view)
         setupObservers()
         
      }
@@ -228,9 +211,7 @@ class WeatherCityViewController:  UIViewController{
 
 }
 
-
-
-
+// MARK: - NSDate
 extension NSDate {
     func dateStringWithFormat(format: String) -> String {
         let dateFormatter = NSDateFormatter()
@@ -239,6 +220,55 @@ extension NSDate {
     }
 }
 
+// MARK: - UITextField
+extension UITextField  {
+    func setBorder(color: String)
+    {
+        self.borderStyle = UITextBorderStyle.None;
+        let width = CGFloat(1.0)
+        self.layer.borderColor =  UIColor(hexString: color).CGColor
+        self.layer.borderWidth = width
+        self.layer.masksToBounds = true
+    }
+    
+}
+// MARK: - SWSegmentedControl
+extension SWSegmentedControl  {
+    func setBackColor(color: String) {
+        self.backgroundColor = UIColor(hexString: color)
+    }
+    func setTinColor(color: String) {
+        self.tintColor = UIColor(hexString: color)
+    }
+    
+}
+// MARK: - UITextField
+extension UIColor {
+    // Creates a UIColor from a Hex string.
+    convenience init(hexString: String) {
+        var cString: String = hexString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).uppercaseString
+        
+        if (cString.hasPrefix("#")) {
+            cString = (cString as NSString).substringFromIndex(1)
+        }
+        
+        if (cString.characters.count != 6) {
+            self.init(white: 0.5, alpha: 1.0)
+        } else {
+            let rString: String = (cString as NSString).substringToIndex(2)
+            let gString = ((cString as NSString).substringFromIndex(2) as NSString).substringToIndex(2)
+            let bString = ((cString as NSString).substringFromIndex(4) as NSString).substringToIndex(2)
+            
+            var r: CUnsignedInt = 0, g: CUnsignedInt = 0, b: CUnsignedInt = 0;
+            NSScanner(string: rString).scanHexInt(&r)
+            NSScanner(string: gString).scanHexInt(&g)
+            NSScanner(string: bString).scanHexInt(&b)
+            
+            self.init(red: CGFloat(r) / CGFloat(255.0), green: CGFloat(g) / CGFloat(255.0), blue: CGFloat(b) / CGFloat(255.0), alpha: CGFloat(1))
+        }
+    }
+    
+}
 
 // MARK: - UITableViewDelegate
 extension WeatherCityViewController: UITableViewDataSource {
@@ -277,41 +307,72 @@ extension WeatherCityViewController: UITableViewDelegate {
     
 }
 
-// MARK: - UIPickerViewDelegate
-extension WeatherCityViewController: UIPickerViewDelegate {
-    
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        pickerTextfield.text = arrayForComboBox[row]
-        view.endEditing(true)
-        reloadData()
-    }
-    
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return arrayForComboBox[row]
-    }
-    
-}
-
-// MARK: - UIPickerViewDataSource
-extension WeatherCityViewController: UIPickerViewDataSource {
-    
-    // returns the # of rows in each component..
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return arrayForComboBox.count
-    }
-    
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int{
-        return 1
-    }
-    
-}
-
-// MARK: - UIPickerViewDelegate
+// MARK: - UITextFieldDelegate
 extension WeatherCityViewController: UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        view.endEditing(false)
-        return false
+        if let txt = textField as? SRKComboBox {
+            txt.delegateForComboBox = self
+            txt.showOptions()
+            return false
+        }
+            return true
+    }
+    
+}
+
+// MARK: - SRKComboBoxDelegate
+extension WeatherCityViewController: SRKComboBoxDelegate {
+    
+    func comboBox(textField: SRKComboBox, didSelectRow row:Int) {
+        if textField == self.myComboBox {
+            self.myComboBox.text = self.arrayForComboBox[row]
+        }
+    }
+    
+    func comboBoxNumberOfRows(textField: SRKComboBox) -> Int {
+        if textField == self.myComboBox {
+            return self.arrayForComboBox.count
+        } else {
+            return 0
+        }
+    }
+    
+    func comboBox(textField:SRKComboBox, textForRow row:Int) -> String {
+        if textField == self.myComboBox {
+            return self.arrayForComboBox[row]
+        } else {
+            return ""
+        }
+    }
+    
+    func comboBoxPresentingViewController(textField: SRKComboBox) -> UIViewController {
+        return self
+    }
+    
+    func comboBoxRectFromWhereToPresent(textField: SRKComboBox) -> CGRect {
+        return textField.frame
+    }
+    
+    func comboBoxFromBarButton(textField: SRKComboBox) -> UIBarButtonItem? {
+        return nil
+    }
+    
+    func comboBoxTintColor(textField: SRKComboBox) -> UIColor {
+        return UIColor.blackColor()
+    }
+    
+    func comboBoxToolbarColor(textField:SRKComboBox) -> UIColor {
+        return UIColor.whiteColor()
+    }
+    
+    func comboBoxDidTappedCancel(textField:SRKComboBox) {
+        textField.text = ""
+    }
+    
+    func comboBoxDidTappedDone(textField:SRKComboBox) {
+        
+        reloadData()
     }
     
 }

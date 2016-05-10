@@ -19,6 +19,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SRKControls-SRKControls.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SRKControls.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SWSegmentedControl-SWSegmentedControl.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,12 +47,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1F1BEA85F0EE790E90E8EA04E1D98B64</key>
+		<key>2FDA4D20376AFD4234B79EB9CC8D2CD1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2D3E11C29F906B509AA836C371A20738</key>
+		<key>647736C5910C876D781001589503E98C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -52,17 +62,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>983D02449DE54481583FC1C7D3BE9B16</key>
+		<key>D068280D15C42C6692E7C1A4BF33DB08</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CBABA36079060423B568CDDAF2FD41D4</key>
+		<key>D4E53EA0EA98F02BA4B43D27DC25C717</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DF2117BF960452EB5AD59427ADC6AC69</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F815EFFEFB9ED75CCA99C3EEBC82C17E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

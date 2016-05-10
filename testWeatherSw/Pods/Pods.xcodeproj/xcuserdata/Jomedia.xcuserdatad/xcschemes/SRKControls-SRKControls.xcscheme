@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '2F8E5D21269E25FCBD900E88'
-               BlueprintName = 'SwiftyJSON'
+               BlueprintIdentifier = '739B28BB05F501E8FA93989B'
+               BlueprintName = 'SRKControls-SRKControls'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'SwiftyJSON.framework'>
+               BuildableName = 'SRKControls.bundle'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

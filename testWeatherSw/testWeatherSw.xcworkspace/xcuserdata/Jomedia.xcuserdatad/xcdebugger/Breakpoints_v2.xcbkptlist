@@ -95,22 +95,53 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "11"
             endingLineNumber = "11">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pods/SRKControls/SRKControls/ComboBoxVCtr.swift"
-            timestampString = "483986084.44128"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SRKControls.SRKCustomComboBox.__deallocating_deinit"
+                  moduleName = "SRKControls"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Jomedia/Documents/testWeatherSw/Pods/SRKControls/SRKControls/CustomComboBoxVCtr.swift"
+                  timestampString = "484576746.349891"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SRKControls.SRKCustomComboBox.init (frame : __C.CGRect) -&gt; SRKControls.SRKCustomComboBox"
+                  moduleName = "SRKControls"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Jomedia/Documents/testWeatherSw/Pods/SRKControls/SRKControls/CustomComboBoxVCtr.swift"
+                  timestampString = "484576746.350257"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "66">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SRKControls.SRKCustomComboBox.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;SRKControls.SRKCustomComboBox&gt;"
+                  moduleName = "SRKControls"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Jomedia/Documents/testWeatherSw/Pods/SRKControls/SRKControls/CustomComboBoxVCtr.swift"
+                  timestampString = "484576746.350477"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -142,6 +173,22 @@
             startingLineNumber = "18"
             endingLineNumber = "18"
             landmarkName = "init(frame:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "testWeatherSw/WeatherNowGet.swift"
+            timestampString = "484576795.202759"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "getWeatherCity(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
