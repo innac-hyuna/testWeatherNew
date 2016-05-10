@@ -8,28 +8,58 @@
 
 import UIKit
 import MBProgressHUD
+import CoreLocation
 
 class CitySViewController: UIViewController{
 
     
     var tableView: UITableView!
     var searchBar: UISearchBar!
+    var locationButton: UIButton!
     var city: CityGet!
     var arrCity: [CityData] = []
     var searchActive: Bool = false
     var filteredArray: [CityData] = []
+    var locCoordination: (Double, Double) = (0.0, 0.0)
+    var locationManager: CLLocationManager!
+    var clat: Double = 0
+    var coolat: Double = 0
+    var clon: Double = 0
+    var coolon: Double = 0
+    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
+        locationManager = CLLocationManager()
+        
+        // Ask for Authorisation from the User.
+        locationManager.requestAlwaysAuthorization()
+        
+        // For use in foreground
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+        
+
         title = "Weather"
         tableView =  UITableView()
         searchBar =  UISearchBar()
+        locationButton = UIButton(type: UIButtonType.System) as UIButton
+        locationButton.frame = CGRectMake(0, 0, 20, 200)
+        locationButton.backgroundColor = UIColor.grayColor()
         city = CityGet()
         searchBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(CityTableViewCell.self, forCellReuseIdentifier: "Cell")
+        locationButton.addTarget(self, action: #selector(CitySViewController.locationGet(_:)), forControlEvents: .TouchUpInside)
+        locationButton.setTitle("Loc", forState: UIControlState.Normal)
         setupLayout()
         
     }
@@ -45,6 +75,31 @@ class CitySViewController: UIViewController{
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        
+    }
+    
+    func locationGet(sender:UIButton!) {
+        
+        filteredArray.removeAll()
+        
+        for cityFor in arrCity {
+            
+            clat = Double(round(100*cityFor.lat)/100)
+            coolat = Double(round(100*locCoordination.0)/100)
+            clon = Double(round(100*cityFor.lon)/100)
+            coolon = Double(round(100*locCoordination.1)/100)
+           
+          if (clat == coolat  && clon == coolon)  {
+                filteredArray.append(cityFor)
+            }
+        }
+        
+        if(filteredArray.count == 0){
+            searchActive = false;
+        } else {
+            searchActive = true;
+        }
+        self.tableView.reloadData()
         
     }
     
@@ -66,21 +121,27 @@ class CitySViewController: UIViewController{
     func setupLayout() {
         
         view.addSubview(searchBar)
+        view.addSubview(locationButton)
         view.addSubview(tableView)
         
         let  viewsDict = [
             "searchBar" : searchBar,
+            "locationButton" : locationButton,
             "tableView" : tableView]
         
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        locationButton.translatesAutoresizingMaskIntoConstraints = false
         
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-0-[searchBar]-0-|", options: [], metrics: nil, views: viewsDict))
+            "H:|-0-[searchBar]-[locationButton]-0-|", options: [], metrics: nil, views: viewsDict))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "H:|-0-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "V:|-60-[searchBar]-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+            "V:|-60-[locationButton]-|", options: [], metrics: nil, views: viewsDict))
+
         
     }
     
@@ -101,6 +162,7 @@ class CitySViewController: UIViewController{
     }
     
 }
+
 
     // MARK: - UITableViewDataSource
 extension CitySViewController: UITableViewDataSource {
@@ -134,13 +196,13 @@ extension CitySViewController: UITableViewDataSource {
             
           let MyDetView: WeatherCityViewController = WeatherCityViewController()
         
-        if(searchActive){
-             MyDetView.cityId = filteredArray[indexPath.row].id
+          if(searchActive){
+              MyDetView.cityId = filteredArray[indexPath.row].id
             
-        } else {
-             MyDetView.cityId = arrCity[indexPath.row].id
+          } else {
+              MyDetView.cityId = arrCity[indexPath.row].id
             
-        }
+          }
             // self.presentViewController(MyDetView, animated: true,completion: nil)
           navigationController?.pushViewController(MyDetView, animated: true)
             
@@ -197,5 +259,17 @@ extension CitySViewController: UISearchBarDelegate {
     }
     
     
+}
+
+// MARK: - CLLocationManagerDelegate
+extension CitySViewController: CLLocationManagerDelegate {
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        locCoordination = (locValue.latitude, locValue.longitude)
+        
+    }
+
 }
 

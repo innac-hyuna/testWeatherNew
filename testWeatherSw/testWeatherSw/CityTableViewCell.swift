@@ -18,7 +18,7 @@ class CityTableViewCell: UITableViewCell {
     var cityLabel: UILabel!
     var countryLabel: UILabel!
     var idLabel: UILabel!
-   
+       
     
     override func awakeFromNib() {
         super.awakeFromNib()

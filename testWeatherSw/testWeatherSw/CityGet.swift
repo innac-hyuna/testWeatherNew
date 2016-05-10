@@ -65,6 +65,12 @@ class CityGet {
                if let country = subJson["country"].string {
                   cityD.country = country
                }
+               if let lat = subJson["coord"]["lat"].double {
+                  cityD.lat = lat
+               }
+               if let lon = subJson["coord"]["lon"].double {
+                  cityD.lon = lon
+               }
                arrCity.append(cityD)
             
                 }
