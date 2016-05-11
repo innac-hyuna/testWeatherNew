@@ -40,8 +40,8 @@ class WeatherGet {
     private var weather = WeatherData()
     
     
-    func getWeatherCity(cityID: Int, dayCount: String, view: UIView) {
-        let url = NSURL(string: stringWeather(cityID, dayCount: dayCount))
+    func getWeatherCity(cityID: Int, dayCount: String, view: UIView, lat: Double, lon: Double) {
+        let url = NSURL(string: stringWeather(cityID, dayCount: dayCount, lat: lat, lon: lon)!)
         
         let progressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
         progressHUD.labelText = "Loading..."
@@ -135,9 +135,17 @@ class WeatherGet {
         }
     }
         
-    private func stringWeather(cityID: Int,  dayCount: String) -> String {
-      
-         let requestString = "http://api.openweathermap.org/data/2.5/forecast/daily?id=\(String(cityID))&cnt=\(dayCount)&APPID=6a700a1e919dc96b0a98901c9f4bec47"
+    private func stringWeather(cityID: Int,  dayCount: String, lat: Double, lon: Double) -> String? {
+        
+        var requestString = ""
+        
+        if  cityID != 0 {
+            requestString = "http://api.openweathermap.org/data/2.5/forecast/daily?id=\(String(cityID))&cnt=\(dayCount)&APPID=6a700a1e919dc96b0a98901c9f4bec47"}
+        else {
+            requestString = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=\(String(lat))&lon=\(String(lon))&cnt=\(dayCount)&APPID=6a700a1e919dc96b0a98901c9f4bec47"
+        }
+  
+        
         return requestString
     }
     

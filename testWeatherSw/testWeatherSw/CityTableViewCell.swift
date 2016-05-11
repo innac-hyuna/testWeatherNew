@@ -10,10 +10,6 @@ import UIKit
 
 class CityTableViewCell: UITableViewCell {
 
-  
-   // @IBOutlet weak var cityLabel: UILabel!
-   // @IBOutlet weak var countryLabel: UILabel!
-  //  @IBOutlet weak var idLabel: UILabel!
     
     var cityLabel: UILabel!
     var countryLabel: UILabel!

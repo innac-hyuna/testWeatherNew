@@ -27,6 +27,8 @@ class WeatherCityViewController:  UIViewController{
     var arrWNow: [WeatherData] = []
     var wea: WeatherData!
     var cityId = 0
+    var lat = 0.00
+    var lon = 0.00
     var myComboBox: SRKComboBox!
     let arrayForComboBox = ["1","5","7","10","16"]
     
@@ -138,7 +140,7 @@ class WeatherCityViewController:  UIViewController{
     override func viewWillAppear(animated: Bool) {
             super.viewWillAppear(true)
   
-        getWeatherNow.getWeatherCity(cityId)
+        getWeatherNow.getWeatherCity(cityId, lat: lat, lon: lon)
         setupObserversNow()
         reloadData()
             
@@ -146,7 +148,7 @@ class WeatherCityViewController:  UIViewController{
 
     func reloadData() {
         
-        getWeather.getWeatherCity(cityId, dayCount: self.myComboBox.text!, view: self.view)
+        getWeather.getWeatherCity(cityId, dayCount: self.myComboBox.text!, view: self.view, lat: lat, lon: lon)
         setupObservers()
         
      }
@@ -301,7 +303,6 @@ extension WeatherCityViewController: UITableViewDataSource {
 extension WeatherCityViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
         return 100.0
     }
     

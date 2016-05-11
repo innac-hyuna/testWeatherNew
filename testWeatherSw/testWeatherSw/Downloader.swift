@@ -21,8 +21,7 @@ class HttpDownloader {
       if NSFileManager().fileExistsAtPath(destinationUrl.path!) {
         print("The file already exists at path")
       } else {
-        if let myJsonDataFromUrl = NSData(contentsOfURL: jsonUrl){
-   
+        if let myJsonDataFromUrl = NSData(contentsOfURL: jsonUrl){   
          if myJsonDataFromUrl.writeToURL(destinationUrl, atomically: true) {
           print("file saved")
           } else {

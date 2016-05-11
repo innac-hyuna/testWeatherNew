@@ -16,8 +16,8 @@ class WeatherNowGet {
     private var weather = WeatherData()
     
    
-    func getWeatherCity(cityID: Int) {
-        let url = NSURL(string: stringWeather(cityID))
+    func getWeatherCity(cityID: Int, lat: Double, lon: Double) {
+        let url = NSURL(string: stringWeather(cityID, lat: lat, lon: lon)!)
         
         let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         let task = session.dataTaskWithURL(url!) { [unowned self] (data, response, error) -> Void in
@@ -93,8 +93,17 @@ class WeatherNowGet {
         }
     }
     
-    private func stringWeather(cityID: Int) -> String {
-        let requestString = "http://api.openweathermap.org/data/2.5/weather?id=\(String(cityID))&APPID=6a700a1e919dc96b0a98901c9f4bec47"
+    private func stringWeather(cityID: Int, lat: Double, lon: Double) -> String? {
+        
+        var requestString = ""
+        
+        if  cityID != 0 {
+            requestString = "http://api.openweathermap.org/data/2.5/weather?id=\(String(cityID))&APPID=6a700a1e919dc96b0a98901c9f4bec47"
+        } else  {
+            requestString = "http://api.openweathermap.org/data/2.5/weather?lat=\(String(lat))&lon=\(String(lon))&APPID=6a700a1e919dc96b0a98901c9f4bec47"
+        }
+
+        
         return requestString
     }
     

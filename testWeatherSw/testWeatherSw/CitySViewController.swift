@@ -11,7 +11,6 @@ import MBProgressHUD
 import CoreLocation
 
 class CitySViewController: UIViewController{
-
     
     var tableView: UITableView!
     var searchBar: UISearchBar!
@@ -26,7 +25,6 @@ class CitySViewController: UIViewController{
     var coolat: Double = 0
     var clon: Double = 0
     var coolon: Double = 0
-    
 
 
     override func viewDidLoad() {
@@ -46,20 +44,21 @@ class CitySViewController: UIViewController{
             locationManager.startUpdatingLocation()
         }
         
-
+       
         title = "Weather"
         tableView =  UITableView()
         searchBar =  UISearchBar()
         locationButton = UIButton(type: UIButtonType.System) as UIButton
-        locationButton.frame = CGRectMake(0, 0, 20, 200)
-        locationButton.backgroundColor = UIColor.grayColor()
+        locationButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        locationButton.setTitle("Loc", forState: .Normal)
+        locationButton.backgroundColor = UIColor.redColor()
         city = CityGet()
         searchBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(CityTableViewCell.self, forCellReuseIdentifier: "Cell")
         locationButton.addTarget(self, action: #selector(CitySViewController.locationGet(_:)), forControlEvents: .TouchUpInside)
-        locationButton.setTitle("Loc", forState: UIControlState.Normal)
+        
         setupLayout()
         
     }
@@ -80,7 +79,7 @@ class CitySViewController: UIViewController{
     
     func locationGet(sender:UIButton!) {
         
-        filteredArray.removeAll()
+       /* filteredArray.removeAll()
         
         for cityFor in arrCity {
             
@@ -99,7 +98,14 @@ class CitySViewController: UIViewController{
         } else {
             searchActive = true;
         }
-        self.tableView.reloadData()
+        self.tableView.reloadData()*/
+        
+        let MyDetView: WeatherCityViewController = WeatherCityViewController()
+        
+         MyDetView.lat = locCoordination.0
+         MyDetView.lon = locCoordination.1
+     
+        navigationController?.pushViewController(MyDetView, animated: true)
         
     }
     
@@ -134,14 +140,13 @@ class CitySViewController: UIViewController{
         locationButton.translatesAutoresizingMaskIntoConstraints = false
         
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-0-[searchBar]-[locationButton]-0-|", options: [], metrics: nil, views: viewsDict))
+            "H:|-0-[searchBar]-[locationButton(30)]-0-|", options: [], metrics: nil, views: viewsDict))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "H:|-0-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "V:|-60-[searchBar]-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-60-[locationButton]-|", options: [], metrics: nil, views: viewsDict))
-
+            "V:|-60-[locationButton]-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
         
     }
     
@@ -163,7 +168,6 @@ class CitySViewController: UIViewController{
     
 }
 
-
     // MARK: - UITableViewDataSource
 extension CitySViewController: UITableViewDataSource {
     
@@ -173,7 +177,6 @@ extension CitySViewController: UITableViewDataSource {
         }
         return arrCity.count
       }
-        
     
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             
