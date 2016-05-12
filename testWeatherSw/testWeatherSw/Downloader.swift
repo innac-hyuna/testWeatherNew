@@ -10,26 +10,34 @@ import Foundation
 
 class HttpDownloader {
     
-    class func loadFileSync(url: String)-> Void {
-      
+    
+    class func loadFileSync(url: String)-> Bool{
+        
+    var result: Bool = false
+        
     if let jsonUrl = NSURL(string: url) {
    
-      let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.ApplicationDirectory, inDomains: .UserDomainMask).first! as NSURL
+      let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).first! as NSURL
       let destinationUrl = documentsUrl.URLByAppendingPathComponent(jsonUrl.lastPathComponent!)
       print(destinationUrl)
    
       if NSFileManager().fileExistsAtPath(destinationUrl.path!) {
         print("The file already exists at path")
+        result = true
       } else {
         if let myJsonDataFromUrl = NSData(contentsOfURL: jsonUrl){   
          if myJsonDataFromUrl.writeToURL(destinationUrl, atomically: true) {
           print("file saved")
+          result = true
           } else {
           print("error saving file")
+          result = false
+            
          }
       }
      }
     }
-    
+     return result
   }
+  
 }

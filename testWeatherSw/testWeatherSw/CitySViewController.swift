@@ -17,25 +17,17 @@ class CitySViewController: UIViewController{
     var locationButton: UIButton!
     var city: CityGet!
     var arrCity: [CityData] = []
-    var searchActive: Bool = false
     var filteredArray: [CityData] = []
+    var searchActive: Bool = false
     var locCoordination: (Double, Double) = (0.0, 0.0)
     var locationManager: CLLocationManager!
-    var clat: Double = 0
-    var coolat: Double = 0
-    var clon: Double = 0
-    var coolon: Double = 0
-
+  
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         locationManager = CLLocationManager()
-        
-        // Ask for Authorisation from the User.
         locationManager.requestAlwaysAuthorization()
-        
-        // For use in foreground
         locationManager.requestWhenInUseAuthorization()
         
         if CLLocationManager.locationServicesEnabled() {
@@ -43,7 +35,6 @@ class CitySViewController: UIViewController{
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
-        
        
         title = "Weather"
         tableView =  UITableView()
@@ -79,33 +70,11 @@ class CitySViewController: UIViewController{
     
     func locationGet(sender:UIButton!) {
         
-       /* filteredArray.removeAll()
         
-        for cityFor in arrCity {
-            
-            clat = Double(round(100*cityFor.lat)/100)
-            coolat = Double(round(100*locCoordination.0)/100)
-            clon = Double(round(100*cityFor.lon)/100)
-            coolon = Double(round(100*locCoordination.1)/100)
-           
-          if (clat == coolat  && clon == coolon)  {
-                filteredArray.append(cityFor)
-            }
-        }
-        
-        if(filteredArray.count == 0){
-            searchActive = false;
-        } else {
-            searchActive = true;
-        }
-        self.tableView.reloadData()*/
-        
-        let MyDetView: WeatherCityViewController = WeatherCityViewController()
-        
-         MyDetView.lat = locCoordination.0
-         MyDetView.lon = locCoordination.1
-     
-        navigationController?.pushViewController(MyDetView, animated: true)
+      let MyDetView: WeatherCityViewController = WeatherCityViewController()
+       MyDetView.lat = locCoordination.0
+       MyDetView.lon = locCoordination.1
+       navigationController?.pushViewController(MyDetView, animated: true)
         
     }
     
@@ -156,7 +125,7 @@ class CitySViewController: UIViewController{
         navigationController?.pushViewController(newVC, animated: true)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
+    /*override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
                
         if segue!.identifier == "Push" {
             let indexPath = sender as! NSIndexPath
@@ -164,7 +133,7 @@ class CitySViewController: UIViewController{
             MyDetView.cityId = self.arrCity[indexPath.row].id
             
         }
-    }
+    }*/
     
 }
 
@@ -180,7 +149,7 @@ extension CitySViewController: UITableViewDataSource {
     
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             
-          let cell:CityTableViewCell  = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CityTableViewCell
+        let cell:CityTableViewCell  = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CityTableViewCell
         if(searchActive){
             cell.cityLabel.text = filteredArray[indexPath.row].name;
             cell.countryLabel.text = filteredArray[indexPath.row].country;

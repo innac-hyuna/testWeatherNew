@@ -47,8 +47,7 @@ class WeatherCityViewController:  UIViewController{
     getWeather = WeatherGet()
     getWeatherNow = WeatherNowGet()
     wea = WeatherData()
-    myComboBox = SRKComboBox()
-    
+    myComboBox = SRKComboBox()    
    
     weathrSwitch = SWSegmentedControl(items: ["C", "F"])
     weathrSwitch.setBackColor("#0066ff")

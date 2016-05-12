@@ -26,6 +26,8 @@
 		DAD13A311CCF5C470035AE55 /* testWeatherSwUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD13A301CCF5C470035AE55 /* testWeatherSwUITests.swift */; };
 		DAD1CFB01CE08BA10086F511 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD1CFA51CE07E2A0086F511 /* libz.tbd */; };
 		DAEF74151CD0DC6B00CCB88F /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF74141CD0DC6B00CCB88F /* CityTableViewCell.swift */; };
+		DAEFAA021CE471940089D299 /* NSData+GZIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEFAA011CE471940089D299 /* NSData+GZIP.swift */; };
+		DAEFAA061CE473050089D299 /* zlib in Resources */ = {isa = PBXBuildFile; fileRef = DAEFAA051CE473050089D299 /* zlib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,8 @@
 		DAD1CFB11CE08CC40086F511 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DAD1CFB41CE08D3A0086F511 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DAEF74141CD0DC6B00CCB88F /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
+		DAEFAA011CE471940089D299 /* NSData+GZIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSData+GZIP.swift"; path = "Sources/NSData+GZIP.swift"; sourceTree = "<group>"; };
+		DAEFAA051CE473050089D299 /* zlib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zlib; sourceTree = SOURCE_ROOT; };
 		E8ED2C2D403F10B83B2EF5D5 /* Pods_testWeatherSw.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_testWeatherSw.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -169,7 +173,9 @@
 				DAD13A171CCF5C470035AE55 /* Assets.xcassets */,
 				DAD13A1C1CCF5C470035AE55 /* Info.plist */,
 				DA4E45551CCFA36E00F44E81 /* Const.swift */,
+				DAEFAA051CE473050089D299 /* zlib */,
 				DA729F881CDB9DA100683417 /* Downloader.swift */,
+				DAEFAA011CE471940089D299 /* NSData+GZIP.swift */,
 			);
 			path = testWeatherSw;
 			sourceTree = "<group>";
@@ -325,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DABFA3461CDB4F4900E38332 /* Default-568h@2x.png in Resources */,
+				DAEFAA061CE473050089D299 /* zlib in Resources */,
 				DA4E456B1CCFCF3B00F44E81 /* city.JSON in Resources */,
 				DAD13A181CCF5C470035AE55 /* Assets.xcassets in Resources */,
 			);
@@ -404,6 +411,7 @@
 				DA729F891CDB9DA100683417 /* Downloader.swift in Sources */,
 				DAEF74151CD0DC6B00CCB88F /* CityTableViewCell.swift in Sources */,
 				DA4E45651CCFC50000F44E81 /* CityData.swift in Sources */,
+				DAEFAA021CE471940089D299 /* NSData+GZIP.swift in Sources */,
 				DAD13A111CCF5C470035AE55 /* AppDelegate.swift in Sources */,
 				DA2F00871CD2720B005ACCC2 /* WeatherNowGet.swift in Sources */,
 				DA4E455E1CCFAB0900F44E81 /* WeatherCityViewController.swift in Sources */,

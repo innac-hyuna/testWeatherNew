@@ -9,12 +9,11 @@
 
 import UIKit
 import SwiftyJSON
-import Alamofire
+
 
 class WeatherNowGet {
     
-    private var weather = WeatherData()
-    
+    private var weather = WeatherData()    
    
     func getWeatherCity(cityID: Int, lat: Double, lon: Double) {
         let url = NSURL(string: stringWeather(cityID, lat: lat, lon: lon)!)

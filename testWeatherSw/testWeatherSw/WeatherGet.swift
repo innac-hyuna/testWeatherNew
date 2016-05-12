@@ -9,7 +9,6 @@
 
 import UIKit
 import SwiftyJSON
-import Alamofire
 import MBProgressHUD
 
 extension NSDate {
@@ -82,7 +81,7 @@ class WeatherGet {
         
         for (_,subJson):(String, JSON) in json["list"] {
           
-            let weatherD:WeatherData = WeatherData.init()
+            let weatherD:WeatherData = WeatherData()
             
             if let name = json["city"]["name"].string {
                 weatherD.name = name
