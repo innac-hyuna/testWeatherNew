@@ -16,8 +16,8 @@ class CitySViewController: UIViewController{
     var searchBar: UISearchBar!
     var locationButton: UIButton!
     var city: CityGet!
-    var arrCity: [CityData] = []
-    var filteredArray: [CityData] = []
+    var arrCity: [CityGet] = []
+    var filteredArray: [CityGet] = []
     var searchActive: Bool = false
     var locCoordination: (Double, Double) = (0.0, 0.0)
     var locationManager: CLLocationManager!
@@ -229,7 +229,6 @@ extension CitySViewController: UISearchBarDelegate {
         self.tableView.reloadData()
         
     }
-    
     
 }
 

@@ -13,20 +13,25 @@ import SwiftyJSON
 
 class WeatherNowGet {
     
-    private var weather = WeatherData()    
-   
+    var name: String = ""
+    var main: String = ""
+    var desription: String=""
+    var minValue: Double = 0.0
+    var maxValue: Double=0.0
+    var windS: Double = 0.0
+    var imgW: UIImage? = UIImage()
+    
+    
     func getWeatherCity(cityID: Int, lat: Double, lon: Double) {
-        let url = NSURL(string: stringWeather(cityID, lat: lat, lon: lon)!)
         
+        let url = NSURL(string: stringWeather(cityID, lat: lat, lon: lon)!)        
         let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         let task = session.dataTaskWithURL(url!) { [unowned self] (data, response, error) -> Void in
             if error != nil {
                 print("Error: \(error?.localizedDescription)")
                 return
             }
-            
-            if let httpResponse = response as? NSHTTPURLResponse {// where httpResponse.statusCode == 200 {
-                
+            if let httpResponse = response as? NSHTTPURLResponse {// where httpResponse.statusCode == 200 {                
                 if httpResponse.statusCode == 200 {
                     print("update ui")
                     let parsedData = self.getDataFromJson(data!)
@@ -41,43 +46,36 @@ class WeatherNowGet {
         task.resume()
     }
     
-    func getDataFromJson(data: NSData) -> Array  <WeatherData>  {
+    func getDataFromJson(data: NSData) -> WeatherNowGet  {
         
-        var arrWeather = [WeatherData]()
+        
         let json = JSON(data: data)
-        let weather = WeatherData()
+        let weather = WeatherNowGet()
         
         if let name = json["name"].string {
             weather.name = name
         }
-            
         if let mainMinTemp = json["main"]["temp_min"].double {
             weather.minValue = mainMinTemp
         }
-            
         if let mainMaxTemp = json["main"]["temp_max"].double{
             weather.maxValue = mainMaxTemp
         }
-            
         if let windS = json["wind"]["speed"].double {
                 weather.windS = windS
         }
-        
         if let weatherMain = json["weather"][0]["main"].string {
                 weather.main = weatherMain
         }
-      
         if let weatherDescription = json["weather"][0]["description"].string {
                 weather.desription = weatherDescription
         }
-        
         if let weatherImg =  downloadImage("http://openweathermap.org/img/w/\(json["weather"][0]["icon"].string!).png"){
                weather.imgW = weatherImg
         }
-
-        arrWeather.append(weather)
+       
         
-        return arrWeather
+        return weather
     }
     
     private func downloadImage(str: String) -> UIImage?{

@@ -33,26 +33,30 @@ extension NSDate {
     }
 }
 
-
 class WeatherGet {
     
-    private var weather = WeatherData()
     
+    var name: String = ""
+    var main: String = ""
+    var desription: String=""
+    var minValue: Double = 0.0
+    var maxValue: Double=0.0
+    var windS: Double = 0.0
+    var date: NSDate = NSDate()
+    var imgW: UIImage? = UIImage()
     
     func getWeatherCity(cityID: Int, dayCount: String, view: UIView, lat: Double, lon: Double) {
         let url = NSURL(string: stringWeather(cityID, dayCount: dayCount, lat: lat, lon: lon)!)
         
         let progressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
         progressHUD.labelText = "Loading..."
-        
         let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         let task = session.dataTaskWithURL(url!) { [unowned self] (data, response, error) -> Void in
             if error != nil {
                 print("Error: \(error?.localizedDescription)")
                 return
             }
-            
-       if let httpResponse = response as? NSHTTPURLResponse {
+        if let httpResponse = response as? NSHTTPURLResponse {
         if httpResponse.statusCode == 200 {
                    
                     let parsedData = self.getDataFromJson(data!)
@@ -72,54 +76,43 @@ class WeatherGet {
     }
     
     
-    func getDataFromJson(data: NSData) -> Array  <WeatherData> {
+    func getDataFromJson(data: NSData) -> Array  <WeatherGet> {
         
-        var arrWather = [WeatherData]()
         
         let json = JSON(data: data)
+       
         
-        
-        for (_,subJson):(String, JSON) in json["list"] {
-          
-            let weatherD:WeatherData = WeatherData()
-            
+        return json["list"].arrayValue.map { (subJson: JSON) -> WeatherGet in
+            let weatherD:WeatherGet = WeatherGet()
             if let name = json["city"]["name"].string {
                 weatherD.name = name
             }
-            
             if let mainMinTemp = subJson["temp"]["min"].double {
                 weatherD.minValue = mainMinTemp
             }
-            
             if let mainMaxTemp = subJson["temp"]["max"].double{
                 weatherD.maxValue = mainMaxTemp
             }
-            
             if let windS = subJson["speed"].double {
                 weatherD.windS = windS
             }
-            
             if let date = NSDate(jsonDate: "/Date" + String(subJson["dt"].int)+"/") {
                 weatherD.date = date
             }
-            
             if let weatherMain = subJson["weather"][0]["main"].string {
                 weatherD.main = weatherMain
             }
-            
             if let weatherDescription = subJson["weather"][0]["description"].string {
                 weatherD.desription = weatherDescription
             }
-            
             if let weatherImg =  downloadImage("http://openweathermap.org/img/w/\(subJson["weather"][0]["icon"].string!).png"){
                 weatherD.imgW = weatherImg
             }
-           
-            arrWather.append(weatherD)
-        }        
+            
+            return weatherD
+        }
      
-        return arrWather
-    }
+   }
     
     
     private func downloadImage(str: String) -> UIImage?{

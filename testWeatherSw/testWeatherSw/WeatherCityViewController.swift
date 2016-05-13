@@ -23,9 +23,8 @@ class WeatherCityViewController:  UIViewController{
     var dayLabel: UILabel!
     var getWeather: WeatherGet!
     var getWeatherNow: WeatherNowGet!
-    var arrW: [WeatherData] = []
-    var arrWNow: [WeatherData] = []
-    var wea: WeatherData!
+    var arrW: [WeatherGet] = []
+    var arrWNow: WeatherNowGet = WeatherNowGet()
     var cityId = 0
     var lat = 0.00
     var lon = 0.00
@@ -46,8 +45,7 @@ class WeatherCityViewController:  UIViewController{
     dayLabel = UILabel()
     getWeather = WeatherGet()
     getWeatherNow = WeatherNowGet()
-    wea = WeatherData()
-    myComboBox = SRKComboBox()    
+    myComboBox = SRKComboBox()
    
     weathrSwitch = SWSegmentedControl(items: ["C", "F"])
     weathrSwitch.setBackColor("#0066ff")
@@ -165,7 +163,7 @@ class WeatherCityViewController:  UIViewController{
     
     func weatherData(notificaion: NSNotification) {
         
-        guard let arrWeather = notificaion.object as? Array<WeatherData> else {
+        guard let arrWeather = notificaion.object as? Array<WeatherGet> else {
             return
         }
         arrW = arrWeather
@@ -176,7 +174,7 @@ class WeatherCityViewController:  UIViewController{
     
     func weatherNowData(notificaion: NSNotification) {
         
-        guard let arrWeather = notificaion.object as? Array<WeatherData> else {
+        guard let arrWeather = notificaion.object as? WeatherNowGet else {
             return
         }
         arrWNow = arrWeather
@@ -187,10 +185,9 @@ class WeatherCityViewController:  UIViewController{
     
     func setDataWeatherToday() -> Void {
         
-        if arrWNow.count > 0 {
-          nameCityLabel.text = arrWNow[0].name
-          tempLabel.text =  convertToTemp(Int(arrWNow[0].maxValue))
-          weatherImg.image = arrWNow[0].imgW}
+          nameCityLabel.text = arrWNow.name
+          tempLabel.text =  convertToTemp(Int(arrWNow.maxValue))
+          weatherImg.image = arrWNow.imgW
           
         tableViewWeather.reloadData()
      }

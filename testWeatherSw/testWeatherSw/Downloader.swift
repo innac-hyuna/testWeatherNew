@@ -10,7 +10,6 @@ import Foundation
 
 class HttpDownloader {
     
-    
     class func loadFileSync(url: String)-> Bool{
         
     var result: Bool = false
@@ -32,7 +31,6 @@ class HttpDownloader {
           } else {
           print("error saving file")
           result = false
-            
          }
       }
      }
