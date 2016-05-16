@@ -23,17 +23,22 @@ class HttpDownloader {
       if NSFileManager().fileExistsAtPath(destinationUrl.path!) {
         print("The file already exists at path")
         result = true
-      } else {
-        if let myJsonDataFromUrl = NSData(contentsOfURL: jsonUrl){   
-         if myJsonDataFromUrl.writeToURL(destinationUrl, atomically: true) {
-          print("file saved")
-          result = true
-          } else {
-          print("error saving file")
-          result = false
-         }
+       } else {
+        
+        if let myJsonDataFromUrl = NSData(contentsOfURL: jsonUrl){
+            if Int64(myJsonDataFromUrl.length) < DiskStatus.freeDiskSpaceInBytes{
+               if myJsonDataFromUrl.writeToURL(destinationUrl, atomically: true) {
+                  print("file saved")
+                  result = true
+               } else {
+                  print("error saving file")
+                  result = false
+                }}
+        }else {
+            print("error disk space")
+            result = false
+        }
       }
-     }
     }
      return result
   }

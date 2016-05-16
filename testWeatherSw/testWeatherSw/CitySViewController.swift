@@ -123,17 +123,7 @@ class CitySViewController: UIViewController{
         
         let newVC = WeatherCityViewController()
         navigationController?.pushViewController(newVC, animated: true)
-    }
-    
-    /*override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
-               
-        if segue!.identifier == "Push" {
-            let indexPath = sender as! NSIndexPath
-            let MyDetView: WeatherCityViewController = segue!.destinationViewController as! WeatherCityViewController
-            MyDetView.cityId = self.arrCity[indexPath.row].id
-            
-        }
-    }*/
+    }    
     
 }
 
@@ -213,6 +203,7 @@ extension CitySViewController: UISearchBarDelegate {
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
     
         filteredArray.removeAll()
+                
         for cityFor in arrCity {
      
        

@@ -8,6 +8,7 @@ target ‘testWeatherSw’ do
        pod 'MBProgressHUD', '~> 0.9.2'
        pod 'SWSegmentedControl'
        pod 'SRKControls'
+       pod 'Kingfisher', '~> 2.4'
    
 end
 

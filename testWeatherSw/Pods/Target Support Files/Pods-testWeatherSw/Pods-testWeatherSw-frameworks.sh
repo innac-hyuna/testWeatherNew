@@ -85,6 +85,7 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-testWeatherSw/Alamofire.framework"
+  install_framework "Pods-testWeatherSw/Kingfisher.framework"
   install_framework "Pods-testWeatherSw/MBProgressHUD.framework"
   install_framework "Pods-testWeatherSw/SRKControls.framework"
   install_framework "Pods-testWeatherSw/SWSegmentedControl.framework"
@@ -92,6 +93,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-testWeatherSw/Alamofire.framework"
+  install_framework "Pods-testWeatherSw/Kingfisher.framework"
   install_framework "Pods-testWeatherSw/MBProgressHUD.framework"
   install_framework "Pods-testWeatherSw/SRKControls.framework"
   install_framework "Pods-testWeatherSw/SWSegmentedControl.framework"

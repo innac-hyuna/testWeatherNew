@@ -9,6 +9,7 @@
 import UIKit
 import SWSegmentedControl
 import SRKControls
+import Kingfisher
 
 class WeatherCityViewController:  UIViewController{
     
@@ -187,9 +188,10 @@ class WeatherCityViewController:  UIViewController{
         
           nameCityLabel.text = arrWNow.name
           tempLabel.text =  convertToTemp(Int(arrWNow.maxValue))
-          weatherImg.image = arrWNow.imgW
-          
-        tableViewWeather.reloadData()
+          let URL = NSURL(string: arrWNow.imgW)!
+          let resource = Resource(downloadURL: URL, cacheKey: arrWNow.imgW)
+          weatherImg.kf_setImageWithResource(resource)                  
+          tableViewWeather.reloadData()
      }
     
   
@@ -288,8 +290,10 @@ extension WeatherCityViewController: UITableViewDataSource {
             Int(weatherDay.maxValue));
         cell.mainLabel.text = weatherDay.main + " : " + weatherDay.desription
         cell.windsLabel.text = "Wind speed : " +  String(format:"%.0f",  weatherDay.windS)
-        cell.weatherImg.image = weatherDay.imgW
         
+        let URL = NSURL(string: weatherDay.imgW)!
+        let resource = Resource(downloadURL: URL, cacheKey: weatherDay.imgW)
+        cell.weatherImg.kf_setImageWithResource(resource, placeholderImage: UIImage(named:""))
         return cell
     }
 

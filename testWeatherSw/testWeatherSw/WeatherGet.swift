@@ -43,7 +43,7 @@ class WeatherGet {
     var maxValue: Double=0.0
     var windS: Double = 0.0
     var date: NSDate = NSDate()
-    var imgW: UIImage? = UIImage()
+    var imgW: String = ""
     
     func getWeatherCity(cityID: Int, dayCount: String, view: UIView, lat: Double, lon: Double) {
         let url = NSURL(string: stringWeather(cityID, dayCount: dayCount, lat: lat, lon: lon)!)
@@ -105,7 +105,7 @@ class WeatherGet {
             if let weatherDescription = subJson["weather"][0]["description"].string {
                 weatherD.desription = weatherDescription
             }
-            if let weatherImg =  downloadImage("http://openweathermap.org/img/w/\(subJson["weather"][0]["icon"].string!).png"){
+            if let weatherImg =  "http://openweathermap.org/img/w/\(subJson["weather"][0]["icon"].string!).png" as String? {
                 weatherD.imgW = weatherImg
             }
             
@@ -113,19 +113,7 @@ class WeatherGet {
         }
      
    }
-    
-    
-    private func downloadImage(str: String) -> UIImage?{
-        
-        let url = NSURL(string: str)
-        let data = NSData(contentsOfURL: url!)
-        
-        if let image = UIImage(data: data!) {
-            return image
-        } else {
-            return nil
-        }
-    }
+   
         
     private func stringWeather(cityID: Int,  dayCount: String, lat: Double, lon: Double) -> String? {
         

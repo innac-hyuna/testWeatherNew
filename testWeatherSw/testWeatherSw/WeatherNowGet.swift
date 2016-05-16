@@ -9,19 +9,20 @@
 
 import UIKit
 import SwiftyJSON
+import Kingfisher
 
 
 class WeatherNowGet {
     
     var name: String = ""
     var main: String = ""
-    var desription: String=""
+    var desription: String = ""
     var minValue: Double = 0.0
-    var maxValue: Double=0.0
+    var maxValue: Double = 0.0
     var windS: Double = 0.0
-    var imgW: UIImage? = UIImage()
+    var imgW: String = ""
     
-    
+  
     func getWeatherCity(cityID: Int, lat: Double, lon: Double) {
         
         let url = NSURL(string: stringWeather(cityID, lat: lat, lon: lon)!)        
@@ -33,7 +34,6 @@ class WeatherNowGet {
             }
             if let httpResponse = response as? NSHTTPURLResponse {// where httpResponse.statusCode == 200 {                
                 if httpResponse.statusCode == 200 {
-                    print("update ui")
                     let parsedData = self.getDataFromJson(data!)
                     
                     dispatch_async(dispatch_get_main_queue()) {
@@ -70,7 +70,7 @@ class WeatherNowGet {
         if let weatherDescription = json["weather"][0]["description"].string {
                 weather.desription = weatherDescription
         }
-        if let weatherImg =  downloadImage("http://openweathermap.org/img/w/\(json["weather"][0]["icon"].string!).png"){
+        if let weatherImg =  "http://openweathermap.org/img/w/\(json["weather"][0]["icon"].string!).png" as String? {
                weather.imgW = weatherImg
         }
        
@@ -78,18 +78,7 @@ class WeatherNowGet {
         return weather
     }
     
-    private func downloadImage(str: String) -> UIImage?{
-        
-        let url = NSURL(string: str)
-        let data = NSData(contentsOfURL: url!)
-        
-        if let image = UIImage(data: data!) {
-            return image
-        } else {
-            return nil
-        }
-    }
-    
+      
     private func stringWeather(cityID: Int, lat: Double, lon: Double) -> String? {
         
         var requestString = ""
