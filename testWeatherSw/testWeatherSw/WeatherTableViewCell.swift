@@ -91,12 +91,6 @@ class WeatherTableViewCell: UITableViewCell {
             "windsLabel" : windsLabel,
             "mainLabel" : mainLabel ]
         
-        weatherImg.translatesAutoresizingMaskIntoConstraints = false
-        minvalLabel.translatesAutoresizingMaskIntoConstraints = false
-        maxvalLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        windsLabel.translatesAutoresizingMaskIntoConstraints = false
-        mainLabel.translatesAutoresizingMaskIntoConstraints = false
         
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "H:|-[weatherImg]-[dateLabel]-[minvalLabel]-[maxvalLabel]-|", options: [], metrics: nil, views: viewsDict))

@@ -9,22 +9,35 @@
 import UIKit
 import MBProgressHUD
 import CoreLocation
+import CoreData
+
+
 
 class CitySViewController: UIViewController{
     
     var tableView: UITableView!
     var searchBar: UISearchBar!
     var locationButton: UIButton!
+    var buttonHistory: UIBarButtonItem!
     var city: CityGet!
     var arrCity: [CityGet] = []
     var filteredArray: [CityGet] = []
     var searchActive: Bool = false
     var locCoordination: (Double, Double) = (0.0, 0.0)
     var locationManager: CLLocationManager!
+    let managedObjectContext =
+        (UIApplication.sharedApplication().delegate
+            as! AppDelegate).managedObjectContext
+  
   
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        buttonHistory = UIBarButtonItem(title: "History", style: .Plain, target: self, action: #selector(CitySViewController.historyView(_:)))
+        buttonHistory.enabled = false
+        
+        self.navigationItem.setRightBarButtonItem(buttonHistory, animated: true)
         
         locationManager = CLLocationManager()
         locationManager.requestAlwaysAuthorization()
@@ -48,6 +61,7 @@ class CitySViewController: UIViewController{
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(CityTableViewCell.self, forCellReuseIdentifier: "Cell")
+        
         locationButton.addTarget(self, action: #selector(CitySViewController.locationGet(_:)), forControlEvents: .TouchUpInside)
         
         setupLayout()
@@ -70,12 +84,16 @@ class CitySViewController: UIViewController{
     
     func locationGet(sender:UIButton!) {
         
-        
       let MyDetView: WeatherCityViewController = WeatherCityViewController()
        MyDetView.lat = locCoordination.0
        MyDetView.lon = locCoordination.1
        navigationController?.pushViewController(MyDetView, animated: true)
         
+    }
+    
+    func historyView(sender: UIBarButtonItem) {
+        let HistoryView: HistoryViewController = HistoryViewController()
+        navigationController?.pushViewController(HistoryView, animated: true)
     }
     
     func loatData() {
@@ -88,6 +106,7 @@ class CitySViewController: UIViewController{
             dispatch_async(dispatch_get_main_queue()) {
                 MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                 self.view.endEditing(true)
+                self.buttonHistory.enabled = true
                 self.tableView.reloadData()
             }
         }
@@ -140,6 +159,8 @@ extension CitySViewController: UITableViewDataSource {
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             
         let cell:CityTableViewCell  = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CityTableViewCell
+        
+       
         if(searchActive){
             cell.cityLabel.text = filteredArray[indexPath.row].name;
             cell.countryLabel.text = filteredArray[indexPath.row].country;
@@ -165,9 +186,35 @@ extension CitySViewController: UITableViewDataSource {
               MyDetView.cityId = arrCity[indexPath.row].id
             
           }
-            // self.presentViewController(MyDetView, animated: true,completion: nil)
-          navigationController?.pushViewController(MyDetView, animated: true)
+        
+        navigationController?.pushViewController(MyDetView, animated: true)
+        
+        let entityDescription =
+            NSEntityDescription.entityForName("History",
+                                              inManagedObjectContext: managedObjectContext)
+        
+        let historyData = History(entity: entityDescription!,
+                               insertIntoManagedObjectContext: managedObjectContext)
+        
+        var idCity: String
+        if(searchActive){
+           idCity = String(filteredArray[indexPath.row].id);
             
+        } else {
+           idCity = String(arrCity[indexPath.row].id);
+        }
+        
+        historyData.idCity = idCity
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            
+            let nserror = error as NSError
+            NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+            abort()
+        }
+        
      }
     
  }
@@ -175,9 +222,12 @@ extension CitySViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension CitySViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 50.0
+   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+       
+        return 50
+    
     }
+
 }
 
 // MARK: - UISearchBarDelegate
@@ -203,14 +253,8 @@ extension CitySViewController: UISearchBarDelegate {
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
     
         filteredArray.removeAll()
-                
-        for cityFor in arrCity {
-     
-       
-        if (cityFor.name.hasPrefix(searchText))  {
-                filteredArray.append(cityFor)
-            }
-        }
+        
+        filteredArray = city.filterCity(arrCity, strCity: searchText)
         
         if(filteredArray.count == 0){
             searchActive = false;

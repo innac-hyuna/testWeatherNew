@@ -1,4 +1,3 @@
-//
 //  CityGet.swift
 //  testWeatherSw
 //
@@ -93,5 +92,26 @@ class CityGet {
            
             return cityD }
      
+    }
+    
+    func filterCity(arrCity: Array<CityGet>, strCity: String = "", arrId: Array<String> = [] ) -> Array<CityGet> {
+        
+        var filteredArray:[CityGet] = []
+        
+        if !strCity.isEmpty {
+            for cityFor in arrCity {
+                if (cityFor.name.hasPrefix(strCity))  {
+                    filteredArray.append(cityFor)
+                }
+            } }else{
+            for cityFor in arrCity {
+                
+                let isSet = arrId.filter {(name: String) -> Bool in
+                    if name == String(cityFor.id) { return true }
+                    return false }
+                if isSet.count != 0 { filteredArray.append(cityFor) }
+            }
+        }
+        return filteredArray
     }
 }

@@ -278,9 +278,9 @@ extension WeatherCityViewController: UITableViewDataSource {
         return arrW.count
     }
     
-    func tableView(tableViewWeather: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell:WeatherTableViewCell  = tableViewWeather.dequeueReusableCellWithIdentifier("CellWeather", forIndexPath: indexPath) as! WeatherTableViewCell
+        let cell:WeatherTableViewCell  = tableView.dequeueReusableCellWithIdentifier("CellWeather", forIndexPath: indexPath) as! WeatherTableViewCell
         let weatherDay = arrW[indexPath.row]
         
         cell.dateLabel.text =  weatherDay.date.dateStringWithFormat("yyyy-MM-dd");
@@ -303,8 +303,9 @@ extension WeatherCityViewController: UITableViewDataSource {
 extension WeatherCityViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 100.0
-    }
+        
+        return 100
+    }    
     
 }
 
