@@ -23,8 +23,10 @@ class CityTableViewCell: UITableViewCell {
   
     }
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        if reuseIdentifier == "CellHistory"{ self.his = true }
        
         cityLabel = UILabel()
         countryLabel = UILabel()
@@ -41,7 +43,11 @@ class CityTableViewCell: UITableViewCell {
        
         if his {
             delButton = UIButton()
-            contentView.addSubview(delButton)}
+            delButton.setTitle("Dell", forState: .Normal)
+            //delButton.addTarget(self, action: #selector(HistoryViewController.delClick(_:)), forControlEvents: .TouchDragInside)
+            delButton.backgroundColor = UIColor.brownColor()
+            contentView.addSubview(delButton)
+        }
 
         setupLayout()
     }
@@ -77,7 +83,7 @@ class CityTableViewCell: UITableViewCell {
         }
         
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-[city]-[country]-[id]" + (his ? "-[del]" : "") + "-|", options: [], metrics: nil, views: viewsDict))
+            "H:|-[city]-[country]-[id]" + (his ? "-[del(40)]-0" : "") + "-|", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "V:|-[city]-|", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
@@ -86,13 +92,12 @@ class CityTableViewCell: UITableViewCell {
             "V:|-[id]-|", options: [], metrics: nil, views: viewsDict))
         if his {
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-[del]-|", options: [], metrics: nil, views: viewsDict))}
+            "V:|-0-[del]-0-|", options: [], metrics: nil, views: viewsDict))}
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
 
 }

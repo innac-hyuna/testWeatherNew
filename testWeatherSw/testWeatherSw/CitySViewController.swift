@@ -12,7 +12,6 @@ import CoreLocation
 import CoreData
 
 
-
 class CitySViewController: UIViewController{
     
     var tableView: UITableView!
@@ -25,11 +24,7 @@ class CitySViewController: UIViewController{
     var searchActive: Bool = false
     var locCoordination: (Double, Double) = (0.0, 0.0)
     var locationManager: CLLocationManager!
-    let managedObjectContext =
-        (UIApplication.sharedApplication().delegate
-            as! AppDelegate).managedObjectContext
-  
-  
+   
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -186,38 +181,14 @@ extension CitySViewController: UITableViewDataSource {
               MyDetView.cityId = arrCity[indexPath.row].id
             
           }
-        
         navigationController?.pushViewController(MyDetView, animated: true)
+        let his = historyMenedger()
+        his.saveHistory(searchActive ? filteredArray : arrCity, indRow: indexPath.row)
         
-        let entityDescription =
-            NSEntityDescription.entityForName("History",
-                                              inManagedObjectContext: managedObjectContext)
         
-        let historyData = History(entity: entityDescription!,
-                               insertIntoManagedObjectContext: managedObjectContext)
-        
-        var idCity: String
-        if(searchActive){
-           idCity = String(filteredArray[indexPath.row].id);
-            
-        } else {
-           idCity = String(arrCity[indexPath.row].id);
-        }
-        
-        historyData.idCity = idCity
-        
-        do {
-            try managedObjectContext.save()
-        } catch {
-            
-            let nserror = error as NSError
-            NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
-            abort()
-        }
-        
-     }
-    
  }
+
+    }
 
 // MARK: - UITableViewDelegate
 extension CitySViewController: UITableViewDelegate {

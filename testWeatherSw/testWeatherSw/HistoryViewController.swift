@@ -10,17 +10,13 @@ import UIKit
 import CoreData
 import MBProgressHUD
 
-@objc( History )
-class History: NSManagedObject {
-    @NSManaged  var idCity : String?
-}
-
 class HistoryViewController: UIViewController {
     
     var tableView: UITableView!
     var arrHistory: [CityGet] = []
     var historyCity: CityGet = CityGet()
     var arrId: [String] = []
+    let his = historyMenedger()
 
     let managedObjectContext =
         (UIApplication.sharedApplication().delegate
@@ -29,62 +25,23 @@ class HistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "History"
         tableView =  UITableView()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerClass(CityTableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.registerClass(CityTableViewCell.self, forCellReuseIdentifier: "CellHistory")
         setupLayout()
-        
-        // Initialize Fetch Request
-        let fetchRequest = NSFetchRequest()
-        
-        // Create Entity Description
-        let entityDescription = NSEntityDescription.entityForName("History", inManagedObjectContext: self.managedObjectContext)
-        
-        // Configure Fetch Request
-        fetchRequest.entity = entityDescription
-        
-        do {
-            let result = try self.managedObjectContext.executeFetchRequest(fetchRequest)
-            var str = ""
-            if (result.count > 0) {
-               /*for his  in result {
-               if let cityString =  his.valueForKey("idCity") {
-                let cityStr = cityString as! String
-                arrId.append(cityStr)
-                }
-               
-              }*/
-            arrId = result.map{ (his: AnyObject) -> String in
-                    if let cityString =  his.valueForKey("idCity") {
-                        str = cityString as! String
-                        }
-                    return str
-                }
-            }
-            
-        } catch {
-            let fetchError = error as NSError
-            print(fetchError)
-        }
-        let progressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
-        progressHUD.labelText = "Loading..."
-        
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            self.historyCity = CityGet()
-            self.arrHistory = self.historyCity.filterCity(self.historyCity.getCityArray(), arrId: self.arrId)
-            
-            dispatch_async(dispatch_get_main_queue()) {
-                self.tableView.reloadData()
-                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-            }
-        }
-   
+        arrHistory = his.historyGetArray()
+    
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidDisappear(animated: Bool) {        
+       
     }
     
     func setupLayout() {
@@ -101,6 +58,16 @@ class HistoryViewController: UIViewController {
             "V:|-60-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
     }
     
+    func delClick (sender: UIButton) {
+        
+        let ind = sender.tag
+        
+        his.historyDel(arrHistory, ind: ind)
+        
+        arrHistory.removeAtIndex(ind)
+        tableView.reloadData()
+}
+    
 }
 
 // MARK: - UITableViewDataSource
@@ -113,14 +80,17 @@ extension HistoryViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell:CityTableViewCell  = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CityTableViewCell
-            cell.his = true
+        let cell:CityTableViewCell  = tableView.dequeueReusableCellWithIdentifier("CellHistory", forIndexPath: indexPath) as! CityTableViewCell
+        
             cell.cityLabel.text = arrHistory[indexPath.row].name;
             cell.countryLabel.text = arrHistory[indexPath.row].country;
             cell.idLabel.text = String(arrHistory[indexPath.row].id);
+            cell.delButton.addTarget(self, action: #selector(HistoryViewController.delClick(_:)), forControlEvents: .TouchUpInside)
+            cell.delButton.tag  = indexPath.row
        
         return cell
     }
+    
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
