@@ -12,8 +12,7 @@ import SwiftyJSON
 import MBProgressHUD
 
 
-class WeatherGet {
-    
+class WeatherGetH {
     
     var name: String = ""
     var main: String = ""
@@ -21,7 +20,7 @@ class WeatherGet {
     var minValue: Double = 0.0
     var maxValue: Double=0.0
     var windS: Double = 0.0
-    var date: String = String()
+    var date: String = ""
     var imgW: String = ""
     
     func getWeatherCity(cityID: Int, dayCount: String, view: UIView, lat: Double, lon: Double) {
@@ -50,19 +49,32 @@ class WeatherGet {
             }
             
         }
-        
         task.resume()
     }
     
     
-    func getDataFromJson(data: NSData) -> Array  <WeatherGet> {
+    func getDataFromJson(data: NSData) -> Dictionary <String, Array <WeatherGetH>> {
         
         
-        let json = JSON(data: data)
-       
+        let json = JSON(data: data)       
+        var dicWeather: [String: Array<WeatherGetH>] = [:]
+        var arrWeather: [WeatherGetH] = []
+        var dayLast = ""
         
-        return json["list"].arrayValue.map { (subJson: JSON) -> WeatherGet in
-            let weatherD:WeatherGet = WeatherGet()
+        if let date = NSDate(jsonDate: "/Date" + String(json["list"][0]["dt"].int)+"/") {
+           dayLast = date.dateStringWithFormat("yyyy-MM-dd")
+        }
+        
+        for (_, subJson): (String, JSON) in  json["list"]
+          {
+          
+                
+            let weatherD:WeatherGetH = WeatherGetH()
+            
+            if let date = NSDate(jsonDate: "/Date" + String(subJson["dt"].int)+"/") {
+                weatherD.date = date.dateStringWithFormat("yyyy-MM-dd HH:mm")
+            }
+            
             if let name = json["city"]["name"].string {
                 weatherD.name = name
             }
@@ -75,9 +87,6 @@ class WeatherGet {
             if let windS = subJson["speed"].double {
                 weatherD.windS = windS
             }
-            if let date = NSDate(jsonDate: "/Date" + String(subJson["dt"].int)+"/") {
-                weatherD.date = date.dateStringWithFormat("yyyy-MM-dd HH:mm")
-            }
             if let weatherMain = subJson["weather"][0]["main"].string {
                 weatherD.main = weatherMain
             }
@@ -87,26 +96,33 @@ class WeatherGet {
             if let weatherImg =  "http://openweathermap.org/img/w/\(subJson["weather"][0]["icon"].string!).png" as String? {
                 weatherD.imgW = weatherImg
             }
+           
             
-            return weatherD
+            if (weatherD.date.getDateD() == dayLast) {
+                arrWeather.append(weatherD)
+                dayLast = weatherD.date.getDateYMD()
+               } else
+             { dicWeather.updateValue(arrWeather, forKey: weatherD.date.getDateYMD())
+               arrWeather.removeAll()}
+            
         }
-     
-   }
-   
+      return dicWeather
+   }   
         
     private func stringWeather(cityID: Int,  dayCount: String, lat: Double, lon: Double) -> String? {
         
         var requestString = ""
         
         if  cityID != 0 {
-            requestString = "http://api.openweathermap.org/data/2.5/forecast/daily?id=\(String(cityID))&cnt=\(dayCount)&APPID=6a700a1e919dc96b0a98901c9f4bec47"}
+           // requestString = "http://api.openweathermap.org/data/2.5/forecast/daily?id=\(String(cityID))&cnt=\(dayCount)&APPID=6a700a1e919dc96b0a98901c9f4bec47"
+           requestString = "http://api.openweathermap.org/data/2.5/forecast?id=\(String(cityID))&cnt=\(dayCount)&APPID=6a700a1e919dc96b0a98901c9f4bec47"
+        }
         else {
             requestString = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=\(String(lat))&lon=\(String(lon))&cnt=\(dayCount)&APPID=6a700a1e919dc96b0a98901c9f4bec47"
         }
-  
         
         return requestString
-    }    
+    }
     
 }
 
@@ -136,6 +152,8 @@ extension NSDate {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = format
         return dateFormatter.stringFromDate(self)
-    }
-    
 }
+
+
+
+

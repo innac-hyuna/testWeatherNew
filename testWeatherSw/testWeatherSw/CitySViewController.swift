@@ -9,7 +9,6 @@
 import UIKit
 import MBProgressHUD
 import CoreLocation
-import CoreData
 
 
 class CitySViewController: UIViewController{
@@ -152,7 +151,8 @@ extension CitySViewController: UITableViewDataSource {
       }
     
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-            
+        
+        
         let cell:CityTableViewCell  = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CityTableViewCell
         
        
@@ -173,6 +173,7 @@ extension CitySViewController: UITableViewDataSource {
       func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
             
           let MyDetView: WeatherCityViewController = WeatherCityViewController()
+          //let MyDetView: WeatherCityViewControllerH = WeatherCityViewControllerH()
         
           if(searchActive){
               MyDetView.cityId = filteredArray[indexPath.row].id
@@ -182,13 +183,12 @@ extension CitySViewController: UITableViewDataSource {
             
           }
         navigationController?.pushViewController(MyDetView, animated: true)
-        let his = historyMenedger()
-        his.saveHistory(searchActive ? filteredArray : arrCity, indRow: indexPath.row)
+        let his = historyManadger()
+        his.saveHistory(searchActive ? filteredArray : arrCity, indRow: indexPath.row)        
         
-        
- }
-
     }
+
+}
 
 // MARK: - UITableViewDelegate
 extension CitySViewController: UITableViewDelegate {
@@ -232,8 +232,7 @@ extension CitySViewController: UISearchBarDelegate {
         } else {
             searchActive = true;
         }
-        self.tableView.reloadData()
-        
+        self.tableView.reloadData()        
     }
     
 }

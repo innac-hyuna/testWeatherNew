@@ -11,7 +11,7 @@ import SWSegmentedControl
 import SRKControls
 import Kingfisher
 
-class WeatherCityViewController:  UIViewController{
+class WeatherCityViewControllerH:  UIViewController{
     
     
     var weathrSwitch: SWSegmentedControl!
@@ -22,9 +22,10 @@ class WeatherCityViewController:  UIViewController{
     var celLabel: UILabel!
     var farLabel:UILabel!
     var dayLabel: UILabel!
+    var arrDate: [String] = []
     var getWeather: WeatherGet!
     var getWeatherNow: WeatherNowGet!
-    var arrW: [WeatherGet] = []
+    var arrW: [String: WeatherGet] = [:]
     var arrWNow: WeatherNowGet = WeatherNowGet()
     var cityId = 0
     var lat = 0.00
@@ -76,7 +77,7 @@ class WeatherCityViewController:  UIViewController{
      view.addSubview(farLabel)
      view.addSubview(dayLabel)
     
-     weathrSwitch.addTarget(self, action: #selector(WeatherCityViewController.switchIsChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+     weathrSwitch.addTarget(self, action: #selector(WeatherCityViewControllerH.switchIsChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
     
      tableViewWeather.registerClass(WeatherTableViewCell.self, forCellReuseIdentifier: "CellWeather")
     
@@ -153,21 +154,22 @@ class WeatherCityViewController:  UIViewController{
         
     private func setupObservers() {
        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WeatherCityViewController.weatherData(_:)), name: constNotification.WeatherChange, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WeatherCityViewControllerH.weatherData(_:)), name: constNotification.WeatherChange, object: nil)
      }
     
     private func setupObserversNow() {
             
-         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WeatherCityViewController.weatherNowData(_:)), name: constNotification.WeatherNowChange, object: nil)
+         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WeatherCityViewControllerH.weatherNowData(_:)), name: constNotification.WeatherNowChange, object: nil)
       
      }
     
     func weatherData(notificaion: NSNotification) {
         
-        guard let arrWeather = notificaion.object as? Array<WeatherGet> else {
+        guard let arrWeather = notificaion.object as? Dictionary<String, WeatherGet> else {
             return
         }
         arrW = arrWeather
+        arrDate = Array(arrW.keys)
         
         setDataWeatherToday()
          
@@ -212,87 +214,49 @@ class WeatherCityViewController:  UIViewController{
 }
 
 
-// MARK: - UITextField
-extension UITextField  {
-    func setBorder(color: String)
-    {
-        self.borderStyle = UITextBorderStyle.None;
-        let width = CGFloat(1.0)
-        self.layer.borderColor =  UIColor(hexString: color).CGColor
-        self.layer.borderWidth = width
-        self.layer.masksToBounds = true
-    }
-    
-}
-// MARK: - SWSegmentedControl
-extension SWSegmentedControl  {
-    func setBackColor(color: String) {
-        self.backgroundColor = UIColor(hexString: color)
-    }
-    func setTinColor(color: String) {
-        self.tintColor = UIColor(hexString: color)
-    }
-    
-}
-// MARK: - UITextField
-extension UIColor {
-    // Creates a UIColor from a Hex string.
-    convenience init(hexString: String) {
-        var cString: String = hexString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).uppercaseString
-        
-        if (cString.hasPrefix("#")) {
-            cString = (cString as NSString).substringFromIndex(1)
-        }
-        
-        if (cString.characters.count != 6) {
-            self.init(white: 0.5, alpha: 1.0)
-        } else {
-            let rString: String = (cString as NSString).substringToIndex(2)
-            let gString = ((cString as NSString).substringFromIndex(2) as NSString).substringToIndex(2)
-            let bString = ((cString as NSString).substringFromIndex(4) as NSString).substringToIndex(2)
-            
-            var r: CUnsignedInt = 0, g: CUnsignedInt = 0, b: CUnsignedInt = 0;
-            NSScanner(string: rString).scanHexInt(&r)
-            NSScanner(string: gString).scanHexInt(&g)
-            NSScanner(string: bString).scanHexInt(&b)
-            
-            self.init(red: CGFloat(r) / CGFloat(255.0), green: CGFloat(g) / CGFloat(255.0), blue: CGFloat(b) / CGFloat(255.0), alpha: CGFloat(1))
-        }
-    }
-    
-}
-
 // MARK: - UITableViewDelegate
-extension WeatherCityViewController: UITableViewDataSource {
+extension WeatherCityViewControllerH: UITableViewDataSource {
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return arrW.count
+        return 0
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return arrDate.count
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return arrDate[section]
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell:WeatherTableViewCell  = tableView.dequeueReusableCellWithIdentifier("CellWeather", forIndexPath: indexPath) as! WeatherTableViewCell
-        let weatherDay = arrW[indexPath.row]
+       
+       // arrW[arrDate[indexPath.section]]
         
-        cell.dateLabel.text =  weatherDay.date;
-        cell.minvalLabel.text = "Min t : " + convertToTemp(
-            Int(weatherDay.minValue));
+       //let weatherDay = arrW[indexPath.row]
+        
+       /*  cell.dateLabel.text =  weatherDay.date
+       cell.minvalLabel.text = "Min t : " + convertToTemp(
+            Int(weatherDay.minValue))
         cell.maxvalLabel.text = "Max t : " + convertToTemp(
-            Int(weatherDay.maxValue));
+            Int(weatherDay.maxValue))
         cell.mainLabel.text = weatherDay.main + " : " + weatherDay.desription
         cell.windsLabel.text = "Wind speed : " +  String(format:"%.0f",  weatherDay.windS)
         
         let URL = NSURL(string: weatherDay.imgW)!
         let resource = Resource(downloadURL: URL, cacheKey: weatherDay.imgW)
-        cell.weatherImg.kf_setImageWithResource(resource, placeholderImage: UIImage(named:""))
-        return cell
+        cell.weatherImg.kf_setImageWithResource(resource, placeholderImage: UIImage(named:""))*/
+        
+       return cell
     }
 
 }
 
 // MARK: - UITableViewDelegate
-extension WeatherCityViewController: UITableViewDelegate {
+extension WeatherCityViewControllerH: UITableViewDelegate {
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
@@ -302,7 +266,7 @@ extension WeatherCityViewController: UITableViewDelegate {
 }
 
 // MARK: - UITextFieldDelegate
-extension WeatherCityViewController: UITextFieldDelegate {
+extension WeatherCityViewControllerH: UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         if let txt = textField as? SRKComboBox {
@@ -316,7 +280,7 @@ extension WeatherCityViewController: UITextFieldDelegate {
 }
 
 // MARK: - SRKComboBoxDelegate
-extension WeatherCityViewController: SRKComboBoxDelegate {
+extension WeatherCityViewControllerH: SRKComboBoxDelegate {
     
     func comboBox(textField: SRKComboBox, didSelectRow row:Int) {
         if textField == self.myComboBox {
@@ -370,7 +334,4 @@ extension WeatherCityViewController: SRKComboBoxDelegate {
     }
     
 }
-
-
-
 

@@ -91,7 +91,6 @@ class WeatherTableViewCell: UITableViewCell {
             "windsLabel" : windsLabel,
             "mainLabel" : mainLabel ]
         
-        
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "H:|-[weatherImg]-[dateLabel]-[minvalLabel]-[maxvalLabel]-|", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
@@ -106,6 +105,5 @@ class WeatherTableViewCell: UITableViewCell {
             "V:|-[maxvalLabel]", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "V:|-[dateLabel]-[mainLabel]-[windsLabel]", options: [], metrics: nil, views: viewsDict))}    
-    
 
 }

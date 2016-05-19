@@ -16,7 +16,9 @@ class History: NSManagedObject {
     @NSManaged  var country : String?
     
 }
-class historyMenedger {
+
+class historyManadger {
+    
     var request = NSFetchRequest(entityName: "History")
     let managedObjectContext =
         (UIApplication.sharedApplication().delegate

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 import MBProgressHUD
 
 class HistoryViewController: UIViewController {
@@ -16,7 +15,7 @@ class HistoryViewController: UIViewController {
     var arrHistory: [CityGet] = []
     var historyCity: CityGet = CityGet()
     var arrId: [String] = []
-    let his = historyMenedger()
+    let his = historyManadger()
 
     let managedObjectContext =
         (UIApplication.sharedApplication().delegate

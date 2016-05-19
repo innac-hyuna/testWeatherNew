@@ -44,7 +44,6 @@ class CityTableViewCell: UITableViewCell {
         if his {
             delButton = UIButton()
             delButton.setTitle("Dell", forState: .Normal)
-            //delButton.addTarget(self, action: #selector(HistoryViewController.delClick(_:)), forControlEvents: .TouchDragInside)
             delButton.backgroundColor = UIColor.brownColor()
             contentView.addSubview(delButton)
         }
