@@ -28,22 +28,13 @@ class CityGet {
         let fileManager = NSFileManager.defaultManager()
         let documentsURL = fileManager.URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)[0]
         
-        /* do {
-         let documentDirectory = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)[0])
-         let originPath = documentDirectory.URLByAppendingPathComponent("/city.list.json.gz")
-         let destinationPath = documentDirectory.URLByAppendingPathComponent("/city.gz")
-         try NSFileManager.defaultManager().moveItemAtURL(originPath, toURL: destinationPath)
-         } catch let error as NSError {
-         print(error)
-         }*/
-        
         let fileURL = documentsURL.URLByAppendingPathComponent("city.list.json.gz")
         
         guard let data = try? NSData(contentsOfFile: fileURL.path!, options:.DataReadingUncached)   else {
             return true
         }
         
-        guard let decompressedData : NSData = try? data.gunzippedData() else {
+        guard let decompressedData: NSData = try? data.gunzippedData() else {
             return true
         }
         
@@ -58,7 +49,7 @@ class CityGet {
             return true
         }
            dataConvert = data
-        }
+      }
       let  dictionary =  JSON(data:dataConvert!)
     
       return dictionary
@@ -94,16 +85,23 @@ class CityGet {
      
     }
     
-    func filterCity(arrCity: Array<CityGet>, strCity: String = "", arrId: Array<String> = [] ) -> Array<CityGet> {
+    func filterCity(arrC: Array<CityGet>, strCity: String = "", arrId: Array<String> = []) -> Array<CityGet> {
         
         var filteredArray:[CityGet] = []
+        var arrCity: [CityGet] = []
         
+        if arrC.count == 0 {
+            arrCity = getCityArray()
+        } else {
+           arrCity = arrC
+        }
+                
         if !strCity.isEmpty {
             for cityFor in arrCity {
                 if (cityFor.name.hasPrefix(strCity))  {
                     filteredArray.append(cityFor)
                 }
-            } }else{
+            } } else {
             for cityFor in arrCity {
                 
                 let isSet = arrId.filter {(name: String) -> Bool in

@@ -21,9 +21,9 @@ class CitySViewController: UIViewController{
     var city: CityGet!
     var arrCity: [CityGet] = []
     var filteredArray: [CityGet] = []
-    var searchActive: Bool = false
     var locCoordination: (Double, Double) = (0.0, 0.0)
     var locationManager: CLLocationManager!
+    var searchTextOld = ""
    
 
     override func viewDidLoad() {
@@ -66,9 +66,6 @@ class CitySViewController: UIViewController{
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if arrCity.count == 0 {
-            loatData()}
-        
     }
    
     override func didReceiveMemoryWarning() {
@@ -91,21 +88,6 @@ class CitySViewController: UIViewController{
         navigationController?.pushViewController(HistoryView, animated: true)
     }
     
-    func loatData() {
-        
-        let progressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
-        progressHUD.labelText = "Loading..."
-
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            self.arrCity = self.city.getCityArray()
-            dispatch_async(dispatch_get_main_queue()) {
-                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                self.view.endEditing(true)
-                self.buttonHistory.enabled = true
-                self.tableView.reloadData()
-            }
-        }
-    }
     
     func setupLayout() {
         
@@ -145,50 +127,32 @@ class CitySViewController: UIViewController{
 extension CitySViewController: UITableViewDataSource {
     
       func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(searchActive) {
             return filteredArray.count
-        }
-        return arrCity.count
       }
     
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             
         let cell:CityTableViewCell  = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CityTableViewCell
-        
        
-        if(searchActive){
-            cell.cityLabel.text = filteredArray[indexPath.row].name;
-            cell.countryLabel.text = filteredArray[indexPath.row].country;
-            cell.idLabel.text = String(filteredArray[indexPath.row].id);
+        cell.cityLabel.text = filteredArray[indexPath.row].name;
+        cell.countryLabel.text = filteredArray[indexPath.row].country;
+        cell.idLabel.text = String(filteredArray[indexPath.row].id);
 
-        } else {
-            cell.cityLabel.text = arrCity[indexPath.row].name;
-            cell.countryLabel.text = arrCity[indexPath.row].country;
-            cell.idLabel.text = String(arrCity[indexPath.row].id);
-
-        }
         return cell
       }
         
       func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
             
-          let MyDetView: WeatherCityViewController = WeatherCityViewController()
-        
-          if(searchActive){
-              MyDetView.cityId = filteredArray[indexPath.row].id
-            
-          } else {
-              MyDetView.cityId = arrCity[indexPath.row].id
-            
-          }
+        let MyDetView: WeatherCityViewController = WeatherCityViewController()
+        MyDetView.cityId = filteredArray[indexPath.row].id
+       
         navigationController?.pushViewController(MyDetView, animated: true)
         let his = historyMenedger()
-        his.saveHistory(searchActive ? filteredArray : arrCity, indRow: indexPath.row)
+        his.saveHistory(filteredArray, indRow: indexPath.row)        
         
-        
- }
+   }
 
-    }
+}
 
 // MARK: - UITableViewDelegate
 extension CitySViewController: UITableViewDelegate {
@@ -205,37 +169,50 @@ extension CitySViewController: UITableViewDelegate {
 extension CitySViewController: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-         searchActive = true;
+        
     }
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-         searchActive = false;
+        
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-         searchActive = false;
+        
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         self.view.endEditing(true)
-        searchActive = false;
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
     
-        filteredArray.removeAll()
-        
-        filteredArray = city.filterCity(arrCity, strCity: searchText)
-        
-        if(filteredArray.count == 0){
-            searchActive = false;
+        if searchText != "" {
+            let progressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
+            progressHUD.labelText = "Loading..."
+            
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+                
+                if searchText.hasPrefix(self.searchTextOld) {
+                    self.filteredArray = self.city.filterCity(self.filteredArray, strCity: searchText)
+                } else {
+                    self.filteredArray.removeAll()
+                    self.filteredArray = self.city.filterCity([], strCity: searchText) }
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                    self.searchTextOld = searchText
+                    self.view.endEditing(true)
+                    self.buttonHistory.enabled = true
+                    self.tableView.reloadData()
+                }
+            }
         } else {
-            searchActive = true;
+            
+         self.filteredArray.removeAll()
+         self.tableView.reloadData()
+
         }
-        self.tableView.reloadData()
-        
     }
-    
 }
 
 // MARK: - CLLocationManagerDelegate
