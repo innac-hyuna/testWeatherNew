@@ -104,7 +104,7 @@
                   moduleName = "SRKControls"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jomedia/Documents/testWeatherSw/Pods/SRKControls/SRKControls/CustomComboBoxVCtr.swift"
-                  timestampString = "485359521.024356"
+                  timestampString = "485801211.404429"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -119,7 +119,7 @@
                   moduleName = "SRKControls"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jomedia/Documents/testWeatherSw/Pods/SRKControls/SRKControls/CustomComboBoxVCtr.swift"
-                  timestampString = "485359521.024593"
+                  timestampString = "485801211.404921"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "31"
@@ -134,7 +134,7 @@
                   moduleName = "SRKControls"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jomedia/Documents/testWeatherSw/Pods/SRKControls/SRKControls/CustomComboBoxVCtr.swift"
-                  timestampString = "485359521.024769"
+                  timestampString = "485801211.405069"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "31"
@@ -189,38 +189,6 @@
             startingLineNumber = "87"
             endingLineNumber = "87"
             landmarkName = "parse(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "testWeatherSw/WeatherGet.swift"
-            timestampString = "485358955.975276"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
-            landmarkName = "getDataFromJson(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "testWeatherSw/WeatherGet.swift"
-            timestampString = "485358955.975276"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
-            landmarkName = "stringWeather(_:dayCount:lat:lon:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -48,8 +48,7 @@ class CitySViewController: UIViewController{
         searchBar =  UISearchBar()
         locationButton = UIButton(type: UIButtonType.System) as UIButton
         locationButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        locationButton.setTitle("Loc", forState: .Normal)
-        locationButton.backgroundColor = UIColor.redColor()
+        locationButton.setImage(UIImage(named: "Location.png"), forState: UIControlState.Normal)
         city = CityGet()
         searchBar.delegate = self
         tableView.delegate = self
@@ -66,7 +65,7 @@ class CitySViewController: UIViewController{
         super.viewWillAppear(animated)
         
         if arrCity.count == 0 {
-            loatData()}
+           loadData() }
         
     }
    
@@ -90,7 +89,7 @@ class CitySViewController: UIViewController{
         navigationController?.pushViewController(HistoryView, animated: true)
     }
     
-    func loatData() {
+    func loadData() {
         
         let progressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
         progressHUD.labelText = "Loading..."
@@ -115,20 +114,20 @@ class CitySViewController: UIViewController{
         let  viewsDict = [
             "searchBar" : searchBar,
             "locationButton" : locationButton,
-            "tableView" : tableView]
+            "tableView" : tableView ]
         
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         locationButton.translatesAutoresizingMaskIntoConstraints = false
         
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-0-[searchBar]-[locationButton(30)]-0-|", options: [], metrics: nil, views: viewsDict))
+            "H:|-0-[searchBar]-[locationButton(35)]-0-|", options: [], metrics: nil, views: viewsDict))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "H:|-0-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-60-[searchBar]-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
+            "V:|-70-[searchBar]-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-60-[locationButton]-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
+            "V:|-70-[locationButton]-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
         
     }
     
@@ -173,8 +172,7 @@ extension CitySViewController: UITableViewDataSource {
       func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
             
           let MyDetView: WeatherCityViewController = WeatherCityViewController()
-          //let MyDetView: WeatherCityViewControllerH = WeatherCityViewControllerH()
-        
+                 
           if(searchActive){
               MyDetView.cityId = filteredArray[indexPath.row].id
             
@@ -214,6 +212,7 @@ extension CitySViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
          searchActive = false;
+         self.tableView.reloadData()
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
@@ -223,16 +222,14 @@ extension CitySViewController: UISearchBarDelegate {
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
     
-        filteredArray.removeAll()
-        
-        filteredArray = city.filterCity(arrCity, strCity: searchText)
-        
-        if(filteredArray.count == 0){
-            searchActive = false;
+        if searchText != "" {
+          filteredArray.removeAll()
+          filteredArray = city.filterCity(arrCity, strCity: searchText)
         } else {
-            searchActive = true;
+          searchActive = false;
         }
-        self.tableView.reloadData()        
+        
+        self.tableView.reloadData()
     }
     
 }
