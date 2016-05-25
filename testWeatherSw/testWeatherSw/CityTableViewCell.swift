@@ -32,7 +32,6 @@ class CityTableViewCell: UITableViewCell {
         countryLabel = UILabel()
         idLabel = UILabel()
         
-        
         cityLabel.textColor = UIColor.blackColor()
         countryLabel.textColor = UIColor.blackColor()
         idLabel.textColor = UIColor.blackColor()
@@ -64,8 +63,7 @@ class CityTableViewCell: UITableViewCell {
         
         cityLabel.translatesAutoresizingMaskIntoConstraints = false
         countryLabel.translatesAutoresizingMaskIntoConstraints = false
-        idLabel.translatesAutoresizingMaskIntoConstraints = false
-       
+        idLabel.translatesAutoresizingMaskIntoConstraints = false       
         
         cityLabel.font =  UIFont (name: "Helvetica Neue", size: 14)
         countryLabel.font =  UIFont (name: "Helvetica Neue", size: 12)
@@ -82,7 +80,7 @@ class CityTableViewCell: UITableViewCell {
         }
         
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-[city]-[country]-[id]" + (his ? "-[del(40)]-0" : "") + "-|", options: [], metrics: nil, views: viewsDict))
+            "H:|-[city]-[country(30)]-[id(40)]" + (his ? "-[del(40)]-0" : "") + "-|", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "V:|-[city]-|", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(

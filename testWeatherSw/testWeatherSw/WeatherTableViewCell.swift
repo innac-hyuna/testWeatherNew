@@ -148,6 +148,14 @@ class WeatherTableViewCell: UITableViewCell {
                            attribute: NSLayoutAttribute.RightMargin,
                            multiplier: 1.0,
                            constant: 20).active = true
+        NSLayoutConstraint(item: tempView,
+                           attribute: NSLayoutAttribute.Width,
+                           relatedBy: NSLayoutRelation.Equal,
+                           toItem: nil,
+                           attribute: NSLayoutAttribute.NotAnAttribute,
+                           multiplier: 1.0,
+                           constant: 45).active = true
+
         
         
         NSLayoutConstraint(item: mainView,

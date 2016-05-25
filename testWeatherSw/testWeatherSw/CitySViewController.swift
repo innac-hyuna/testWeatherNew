@@ -16,7 +16,8 @@ class CitySViewController: UIViewController{
     var tableView: UITableView!
     var searchBar: UISearchBar!
     var locationButton: UIButton!
-    var buttonHistory: UIBarButtonItem!
+    var buttonHistory: UIButton!
+    var barItemHistory: UINavigationItem!
     var city: CityGet!
     var arrCity: [CityGet] = []
     var filteredArray: [CityGet] = []
@@ -28,10 +29,18 @@ class CitySViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        buttonHistory = UIBarButtonItem(title: "History", style: .Plain, target: self, action: #selector(CitySViewController.historyView(_:)))
-        buttonHistory.enabled = false
+        buttonHistory = UIButton(type: .Custom) as UIButton
+        buttonHistory.setImage(UIImage(named: "History.png"), forState: .Normal)
+        buttonHistory.frame = CGRectMake(0, 0, 25, 25)
+        buttonHistory.addTarget(self, action: #selector(CitySViewController.historyView(_:)), forControlEvents: .TouchUpInside)
+        let buttonItemHistory = UIBarButtonItem(customView: buttonHistory)
+        buttonItemHistory.enabled = false
+        barItemHistory = self.navigationItem
+        barItemHistory.setRightBarButtonItem(buttonItemHistory, animated: true)
         
-        self.navigationItem.setRightBarButtonItem(buttonHistory, animated: true)
+       /*navigationBar = UINavigationBar(frame: CGRectMake(0, 0, self.view.frame.size.width, 70)) // Offset by 20 pixels vertically to take
+        navigationBar.backgroundColor = UIColor.grayColor()
+        navigationBar.items = [barItemHistory]*/
         
         locationManager = CLLocationManager()
         locationManager.requestAlwaysAuthorization()
@@ -42,13 +51,15 @@ class CitySViewController: UIViewController{
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
+        self.prefersStatusBarHidden()
        
         title = "Weather"
         tableView =  UITableView()
+        tableView.separatorColor = UIColor.yellowColor()
         searchBar =  UISearchBar()
-        locationButton = UIButton(type: UIButtonType.System) as UIButton
-        locationButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        locationButton.setImage(UIImage(named: "Location.png"), forState: UIControlState.Normal)
+        locationButton = UIButton(type: UIButtonType.Custom) as UIButton
+        locationButton.setImage(UIImage(named: "Location1.png"), forState: UIControlState.Normal)
+        locationButton.setImage(UIImage(named: "Location.png"), forState: UIControlState.Selected)
         city = CityGet()
         searchBar.delegate = self
         tableView.delegate = self
@@ -98,8 +109,8 @@ class CitySViewController: UIViewController{
             self.arrCity = self.city.getCityArray()
             dispatch_async(dispatch_get_main_queue()) {
                 MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                self.view.endEditing(true)
                 self.buttonHistory.enabled = true
+                self.view.endEditing(true)
                 self.tableView.reloadData()
             }
         }
@@ -114,22 +125,23 @@ class CitySViewController: UIViewController{
         let  viewsDict = [
             "searchBar" : searchBar,
             "locationButton" : locationButton,
-            "tableView" : tableView ]
+            "tableView" : tableView]
         
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         locationButton.translatesAutoresizingMaskIntoConstraints = false
+      
         
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-0-[searchBar]-[locationButton(35)]-0-|", options: [], metrics: nil, views: viewsDict))
+            "H:|-0-[searchBar]-[locationButton(37)]-0-|", options: [], metrics: nil, views: viewsDict))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "H:|-0-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-70-[searchBar]-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
+            "V:|-65-[searchBar]-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-70-[locationButton]-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
+            "V:|-65-[locationButton]-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
         
-    }
+    }    
     
     func pressed(sender: UIButton) {
         
@@ -154,17 +166,19 @@ extension CitySViewController: UITableViewDataSource {
         
         let cell:CityTableViewCell  = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CityTableViewCell
         
+        if (indexPath.row%2 == 0) {
+            cell.backgroundColor = UIColor.grayColor()
+        } else {
+            cell.backgroundColor = UIColor.whiteColor()}
        
         if(searchActive){
             cell.cityLabel.text = filteredArray[indexPath.row].name;
             cell.countryLabel.text = filteredArray[indexPath.row].country;
             cell.idLabel.text = String(filteredArray[indexPath.row].id);
-
         } else {
             cell.cityLabel.text = arrCity[indexPath.row].name;
             cell.countryLabel.text = arrCity[indexPath.row].country;
             cell.idLabel.text = String(arrCity[indexPath.row].id);
-
         }
         return cell
       }
@@ -175,11 +189,10 @@ extension CitySViewController: UITableViewDataSource {
                  
           if(searchActive){
               MyDetView.cityId = filteredArray[indexPath.row].id
-            
           } else {
               MyDetView.cityId = arrCity[indexPath.row].id
-            
           }
+        
         navigationController?.pushViewController(MyDetView, animated: true)
         let his = historyManadger()
         his.saveHistory(searchActive ? filteredArray : arrCity, indRow: indexPath.row)        
