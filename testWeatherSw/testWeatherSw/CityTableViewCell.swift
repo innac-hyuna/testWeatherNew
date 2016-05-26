@@ -29,16 +29,22 @@ class CityTableViewCell: UITableViewCell {
         if reuseIdentifier == "CellHistory"{ self.his = true }
        
         cityLabel = UILabel()
-        countryLabel = UILabel()
-        idLabel = UILabel()
-        
-        cityLabel.textColor = UIColor.blackColor()
-        countryLabel.textColor = UIColor.blackColor()
-        idLabel.textColor = UIColor.blackColor()
-        
+        cityLabel.textColor = UIColor.backGroundColor()
+        cityLabel.font =  UIFont.HelTextFont(14)
         contentView.addSubview(cityLabel)
+        cityLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        countryLabel = UILabel()
+        countryLabel.textColor = UIColor.backGroundColor()
+        countryLabel.font =  UIFont.HelTextFont(12)
         contentView.addSubview(countryLabel)
+        countryLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        idLabel = UILabel()
+        idLabel.textColor = UIColor.backGroundColor()
+        idLabel.font =  UIFont.HelTextFont(10)
         contentView.addSubview(idLabel)
+        idLabel.translatesAutoresizingMaskIntoConstraints = false
        
         if his {
             delButton = UIButton()
@@ -59,15 +65,7 @@ class CityTableViewCell: UITableViewCell {
         
     }
     
-    func setupLayout() {
-        
-        cityLabel.translatesAutoresizingMaskIntoConstraints = false
-        countryLabel.translatesAutoresizingMaskIntoConstraints = false
-        idLabel.translatesAutoresizingMaskIntoConstraints = false       
-        
-        cityLabel.font =  UIFont (name: "Helvetica Neue", size: 14)
-        countryLabel.font =  UIFont (name: "Helvetica Neue", size: 12)
-        idLabel.font =  UIFont (name: "Helvetica Neue", size: 10)
+    func setupLayout() { 
         
         var viewsDict: [String: AnyObject] = [
             "city" : cityLabel,
@@ -98,3 +96,4 @@ class CityTableViewCell: UITableViewCell {
     }
 
 }
+

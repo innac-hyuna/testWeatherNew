@@ -18,9 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
        
-        navController = UINavigationController()
-        let viewController: CitySViewController = CitySViewController()
-        self.navController!.pushViewController(viewController, animated: false)
+        navController = UINavigationController(rootViewController: CitySViewController())       
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.rootViewController = navController
         self.window!.backgroundColor = UIColor.whiteColor()

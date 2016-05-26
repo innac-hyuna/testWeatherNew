@@ -18,56 +18,60 @@ class CitySViewController: UIViewController{
     var locationButton: UIButton!
     var buttonHistory: UIButton!
     var barItemHistory: UINavigationItem!
+    var navigationBar: UINavigationBar!
+    var constNavBar:  NSLayoutConstraint!
+    var constLoc:  NSLayoutConstraint!
     var city: CityGet!
     var arrCity: [CityGet] = []
     var filteredArray: [CityGet] = []
     var searchActive: Bool = false
     var locCoordination: (Double, Double) = (0.0, 0.0)
     var locationManager: CLLocationManager!
-   
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       
         buttonHistory = UIButton(type: .Custom) as UIButton
         buttonHistory.setImage(UIImage(named: "History.png"), forState: .Normal)
         buttonHistory.frame = CGRectMake(0, 0, 25, 25)
         buttonHistory.addTarget(self, action: #selector(CitySViewController.historyView(_:)), forControlEvents: .TouchUpInside)
+        
         let buttonItemHistory = UIBarButtonItem(customView: buttonHistory)
         buttonItemHistory.enabled = false
         barItemHistory = self.navigationItem
         barItemHistory.setRightBarButtonItem(buttonItemHistory, animated: true)
         
-       /*navigationBar = UINavigationBar(frame: CGRectMake(0, 0, self.view.frame.size.width, 70)) // Offset by 20 pixels vertically to take
-        navigationBar.backgroundColor = UIColor.grayColor()
-        navigationBar.items = [barItemHistory]*/
-        
         locationManager = CLLocationManager()
         locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
-        
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
-        self.prefersStatusBarHidden()
-       
-        title = "Weather"
-        tableView =  UITableView()
-        tableView.separatorColor = UIColor.yellowColor()
-        searchBar =  UISearchBar()
         locationButton = UIButton(type: UIButtonType.Custom) as UIButton
         locationButton.setImage(UIImage(named: "Location1.png"), forState: UIControlState.Normal)
         locationButton.setImage(UIImage(named: "Location.png"), forState: UIControlState.Selected)
-        city = CityGet()
-        searchBar.delegate = self
+        locationButton.addTarget(self, action: #selector(CitySViewController.locationGet(_:)), forControlEvents: .TouchUpInside)
+        view.addSubview(locationButton)
+        locationButton.translatesAutoresizingMaskIntoConstraints = false
+     
+        tableView =  UITableView()
+        tableView.separatorColor = UIColor.sepColor()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(CityTableViewCell.self, forCellReuseIdentifier: "Cell")
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         
-        locationButton.addTarget(self, action: #selector(CitySViewController.locationGet(_:)), forControlEvents: .TouchUpInside)
         
+        searchBar =  UISearchBar()
+        searchBar.delegate = self
+        view.addSubview(searchBar)
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        
+        title = "Weather"
+        city = CityGet()
         setupLayout()
         
     }
@@ -82,8 +86,7 @@ class CitySViewController: UIViewController{
    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-        
+          
     }
     
     func locationGet(sender:UIButton!) {
@@ -116,32 +119,83 @@ class CitySViewController: UIViewController{
         }
     }
     
+   override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    let con: CGFloat = setConstOrientation()
+    print(con)
+    self.constNavBar.constant = con
+    self.constLoc.constant = con
+    self.view.layoutIfNeeded()
+    }
+    
+    func setConstOrientation() -> CGFloat {
+        var con: CGFloat = 0
+        
+        if UIDevice.currentDevice().orientation.isPortrait {
+            con = 75.0
+        }
+        if UIDevice.currentDevice().orientation.isLandscape {
+            con = 45.0
+        }
+        
+        return con
+    }
+      
     func setupLayout() {
         
-        view.addSubview(searchBar)
-        view.addSubview(locationButton)
-        view.addSubview(tableView)
         
         let  viewsDict = [
             "searchBar" : searchBar,
             "locationButton" : locationButton,
             "tableView" : tableView]
         
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        locationButton.translatesAutoresizingMaskIntoConstraints = false
-      
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+            "H:|-0-[searchBar]-[locationButton(44)]-0-|", options: [], metrics: nil, views: viewsDict))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+            "H:|-0-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))       
         
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-0-[searchBar]-[locationButton(37)]-0-|", options: [], metrics: nil, views: viewsDict))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-0-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-65-[searchBar]-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-65-[locationButton]-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
+
+        constNavBar = NSLayoutConstraint(item: searchBar,
+                           attribute: NSLayoutAttribute.TopMargin,
+                           relatedBy: NSLayoutRelation.LessThanOrEqual,
+                           toItem: view,
+                           attribute: NSLayoutAttribute.TopMargin,
+                           multiplier: 1.0,
+                           constant: setConstOrientation())
+        view.addConstraint(constNavBar)
         
-    }    
+        constLoc = NSLayoutConstraint(item: locationButton,
+                           attribute: NSLayoutAttribute.TopMargin,
+                           relatedBy: NSLayoutRelation.Equal,
+                           toItem: view,
+                           attribute: NSLayoutAttribute.TopMargin,
+                           multiplier: 1.0,
+                           constant: setConstOrientation())
+        view.addConstraint(constLoc)
+        
+        NSLayoutConstraint(item: locationButton,
+                                      attribute: NSLayoutAttribute.Width,
+                                      relatedBy: NSLayoutRelation.Equal,
+                                      toItem: nil,
+                                      attribute: NSLayoutAttribute.NotAnAttribute,
+                                      multiplier: 1.0,
+                                      constant: 44).active = true
+        
+        NSLayoutConstraint(item: tableView,
+                           attribute: NSLayoutAttribute.TopMargin,
+                           relatedBy: NSLayoutRelation.Equal,
+                           toItem: searchBar,
+                           attribute: NSLayoutAttribute.BottomMargin,
+                           multiplier: 1.0,
+                           constant: 20).active = true
+        NSLayoutConstraint(item: tableView,
+                           attribute: NSLayoutAttribute.BottomMargin,
+                           relatedBy: NSLayoutRelation.Equal,
+                           toItem: view,
+                           attribute: NSLayoutAttribute.BottomMargin,
+                           multiplier: 1.0,
+                           constant: 0).active = true
+        
+    }
     
     func pressed(sender: UIButton) {
         
@@ -167,9 +221,9 @@ extension CitySViewController: UITableViewDataSource {
         let cell:CityTableViewCell  = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CityTableViewCell
         
         if (indexPath.row%2 == 0) {
-            cell.backgroundColor = UIColor.grayColor()
+            cell.backgroundColor = UIColor.oneCellColor()
         } else {
-            cell.backgroundColor = UIColor.whiteColor()}
+            cell.backgroundColor = UIColor.twoCellColor()}
        
         if(searchActive){
             cell.cityLabel.text = filteredArray[indexPath.row].name;

@@ -29,34 +29,45 @@ class WeatherTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        mainLabel = UILabel()
-        minvalLabel = UILabel()
-        maxvalLabel = UILabel()
-        windsLabel = UILabel()
-        dateLabel = UILabel()
-        weatherImg = UIImageView()
-        tempView = UIView()
         mainView = UIView()
-        
-        mainLabel.textColor = UIColor.blackColor()
-        minvalLabel.textColor = UIColor.blackColor()
-        maxvalLabel.textColor = UIColor.blackColor()
-        windsLabel.textColor = UIColor.blackColor()
-        dateLabel.textColor = UIColor.blackColor()
-       
-        contentView.addSubview(mainLabel)
-        contentView.addSubview(windsLabel)
-        contentView.addSubview(dateLabel)
-        contentView.addSubview(weatherImg)
-        contentView.addSubview(tempView)
         contentView.addSubview(mainView)
-
-        tempView.addSubview(minvalLabel)
-        tempView.addSubview(maxvalLabel)
+        mainView.translatesAutoresizingMaskIntoConstraints = false
         
+        tempView = UIView()
+        contentView.addSubview(tempView)
+        tempView.translatesAutoresizingMaskIntoConstraints = false
+        
+        mainLabel = UILabel()
         mainView.addSubview(mainLabel)
+        mainLabel.font =  UIFont.HelTextFont(10)
+        mainLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        windsLabel = UILabel()
         mainView.addSubview(windsLabel)
+        windsLabel.font =  UIFont.HelTextFont(10)
+        windsLabel.translatesAutoresizingMaskIntoConstraints = false
 
+        minvalLabel = UILabel()
+        tempView.addSubview(minvalLabel)
+        minvalLabel.font =  UIFont.HelTextFont(12)
+        minvalLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        maxvalLabel = UILabel()
+        tempView.addSubview(maxvalLabel)
+        maxvalLabel.font =  UIFont.HelTextFont(12)
+        maxvalLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        dateLabel = UILabel()
+        contentView.addSubview(dateLabel)
+        dateLabel.font =  UIFont.HelTextFont(14)
+        dateLabel.textColor = UIColor.mainTextColor()
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        weatherImg = UIImageView()
+        contentView.addSubview(weatherImg)
+        weatherImg.contentMode = UIViewContentMode.ScaleAspectFit;
+        weatherImg.translatesAutoresizingMaskIntoConstraints = false
+        
         setupLayout()
 
     }
@@ -78,23 +89,6 @@ class WeatherTableViewCell: UITableViewCell {
     }
     
     func setupLayout() {
-        
-        mainLabel.translatesAutoresizingMaskIntoConstraints = false
-        minvalLabel.translatesAutoresizingMaskIntoConstraints = false
-        maxvalLabel.translatesAutoresizingMaskIntoConstraints = false
-        windsLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        weatherImg.translatesAutoresizingMaskIntoConstraints = false
-        tempView.translatesAutoresizingMaskIntoConstraints = false
-        mainView.translatesAutoresizingMaskIntoConstraints = false
-        
-        mainLabel.font =  UIFont (name: "Helvetica Neue", size: 10)
-        minvalLabel.font =  UIFont (name: "Helvetica Neue", size: 12)
-        maxvalLabel.font =  UIFont (name: "Helvetica Neue", size: 12)
-        windsLabel.font =  UIFont (name: "Helvetica Neue", size: 10)
-        dateLabel.font =  UIFont (name: "Helvetica Neue", size: 14)
-        dateLabel.textColor = UIColor.blueColor()
-        weatherImg.contentMode = UIViewContentMode.ScaleAspectFit;
         
         
         NSLayoutConstraint(item: weatherImg,
@@ -155,8 +149,6 @@ class WeatherTableViewCell: UITableViewCell {
                            attribute: NSLayoutAttribute.NotAnAttribute,
                            multiplier: 1.0,
                            constant: 45).active = true
-
-        
         
         NSLayoutConstraint(item: mainView,
                            attribute: NSLayoutAttribute.LeftMargin,
@@ -194,7 +186,7 @@ class WeatherTableViewCell: UITableViewCell {
                            toItem: tempView,
                            attribute: NSLayoutAttribute.CenterY,
                            multiplier: 1.0,
-                       constant: 0).active = true        
+                           constant: 0).active = true
         NSLayoutConstraint(item: maxvalLabel,
                            attribute: NSLayoutAttribute.LeftMargin,
                            relatedBy: NSLayoutRelation.Equal,
@@ -202,7 +194,6 @@ class WeatherTableViewCell: UITableViewCell {
                            attribute: NSLayoutAttribute.RightMargin,
                            multiplier: 1.0,
                            constant: 20).active = true
-        
         
        NSLayoutConstraint(item: mainLabel,
                            attribute: NSLayoutAttribute.CenterY,
@@ -233,9 +224,6 @@ class WeatherTableViewCell: UITableViewCell {
                            attribute: NSLayoutAttribute.RightMargin,
                            multiplier: 1.0,
                            constant: 25).active = true
-        
-     
-
     }
     
 }

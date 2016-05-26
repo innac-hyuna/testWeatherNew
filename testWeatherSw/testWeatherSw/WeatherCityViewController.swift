@@ -23,6 +23,7 @@ class WeatherCityViewController:  UIViewController{
     var dayLabel: UILabel!
     var wnowView: UIView!
     var conView: UIView!
+    var constNavBar: NSLayoutConstraint!
     var navigationBar: UINavigationBar!
     var getWeather: WeatherGet!
     var getWeatherNow: WeatherNowGet!
@@ -39,27 +40,68 @@ class WeatherCityViewController:  UIViewController{
     
     super.viewDidLoad()
     
-    tableViewWeather = UITableView()
-    nameCityLabel = UILabel()
-    tempLabel = UILabel()
-    weatherImg = UIImageView()
-    celLabel = UILabel()
-    dayLabel = UILabel()
-    wnowView = UIView()
     getWeather = WeatherGet()
     getWeatherNow = WeatherNowGet()
-    myComboBox = SRKComboBox()
-    setViewElements()
-    setLayout()
     
+    navigationBar = UINavigationBar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44))
+    let navigationItem = UINavigationItem()
+    navigationBar.items = [navigationItem]
+    view.addSubview(navigationBar)
+    navigationBar.translatesAutoresizingMaskIntoConstraints = false
+    
+    tableViewWeather = UITableView()
     tableViewWeather.delegate = self
     tableViewWeather.dataSource = self
-    myComboBox.delegate = self
-    
-    weathrSwitch.addTarget(self, action: #selector(WeatherCityViewController.switchIsChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
-    
+    tableViewWeather.separatorColor = UIColor.sepColor()
     tableViewWeather.registerClass(WeatherTableViewCell.self, forCellReuseIdentifier: "CellWeather")
+    view.addSubview(tableViewWeather)
+    tableViewWeather.translatesAutoresizingMaskIntoConstraints = false
     
+    wnowView = UIView()
+    view.addSubview(wnowView)
+    wnowView.translatesAutoresizingMaskIntoConstraints = false
+    
+    weatherImg = UIImageView()
+    wnowView.addSubview(weatherImg)
+    weatherImg.translatesAutoresizingMaskIntoConstraints = false
+    
+    weathrSwitch = SWSegmentedControl(items: ["C", "F"])
+    weathrSwitch.addTarget(self, action: #selector(WeatherCityViewController.switchIsChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+    view.addSubview(weathrSwitch)
+    weathrSwitch.translatesAutoresizingMaskIntoConstraints = false
+    
+    nameCityLabel = UILabel()
+    nameCityLabel.textColor = UIColor.mainTextColor()
+    nameCityLabel.numberOfLines = 2
+    nameCityLabel.font = UIFont.HelTextFont(14)
+    wnowView.addSubview(nameCityLabel)
+    nameCityLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    tempLabel = UILabel()
+    tempLabel.textColor = UIColor.onBlackTextColor()
+    tempLabel.font =  UIFont.HelTextFont(14)
+    wnowView.addSubview(tempLabel)
+    tempLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    dayLabel = UILabel()
+    dayLabel.text = "Day"
+    dayLabel.textColor = UIColor.onBlackTextColor()
+    dayLabel.font =   UIFont.HelTextFont(12)
+    view.addSubview(dayLabel)
+    dayLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    myComboBox = SRKComboBox()
+    myComboBox.delegate = self
+    myComboBox.text = arrayForComboBox[0]
+    myComboBox.setBorder()
+    myComboBox.textColor = UIColor.onBlackTextColor()
+    myComboBox.textAlignment =  NSTextAlignment.Center
+    view.addSubview(myComboBox)
+    myComboBox.translatesAutoresizingMaskIntoConstraints = false
+  
+    view.backgroundColor =  UIColor.backGroundColor()
+    
+    setLayout()
     }
     
     func pressed(sender: UIButton) {
@@ -70,62 +112,38 @@ class WeatherCityViewController:  UIViewController{
     
     override func viewWillAppear(animated: Bool) {
             super.viewWillAppear(true)
-  
         getWeatherNow.getWeatherCity(cityId, lat: lat, lon: lon)
         setupObserversNow()
         reloadData()
-            
      }
-    
+   
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        
+        let con: CGFloat = setConstOrientation()
+        
+        print(con)
+        self.constNavBar.constant = con
+        self.view.layoutIfNeeded()
 
-    func setViewElements () {
-        
-        weathrSwitch = SWSegmentedControl(items: ["C", "F"])
-        myComboBox.setBorder("#f1c40f")
-        myComboBox.textColor = UIColor.whiteColor()
-        myComboBox.textAlignment =  NSTextAlignment.Center
-        tableViewWeather.backgroundColor = UIColor.blackColor()
-        tableViewWeather.separatorColor = UIColor.yellowColor()
-        dayLabel.textColor = UIColor.whiteColor()
-        tempLabel.textColor = UIColor.whiteColor()
-        view.backgroundColor = UIColor.blackColor()
-        nameCityLabel.textColor = UIColor.blueColor()
-        nameCityLabel.numberOfLines = 2
-        nameCityLabel.font = UIFont (name: "Helvetica Neue", size: 14)
-        tempLabel.font = UIFont (name: "Helvetica Neue", size: 14)
-        dayLabel.font =  UIFont (name: "Helvetica Neue", size: 12)        
-        dayLabel.text = "Day"
-        myComboBox.text = arrayForComboBox[0]
-        
-        navigationBar = UINavigationBar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44)) // Offset by 20 pixels vertically to take
-        navigationBar.backgroundColor = UIColor.grayColor()
-        let navigationItem = UINavigationItem()
-        navigationBar.items = [navigationItem]
-        
-        wnowView.addSubview(weatherImg)
-        wnowView.addSubview(nameCityLabel)
-        wnowView.addSubview(tempLabel)
-        view.addSubview(dayLabel)
-        view.addSubview(myComboBox)
-        view.addSubview(weathrSwitch)
-        view.addSubview(wnowView)
-        view.addSubview(navigationBar)
-        view.addSubview(tableViewWeather)
-        
-        tableViewWeather.translatesAutoresizingMaskIntoConstraints = false
-        weatherImg.translatesAutoresizingMaskIntoConstraints = false
-        nameCityLabel.translatesAutoresizingMaskIntoConstraints = false
-        tempLabel.translatesAutoresizingMaskIntoConstraints = false
-        myComboBox.translatesAutoresizingMaskIntoConstraints = false
-        weathrSwitch.translatesAutoresizingMaskIntoConstraints = false
-        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        dayLabel.translatesAutoresizingMaskIntoConstraints = false
-        wnowView.translatesAutoresizingMaskIntoConstraints = false
     }
     
+    func setConstOrientation() -> CGFloat {
+        var con: CGFloat = 0
+        
+        //view.traitCollection.horizontalSizeClass = UIUserInterfaceSizeClass.Compact
+
+        if UIDevice.currentDevice().orientation.isPortrait {
+            con = 75.0
+        }
+        if UIDevice.currentDevice().orientation.isLandscape {
+            con = 45.0
+        }
+        
+        return con
+    }
     
    func setLayout() {
-    
+
     
     NSLayoutConstraint(item: navigationBar,
                        attribute: NSLayoutAttribute.TopMargin,
@@ -134,14 +152,15 @@ class WeatherCityViewController:  UIViewController{
                        attribute: NSLayoutAttribute.TopMargin,
                        multiplier: 1.0,
                        constant: 10).active = true
-   
-    NSLayoutConstraint(item: navigationBar,
+    
+    constNavBar = NSLayoutConstraint(item: navigationBar,
                        attribute: NSLayoutAttribute.Height,
                        relatedBy: NSLayoutRelation.Equal,
                        toItem: nil,
                        attribute: NSLayoutAttribute.NotAnAttribute,
                        multiplier: 1.0,
-                       constant: 70).active = true
+                       constant: setConstOrientation())
+    view.addConstraint(constNavBar)
     
     NSLayoutConstraint(item: wnowView,
                        attribute: NSLayoutAttribute.TopMargin,
@@ -353,7 +372,7 @@ class WeatherCityViewController:  UIViewController{
         }
         arrW = arrWeather
         
-        setDataWeatherToday()
+        tableViewWeather.reloadData()
          
      }
     
@@ -377,8 +396,6 @@ class WeatherCityViewController:  UIViewController{
             let resource = Resource(downloadURL: URL, cacheKey: arrWNow.imgW)
              weatherImg.kf_setImageWithResource(resource)
         }
-        
-          tableViewWeather.reloadData()
      }
     
   
@@ -400,57 +417,6 @@ class WeatherCityViewController:  UIViewController{
 }
 
 
-// MARK: - UITextField
-extension UITextField  {
-    func setBorder(color: String) {
-    
-        self.borderStyle = UITextBorderStyle.None;
-        let width = CGFloat(1.0)
-        self.layer.borderColor =  UIColor(hexString: color).CGColor
-        self.layer.borderWidth = width
-        self.layer.cornerRadius = 8.0
-        self.layer.masksToBounds = true
-    }
-    
-}
-// MARK: - SWSegmentedControl
-extension SWSegmentedControl  {
-    func setBackColor(color: String) {
-        self.backgroundColor = UIColor(hexString: color)
-    }
-    func setTinColor(color: String) {
-        self.tintColor = UIColor(hexString: color)
-    }
-    
-}
-// MARK: - UITextField
-extension UIColor {
-    // Creates a UIColor from a Hex string.
-    convenience init(hexString: String) {
-        var cString: String = hexString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).uppercaseString
-        
-        if (cString.hasPrefix("#")) {
-            cString = (cString as NSString).substringFromIndex(1)
-        }
-        
-        if (cString.characters.count != 6) {
-            self.init(white: 0.5, alpha: 1.0)
-        } else {
-            let rString: String = (cString as NSString).substringToIndex(2)
-            let gString = ((cString as NSString).substringFromIndex(2) as NSString).substringToIndex(2)
-            let bString = ((cString as NSString).substringFromIndex(4) as NSString).substringToIndex(2)
-            
-            var r: CUnsignedInt = 0, g: CUnsignedInt = 0, b: CUnsignedInt = 0;
-            NSScanner(string: rString).scanHexInt(&r)
-            NSScanner(string: gString).scanHexInt(&g)
-            NSScanner(string: bString).scanHexInt(&b)
-            
-            self.init(red: CGFloat(r) / CGFloat(255.0), green: CGFloat(g) / CGFloat(255.0), blue: CGFloat(b) / CGFloat(255.0), alpha: CGFloat(1))
-        }
-    }
-    
-}
-
 // MARK: - UITableViewDelegate
 extension WeatherCityViewController: UITableViewDataSource {
 
@@ -465,9 +431,9 @@ extension WeatherCityViewController: UITableViewDataSource {
         let weatherDay = arrW[indexPath.row]        
         
         if (indexPath.row%2 == 0) {
-            cell.backgroundColor = UIColor.grayColor()
+            cell.backgroundColor = UIColor.oneCellColor()
         } else {
-            cell.backgroundColor = UIColor.whiteColor()}
+            cell.backgroundColor = UIColor.twoCellColor()}
         
         cell.selectionStyle = .None
         cell.dateLabel.text =  weatherDay.date;
@@ -548,11 +514,11 @@ extension WeatherCityViewController: SRKComboBoxDelegate {
     }
     
     func comboBoxTintColor(textField: SRKComboBox) -> UIColor {
-        return UIColor.blackColor()
+        return UIColor.twoCellColor()
     }
     
     func comboBoxToolbarColor(textField:SRKComboBox) -> UIColor {
-        return UIColor.whiteColor()
+        return UIColor.oneCellColor()
     }
     
     func comboBoxDidTappedCancel(textField:SRKComboBox) {
