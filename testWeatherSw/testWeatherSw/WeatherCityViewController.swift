@@ -121,21 +121,13 @@ class WeatherCityViewController:  UIViewController{
 
     override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-       // if  view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.Compact {
-        if UIDevice.currentDevice().orientation.isLandscape  {
-            NSLayoutConstraint.deactivateConstraints(compactConstraints) //75
-            NSLayoutConstraint.activateConstraints(regularConstraints)   //45
-            
-        } else {
-            
-            NSLayoutConstraint.deactivateConstraints(regularConstraints)
-            NSLayoutConstraint.activateConstraints(compactConstraints)
-        }
+        NSLayoutConstraint.activateConstraints(compactConstraints)
         
     }
     
    func setLayout() {
     
+   let topBar = self.topLayoutGuide
     NSLayoutConstraint(item: navigationBar,
                        attribute: NSLayoutAttribute.TopMargin,
                        relatedBy: NSLayoutRelation.Equal,
@@ -147,17 +139,10 @@ class WeatherCityViewController:  UIViewController{
     compactConstraints.append( NSLayoutConstraint(item: navigationBar,
                        attribute: NSLayoutAttribute.Height,
                        relatedBy: NSLayoutRelation.Equal,
-                       toItem: nil,
-                       attribute: NSLayoutAttribute.NotAnAttribute,
-                       multiplier: 1.0,
-                       constant: 75))
-    regularConstraints.append( NSLayoutConstraint(item: navigationBar,
+                       toItem: topBar,
                        attribute: NSLayoutAttribute.Height,
-                       relatedBy: NSLayoutRelation.Equal,
-                       toItem: nil,
-                       attribute: NSLayoutAttribute.NotAnAttribute,
                        multiplier: 1.0,
-                       constant: 75))
+                       constant: 0))
     
     NSLayoutConstraint(item: wnowView,
                        attribute: NSLayoutAttribute.TopMargin,

@@ -122,22 +122,11 @@ class CitySViewController: UIViewController{
     
   override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-    
-    if UIDevice.currentDevice().orientation.isLandscape  {
-        NSLayoutConstraint.deactivateConstraints(compactConstraints) //75
-        NSLayoutConstraint.activateConstraints(regularConstraints)   //45
-        
-    } else {
-        
-        NSLayoutConstraint.deactivateConstraints(regularConstraints)
-        NSLayoutConstraint.activateConstraints(compactConstraints)
-    }
-    
-    
+     NSLayoutConstraint.activateConstraints(compactConstraints)
     }
       
  func setupLayout() {
-       // let topBar = self.topLayoutGuide
+        let topBar = self.topLayoutGuide
         let  viewsDict = [
             "searchBar" : searchBar,
             "locationButton" : locationButton,
@@ -148,36 +137,21 @@ class CitySViewController: UIViewController{
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "H:|-0-[tableView]-0-|", options: [], metrics: nil, views: viewsDict ))
         
-//Compact
+
         compactConstraints.append(NSLayoutConstraint(item: searchBar,
                            attribute: NSLayoutAttribute.TopMargin,
                            relatedBy: NSLayoutRelation.LessThanOrEqual,
-                           toItem: view,
-                           attribute: NSLayoutAttribute.TopMargin,
+                           toItem: topBar,
+                           attribute: NSLayoutAttribute.BottomMargin,
                            multiplier: 1.0,
-                           constant: 75))
+                           constant: 10))
         compactConstraints.append( NSLayoutConstraint(item: locationButton,
                            attribute: NSLayoutAttribute.TopMargin,
                            relatedBy: NSLayoutRelation.Equal,
-                           toItem: view,
-                           attribute: NSLayoutAttribute.TopMargin,
+                           toItem: topBar,
+                           attribute: NSLayoutAttribute.BottomMargin,
                            multiplier: 1.0,
-                           constant: 75))
-//Regular
-       regularConstraints.append(NSLayoutConstraint(item: searchBar,
-                           attribute: NSLayoutAttribute.TopMargin,
-                           relatedBy: NSLayoutRelation.LessThanOrEqual,
-                           toItem: view,
-                           attribute: NSLayoutAttribute.TopMargin,
-                           multiplier: 1.0,
-                           constant: 45))
-       regularConstraints.append(NSLayoutConstraint(item: locationButton,
-                           attribute: NSLayoutAttribute.TopMargin,
-                           relatedBy: NSLayoutRelation.LessThanOrEqual,
-                           toItem: view,
-                           attribute: NSLayoutAttribute.TopMargin,
-                           multiplier: 1.0,
-                           constant: 45))
+                           constant: 10))
         
         NSLayoutConstraint(item: tableView,
                            attribute: NSLayoutAttribute.TopMargin,
