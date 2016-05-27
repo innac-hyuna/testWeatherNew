@@ -121,6 +121,7 @@ class WeatherCityViewController:  UIViewController{
 
     override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
+        //if traitCollection.horizontalSizeClass = UIUserInterfaceSizeClass.Compact
         NSLayoutConstraint.activateConstraints(compactConstraints)
         
     }
@@ -461,7 +462,7 @@ extension WeatherCityViewController: UITextFieldDelegate {
 // MARK: - SRKComboBoxDelegate
 extension WeatherCityViewController: SRKComboBoxDelegate {
     
-    func comboBox(textField: SRKComboBox, didSelectRow row:Int) {
+    func comboBox(textField: SRKComboBox, didSelectRow row: Int) {
         if textField == self.myComboBox {
             self.myComboBox.text = self.arrayForComboBox[row]
         }
@@ -475,7 +476,7 @@ extension WeatherCityViewController: SRKComboBoxDelegate {
         }
     }
     
-    func comboBox(textField:SRKComboBox, textForRow row:Int) -> String {
+    func comboBox(textField:SRKComboBox, textForRow row: Int) -> String {
         if textField == self.myComboBox {
             return self.arrayForComboBox[row]
         } else {

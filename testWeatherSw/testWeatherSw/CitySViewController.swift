@@ -123,10 +123,13 @@ class CitySViewController: UIViewController{
   override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
      NSLayoutConstraint.activateConstraints(compactConstraints)
+    
     }
-      
+    
  func setupLayout() {
+    
         let topBar = self.topLayoutGuide
+    
         let  viewsDict = [
             "searchBar" : searchBar,
             "locationButton" : locationButton,
@@ -135,8 +138,7 @@ class CitySViewController: UIViewController{
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "H:|-0-[searchBar]-[locationButton(44)]-0-|", options: [], metrics: nil, views: viewsDict ))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-0-[tableView]-0-|", options: [], metrics: nil, views: viewsDict ))
-        
+            "H:|-0-[tableView]-0-|", options: [], metrics: nil, views: viewsDict ))        
 
         compactConstraints.append(NSLayoutConstraint(item: searchBar,
                            attribute: NSLayoutAttribute.TopMargin,
@@ -197,7 +199,7 @@ extension CitySViewController: UITableViewDataSource {
         } else {
             cell.backgroundColor = UIColor.twoCellColor()}
        
-        if(searchActive){
+        if(searchActive && filteredArray.count > 0){
             cell.cityLabel.text = filteredArray[indexPath.row].name;
             cell.countryLabel.text = filteredArray[indexPath.row].country;
             cell.idLabel.text = String(filteredArray[indexPath.row].id);
@@ -264,6 +266,7 @@ extension CitySViewController: UISearchBarDelegate {
         if searchText != "" {
           filteredArray.removeAll()
           filteredArray = city.filterCity(arrCity, strCity: searchText)
+          searchActive = true;
         } else {
           searchActive = false;
         }
