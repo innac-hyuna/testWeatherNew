@@ -34,6 +34,8 @@ class WeatherCityViewController:  UIViewController{
     var lon = 0.00
     var myComboBox: SRKComboBox!
     let arrayForComboBox = ["1","5","7","10","16"]
+    var regularConstraints = [NSLayoutConstraint]()
+    var compactConstraints = [NSLayoutConstraint]()
     
     
    override func viewDidLoad() {
@@ -116,34 +118,23 @@ class WeatherCityViewController:  UIViewController{
         setupObserversNow()
         reloadData()
      }
-   
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        
-        let con: CGFloat = setConstOrientation()
-        
-        print(con)
-        self.constNavBar.constant = con
-        self.view.layoutIfNeeded()
 
-    }
-    
-    func setConstOrientation() -> CGFloat {
-        var con: CGFloat = 0
-        
-        //view.traitCollection.horizontalSizeClass = UIUserInterfaceSizeClass.Compact
-
-        if UIDevice.currentDevice().orientation.isPortrait {
-            con = 75.0
-        }
-        if UIDevice.currentDevice().orientation.isLandscape {
-            con = 45.0
+    override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+       // if  view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.Compact {
+        if UIDevice.currentDevice().orientation.isLandscape  {
+            NSLayoutConstraint.deactivateConstraints(compactConstraints) //75
+            NSLayoutConstraint.activateConstraints(regularConstraints)   //45
+            
+        } else {
+            
+            NSLayoutConstraint.deactivateConstraints(regularConstraints)
+            NSLayoutConstraint.activateConstraints(compactConstraints)
         }
         
-        return con
     }
     
    func setLayout() {
-
     
     NSLayoutConstraint(item: navigationBar,
                        attribute: NSLayoutAttribute.TopMargin,
@@ -153,14 +144,20 @@ class WeatherCityViewController:  UIViewController{
                        multiplier: 1.0,
                        constant: 10).active = true
     
-    constNavBar = NSLayoutConstraint(item: navigationBar,
+    compactConstraints.append( NSLayoutConstraint(item: navigationBar,
                        attribute: NSLayoutAttribute.Height,
                        relatedBy: NSLayoutRelation.Equal,
                        toItem: nil,
                        attribute: NSLayoutAttribute.NotAnAttribute,
                        multiplier: 1.0,
-                       constant: setConstOrientation())
-    view.addConstraint(constNavBar)
+                       constant: 75))
+    regularConstraints.append( NSLayoutConstraint(item: navigationBar,
+                       attribute: NSLayoutAttribute.Height,
+                       relatedBy: NSLayoutRelation.Equal,
+                       toItem: nil,
+                       attribute: NSLayoutAttribute.NotAnAttribute,
+                       multiplier: 1.0,
+                       constant: 75))
     
     NSLayoutConstraint(item: wnowView,
                        attribute: NSLayoutAttribute.TopMargin,

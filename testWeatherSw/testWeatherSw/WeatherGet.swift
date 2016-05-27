@@ -76,7 +76,7 @@ class WeatherGet {
                 weatherD.windS = windS
             }
             if let date = NSDate(jsonDate: "/Date" + String(subJson["dt"].int)+"/") {
-                weatherD.date = date.dateStringWithFormat("yyyy-MM-dd HH:mm")
+                weatherD.date = date.dateStringWithFormat("yyyy-MM-dd")
             }
             if let weatherMain = subJson["weather"][0]["main"].string {
                 weatherD.main = weatherMain

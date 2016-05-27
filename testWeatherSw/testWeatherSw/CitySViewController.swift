@@ -19,18 +19,19 @@ class CitySViewController: UIViewController{
     var buttonHistory: UIButton!
     var barItemHistory: UINavigationItem!
     var navigationBar: UINavigationBar!
-    var constNavBar:  NSLayoutConstraint!
-    var constLoc:  NSLayoutConstraint!
     var city: CityGet!
     var arrCity: [CityGet] = []
     var filteredArray: [CityGet] = []
     var searchActive: Bool = false
     var locCoordination: (Double, Double) = (0.0, 0.0)
     var locationManager: CLLocationManager!
+    var regularConstraints = [NSLayoutConstraint]()
+    var compactConstraints = [NSLayoutConstraint]()
 
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         buttonHistory = UIButton(type: .Custom) as UIButton
         buttonHistory.setImage(UIImage(named: "History.png"), forState: .Normal)
         buttonHistory.frame = CGRectMake(0, 0, 25, 25)
@@ -119,66 +120,64 @@ class CitySViewController: UIViewController{
         }
     }
     
-   override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-    let con: CGFloat = setConstOrientation()
-    print(con)
-    self.constNavBar.constant = con
-    self.constLoc.constant = con
-    self.view.layoutIfNeeded()
+  override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+    
+    if UIDevice.currentDevice().orientation.isLandscape  {
+        NSLayoutConstraint.deactivateConstraints(compactConstraints) //75
+        NSLayoutConstraint.activateConstraints(regularConstraints)   //45
+        
+    } else {
+        
+        NSLayoutConstraint.deactivateConstraints(regularConstraints)
+        NSLayoutConstraint.activateConstraints(compactConstraints)
     }
     
-    func setConstOrientation() -> CGFloat {
-        var con: CGFloat = 0
-        
-        if UIDevice.currentDevice().orientation.isPortrait {
-            con = 75.0
-        }
-        if UIDevice.currentDevice().orientation.isLandscape {
-            con = 45.0
-        }
-        
-        return con
+    
     }
       
-    func setupLayout() {
-        
-        
+ func setupLayout() {
+       // let topBar = self.topLayoutGuide
         let  viewsDict = [
             "searchBar" : searchBar,
             "locationButton" : locationButton,
             "tableView" : tableView]
-        
+  
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-0-[searchBar]-[locationButton(44)]-0-|", options: [], metrics: nil, views: viewsDict))
+            "H:|-0-[searchBar]-[locationButton(44)]-0-|", options: [], metrics: nil, views: viewsDict ))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-0-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))       
+            "H:|-0-[tableView]-0-|", options: [], metrics: nil, views: viewsDict ))
         
-
-        constNavBar = NSLayoutConstraint(item: searchBar,
+//Compact
+        compactConstraints.append(NSLayoutConstraint(item: searchBar,
                            attribute: NSLayoutAttribute.TopMargin,
                            relatedBy: NSLayoutRelation.LessThanOrEqual,
                            toItem: view,
                            attribute: NSLayoutAttribute.TopMargin,
                            multiplier: 1.0,
-                           constant: setConstOrientation())
-        view.addConstraint(constNavBar)
-        
-        constLoc = NSLayoutConstraint(item: locationButton,
+                           constant: 75))
+        compactConstraints.append( NSLayoutConstraint(item: locationButton,
                            attribute: NSLayoutAttribute.TopMargin,
                            relatedBy: NSLayoutRelation.Equal,
                            toItem: view,
                            attribute: NSLayoutAttribute.TopMargin,
                            multiplier: 1.0,
-                           constant: setConstOrientation())
-        view.addConstraint(constLoc)
-        
-        NSLayoutConstraint(item: locationButton,
-                                      attribute: NSLayoutAttribute.Width,
-                                      relatedBy: NSLayoutRelation.Equal,
-                                      toItem: nil,
-                                      attribute: NSLayoutAttribute.NotAnAttribute,
-                                      multiplier: 1.0,
-                                      constant: 44).active = true
+                           constant: 75))
+//Regular
+       regularConstraints.append(NSLayoutConstraint(item: searchBar,
+                           attribute: NSLayoutAttribute.TopMargin,
+                           relatedBy: NSLayoutRelation.LessThanOrEqual,
+                           toItem: view,
+                           attribute: NSLayoutAttribute.TopMargin,
+                           multiplier: 1.0,
+                           constant: 45))
+       regularConstraints.append(NSLayoutConstraint(item: locationButton,
+                           attribute: NSLayoutAttribute.TopMargin,
+                           relatedBy: NSLayoutRelation.LessThanOrEqual,
+                           toItem: view,
+                           attribute: NSLayoutAttribute.TopMargin,
+                           multiplier: 1.0,
+                           constant: 45))
         
         NSLayoutConstraint(item: tableView,
                            attribute: NSLayoutAttribute.TopMargin,
@@ -194,7 +193,6 @@ class CitySViewController: UIViewController{
                            attribute: NSLayoutAttribute.BottomMargin,
                            multiplier: 1.0,
                            constant: 0).active = true
-        
     }
     
     func pressed(sender: UIButton) {
