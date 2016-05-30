@@ -120,7 +120,7 @@ class CitySViewController: UIViewController{
         }
     }
     
-  override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
+ override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
      NSLayoutConstraint.activateConstraints(compactConstraints)
     
@@ -215,7 +215,7 @@ extension CitySViewController: UITableViewDataSource {
             
           let MyDetView: WeatherCityViewController = WeatherCityViewController()
                  
-          if(searchActive){
+          if(searchActive) {
               MyDetView.cityId = filteredArray[indexPath.row].id
           } else {
               MyDetView.cityId = arrCity[indexPath.row].id
@@ -232,10 +232,8 @@ extension CitySViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension CitySViewController: UITableViewDelegate {
     
-   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-       
+   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {       
         return 50
-    
     }
 
 }
@@ -244,21 +242,25 @@ extension CitySViewController: UITableViewDelegate {
 extension CitySViewController: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-         searchActive = true;
+        if searchBar.text == "" {
+            searchActive = false
+            self.tableView.reloadData()}
+        else {
+            searchActive = true
+        }
     }
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-         searchActive = false;
+        
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-         searchActive = false;
+         searchActive = false
          self.tableView.reloadData()
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         self.view.endEditing(true)
-        searchActive = false;
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -266,9 +268,9 @@ extension CitySViewController: UISearchBarDelegate {
         if searchText != "" {
           filteredArray.removeAll()
           filteredArray = city.filterCity(arrCity, strCity: searchText)
-          searchActive = true;
+          searchActive = true
         } else {
-          searchActive = false;
+          searchActive = false
         }
         
         self.tableView.reloadData()
