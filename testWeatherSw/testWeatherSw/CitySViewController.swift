@@ -32,15 +32,15 @@ class CitySViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        buttonHistory = UIButton(type: .Custom) as UIButton
-        buttonHistory.setImage(UIImage(named: "History.png"), forState: .Normal)
-        buttonHistory.frame = CGRectMake(0, 0, 25, 25)
-        buttonHistory.addTarget(self, action: #selector(CitySViewController.historyView(_:)), forControlEvents: .TouchUpInside)
+        buttonHistory = UIButton(type: .custom) as UIButton
+        buttonHistory.setImage(UIImage(named: "History.png"), for: UIControlState())
+        buttonHistory.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        buttonHistory.addTarget(self, action: #selector(CitySViewController.historyView(_:)), for: .touchUpInside)
         
         let buttonItemHistory = UIBarButtonItem(customView: buttonHistory)
-        buttonItemHistory.enabled = false
+        buttonItemHistory.isEnabled = false
         barItemHistory = self.navigationItem
-        barItemHistory.setRightBarButtonItem(buttonItemHistory, animated: true)
+        barItemHistory.setRightBarButton(buttonItemHistory, animated: true)
         
         locationManager = CLLocationManager()
         locationManager.requestAlwaysAuthorization()
@@ -50,10 +50,10 @@ class CitySViewController: UIViewController{
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
-        locationButton = UIButton(type: UIButtonType.Custom) as UIButton
-        locationButton.setImage(UIImage(named: "Location1.png"), forState: UIControlState.Normal)
-        locationButton.setImage(UIImage(named: "Location.png"), forState: UIControlState.Selected)
-        locationButton.addTarget(self, action: #selector(CitySViewController.locationGet(_:)), forControlEvents: .TouchUpInside)
+        locationButton = UIButton(type: UIButtonType.custom) as UIButton
+        locationButton.setImage(UIImage(named: "Location1.png"), for: UIControlState())
+        locationButton.setImage(UIImage(named: "Location.png"), for: UIControlState.selected)
+        locationButton.addTarget(self, action: #selector(CitySViewController.locationGet(_:)), for: .touchUpInside)
         view.addSubview(locationButton)
         locationButton.translatesAutoresizingMaskIntoConstraints = false
      
@@ -61,7 +61,7 @@ class CitySViewController: UIViewController{
         tableView.separatorColor = UIColor.sepColor()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerClass(CityTableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(CityTableViewCell.self, forCellReuseIdentifier: "Cell")
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -77,7 +77,7 @@ class CitySViewController: UIViewController{
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if arrCity.count == 0 {
@@ -90,7 +90,7 @@ class CitySViewController: UIViewController{
           
     }
     
-    func locationGet(sender:UIButton!) {
+    func locationGet(_ sender:UIButton!) {
         
       let MyDetView: WeatherCityViewController = WeatherCityViewController()
        MyDetView.lat = locCoordination.0
@@ -99,30 +99,30 @@ class CitySViewController: UIViewController{
         
     }
     
-    func historyView(sender: UIBarButtonItem) {
+    func historyView(_ sender: UIBarButtonItem) {
         let HistoryView: HistoryViewController = HistoryViewController()
         navigationController?.pushViewController(HistoryView, animated: true)
     }
     
     func loadData() {
         
-        let progressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
-        progressHUD.labelText = "Loading..."
+        let progressHUD = MBProgressHUD.showAdded(to: view, animated: true)
+        progressHUD?.labelText = "Loading..."
 
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {
             self.arrCity = self.city.getCityArray()
-            dispatch_async(dispatch_get_main_queue()) {
-                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                self.buttonHistory.enabled = true
+            DispatchQueue.main.async {
+                MBProgressHUD.hideAllHUDs(for: self.view, animated: true)
+                self.buttonHistory.isEnabled = true
                 self.view.endEditing(true)
                 self.tableView.reloadData()
             }
         }
     }
     
- override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
+ override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-     NSLayoutConstraint.activateConstraints(compactConstraints)
+     NSLayoutConstraint.activate(compactConstraints)
     
     }
     
@@ -133,45 +133,45 @@ class CitySViewController: UIViewController{
         let  viewsDict = [
             "searchBar" : searchBar,
             "locationButton" : locationButton,
-            "tableView" : tableView]
+            "tableView" : tableView] as [String : Any]
   
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-0-[searchBar]-[locationButton(44)]-0-|", options: [], metrics: nil, views: viewsDict ))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-0-[tableView]-0-|", options: [], metrics: nil, views: viewsDict ))        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-0-[searchBar]-[locationButton(44)]-0-|", options: [], metrics: nil, views: viewsDict ))
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-0-[tableView]-0-|", options: [], metrics: nil, views: viewsDict ))        
 
         compactConstraints.append(NSLayoutConstraint(item: searchBar,
-                           attribute: NSLayoutAttribute.TopMargin,
-                           relatedBy: NSLayoutRelation.LessThanOrEqual,
+                           attribute: NSLayoutAttribute.topMargin,
+                           relatedBy: NSLayoutRelation.lessThanOrEqual,
                            toItem: topBar,
-                           attribute: NSLayoutAttribute.BottomMargin,
+                           attribute: NSLayoutAttribute.bottomMargin,
                            multiplier: 1.0,
                            constant: 10))
         compactConstraints.append( NSLayoutConstraint(item: locationButton,
-                           attribute: NSLayoutAttribute.TopMargin,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.topMargin,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: topBar,
-                           attribute: NSLayoutAttribute.BottomMargin,
+                           attribute: NSLayoutAttribute.bottomMargin,
                            multiplier: 1.0,
                            constant: 10))
         
         NSLayoutConstraint(item: tableView,
-                           attribute: NSLayoutAttribute.TopMargin,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.topMargin,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: searchBar,
-                           attribute: NSLayoutAttribute.BottomMargin,
+                           attribute: NSLayoutAttribute.bottomMargin,
                            multiplier: 1.0,
-                           constant: 20).active = true
+                           constant: 20).isActive = true
         NSLayoutConstraint(item: tableView,
-                           attribute: NSLayoutAttribute.BottomMargin,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.bottomMargin,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: view,
-                           attribute: NSLayoutAttribute.BottomMargin,
+                           attribute: NSLayoutAttribute.bottomMargin,
                            multiplier: 1.0,
-                           constant: 0).active = true
+                           constant: 0).isActive = true
     }
     
-    func pressed(sender: UIButton) {
+    func pressed(_ sender: UIButton) {
         
         let newVC = WeatherCityViewController()
         navigationController?.pushViewController(newVC, animated: true)
@@ -182,48 +182,48 @@ class CitySViewController: UIViewController{
     // MARK: - UITableViewDataSource
 extension CitySViewController: UITableViewDataSource {
     
-      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(searchActive) {
             return filteredArray.count
         }
         return arrCity.count
       }
     
-      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-        let cell:CityTableViewCell  = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CityTableViewCell
+        let cell:CityTableViewCell  = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CityTableViewCell
         
-        if (indexPath.row%2 == 0) {
+        if ((indexPath as NSIndexPath).row%2 == 0) {
             cell.backgroundColor = UIColor.oneCellColor()
         } else {
             cell.backgroundColor = UIColor.twoCellColor()}
        
         if(searchActive && filteredArray.count > 0){
-            cell.cityLabel.text = filteredArray[indexPath.row].name;
-            cell.countryLabel.text = filteredArray[indexPath.row].country;
-            cell.idLabel.text = String(filteredArray[indexPath.row].id);
+            cell.cityLabel.text = filteredArray[(indexPath as NSIndexPath).row].name;
+            cell.countryLabel.text = filteredArray[(indexPath as NSIndexPath).row].country;
+            cell.idLabel.text = String(filteredArray[(indexPath as NSIndexPath).row].id);
         } else {
-            cell.cityLabel.text = arrCity[indexPath.row].name;
-            cell.countryLabel.text = arrCity[indexPath.row].country;
-            cell.idLabel.text = String(arrCity[indexPath.row].id);
+            cell.cityLabel.text = arrCity[(indexPath as NSIndexPath).row].name;
+            cell.countryLabel.text = arrCity[(indexPath as NSIndexPath).row].country;
+            cell.idLabel.text = String(arrCity[(indexPath as NSIndexPath).row].id);
         }
         return cell
       }
         
-      func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             
           let MyDetView: WeatherCityViewController = WeatherCityViewController()
                  
           if(searchActive) {
-              MyDetView.cityId = filteredArray[indexPath.row].id
+              MyDetView.cityId = filteredArray[(indexPath as NSIndexPath).row].id
           } else {
-              MyDetView.cityId = arrCity[indexPath.row].id
+              MyDetView.cityId = arrCity[(indexPath as NSIndexPath).row].id
           }
         
         navigationController?.pushViewController(MyDetView, animated: true)
         let his = historyManadger()
-        his.saveHistory(searchActive ? filteredArray : arrCity, indRow: indexPath.row)        
+        his.saveHistory(searchActive ? filteredArray : arrCity, indRow: (indexPath as NSIndexPath).row)        
         
     }
 
@@ -232,7 +232,7 @@ extension CitySViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension CitySViewController: UITableViewDelegate {
     
-   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {       
+   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {       
         return 50
     }
 
@@ -241,7 +241,7 @@ extension CitySViewController: UITableViewDelegate {
 // MARK: - UISearchBarDelegate
 extension CitySViewController: UISearchBarDelegate {
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         if searchBar.text == "" {
             searchActive = false
             self.tableView.reloadData()}
@@ -250,20 +250,20 @@ extension CitySViewController: UISearchBarDelegate {
         }
     }
     
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
          searchActive = false
          self.tableView.reloadData()
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.view.endEditing(true)
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     
         if searchText != "" {
           filteredArray.removeAll()
@@ -281,7 +281,7 @@ extension CitySViewController: UISearchBarDelegate {
 // MARK: - CLLocationManagerDelegate
 extension CitySViewController: CLLocationManagerDelegate {
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         print("locations = \(locValue.latitude) \(locValue.longitude)")
         locCoordination = (locValue.latitude, locValue.longitude)

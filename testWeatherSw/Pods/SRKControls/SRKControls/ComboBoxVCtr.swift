@@ -10,31 +10,31 @@ import UIKit
 
 @objc public protocol SRKComboBoxDelegate : NSObjectProtocol {
 	
-	func comboBox(textField:SRKComboBox, didSelectRow row:Int)
-	func comboBoxNumberOfRows(textField:SRKComboBox) -> Int
-	func comboBox(textField:SRKComboBox, textForRow row:Int) -> String
-	func comboBoxPresentingViewController(textField:SRKComboBox) -> UIViewController
-	func comboBoxRectFromWhereToPresent(textField:SRKComboBox) -> CGRect
+	func comboBox(_ textField:SRKComboBox, didSelectRow row:Int)
+	func comboBoxNumberOfRows(_ textField:SRKComboBox) -> Int
+	func comboBox(_ textField:SRKComboBox, textForRow row:Int) -> String
+	func comboBoxPresentingViewController(_ textField:SRKComboBox) -> UIViewController
+	func comboBoxRectFromWhereToPresent(_ textField:SRKComboBox) -> CGRect
 	
-	func comboBoxFromBarButton(textField:SRKComboBox) -> UIBarButtonItem?
+	func comboBoxFromBarButton(_ textField:SRKComboBox) -> UIBarButtonItem?
 	
-	func comboBoxTintColor(textField:SRKComboBox) -> UIColor
-	func comboBoxToolbarColor(textField:SRKComboBox) -> UIColor
+	func comboBoxTintColor(_ textField:SRKComboBox) -> UIColor
+	func comboBoxToolbarColor(_ textField:SRKComboBox) -> UIColor
 	
-	func comboBoxDidTappedCancel(textField:SRKComboBox)
-	func comboBoxDidTappedDone(textField:SRKComboBox)
+	func comboBoxDidTappedCancel(_ textField:SRKComboBox)
+	func comboBoxDidTappedDone(_ textField:SRKComboBox)
 }
 
-@objc public class SRKComboBox: UITextField {
-	public weak var delegateForComboBox:SRKComboBoxDelegate?
+@objc open class SRKComboBox: UITextField {
+	open weak var delegateForComboBox:SRKComboBoxDelegate?
 	var objComboBoxVCtr: ComboBoxVCtr?
 	
-	public func showOptions() {
-		let podBundle = NSBundle(forClass: self.classForCoder)
-		if let bundleURL = podBundle.URLForResource("SRKControls", withExtension: "bundle") {
-			if let bundle = NSBundle(URL: bundleURL) {
+	open func showOptions() {
+		let podBundle = Bundle(for: self.classForCoder)
+		if let bundleURL = podBundle.url(forResource: "SRKControls", withExtension: "bundle") {
+			if let bundle = Bundle(url: bundleURL) {
 				self.objComboBoxVCtr = ComboBoxVCtr(nibName: "ComboBoxVCtr", bundle: bundle)
-				self.objComboBoxVCtr?.modalPresentationStyle = .Popover
+				self.objComboBoxVCtr?.modalPresentationStyle = .popover
 				self.objComboBoxVCtr?.popoverPresentationController?.delegate = self.objComboBoxVCtr
 				self.objComboBoxVCtr?.refSRKComboBox = self
 				if let btn = self.delegateForComboBox?.comboBoxFromBarButton(self) {
@@ -43,7 +43,7 @@ import UIKit
 					self.objComboBoxVCtr?.popoverPresentationController?.sourceView = self.delegateForComboBox?.comboBoxPresentingViewController(self).view
 					self.objComboBoxVCtr?.popoverPresentationController?.sourceRect = self.delegateForComboBox!.comboBoxRectFromWhereToPresent(self)
 				}
-				self.delegateForComboBox?.comboBoxPresentingViewController(self).presentViewController(self.objComboBoxVCtr!, animated: true, completion: nil)
+				self.delegateForComboBox?.comboBoxPresentingViewController(self).present(self.objComboBoxVCtr!, animated: true, completion: nil)
 			} else {
 				assertionFailure("Could not load the bundle")
 			}
@@ -53,15 +53,15 @@ import UIKit
 	}
 }
 
-@objc public class ComboBoxVCtr: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIPopoverPresentationControllerDelegate {
+@objc open class ComboBoxVCtr: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIPopoverPresentationControllerDelegate {
 
 	@IBOutlet weak var pickerView: UIPickerView!
 	@IBOutlet weak var toolBar: UIToolbar!
 	weak var refSRKComboBox:SRKComboBox?
 	
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
-		self.preferredContentSize = CGSizeMake(320, 260)
+		self.preferredContentSize = CGSize(width: 320, height: 260)
 		if let clr = self.refSRKComboBox?.delegateForComboBox?.comboBoxTintColor(self.refSRKComboBox!) {
 			self.toolBar.tintColor = clr
 		}
@@ -73,37 +73,37 @@ import UIKit
 		self.refSRKComboBox!.delegateForComboBox?.comboBox(self.refSRKComboBox!, didSelectRow: 0)
     }
 	
-    override public func didReceiveMemoryWarning() {
+    override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 	
-	public func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+	open func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 		self.refSRKComboBox!.delegateForComboBox?.comboBox(self.refSRKComboBox!, didSelectRow: row)
 	}
 	
-	public func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+	open func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
 		return (self.refSRKComboBox?.delegateForComboBox?.comboBoxNumberOfRows(self.refSRKComboBox!))!
 	}
 	
-	public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+	open func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
 		return self.refSRKComboBox?.delegateForComboBox?.comboBox(self.refSRKComboBox!, textForRow: row)
 	}
 	
-	public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+	open func numberOfComponents(in pickerView: UIPickerView) -> Int {
 		return 1
 	}
 
-	@IBAction public func btnDoneTapped(sender: UIBarButtonItem) {
+	@IBAction open func btnDoneTapped(_ sender: UIBarButtonItem) {
 		self.refSRKComboBox?.delegateForComboBox?.comboBoxDidTappedDone(self.refSRKComboBox!)
-		self.dismissViewControllerAnimated(true, completion: nil)
+		self.dismiss(animated: true, completion: nil)
 	}
 	
-	@IBAction public func btnCancelTapped(sender: UIBarButtonItem) {
+	@IBAction open func btnCancelTapped(_ sender: UIBarButtonItem) {
 		self.refSRKComboBox?.delegateForComboBox?.comboBoxDidTappedCancel(self.refSRKComboBox!)
-		self.dismissViewControllerAnimated(true, completion: nil)
+		self.dismiss(animated: true, completion: nil)
 	}
 	
-	public func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-		return UIModalPresentationStyle.None
+	open func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+		return UIModalPresentationStyle.none
 	}
 }

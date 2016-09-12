@@ -24,6 +24,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-testWeatherSwTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-testWeatherSwUITests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SRKControls-SRKControls.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,22 +62,37 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>04A1D7F097B6FD7409B04D319D163839</key>
+		<key>0130052FFF0A2305FD8BF2065C45262E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>308989C5C87F7A47136258E537D49992</key>
+		<key>110BA9752ADAFD20E821B44CC2E3A6B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>61036A28A3DB42E64A25E26B22BD882F</key>
+		<key>409EE933BEEDC0F91907603DF5AA3DA6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6A96B37B0071575E3A90F247F32CF157</key>
+		<key>4F580362083DF7CCAA87E515D953DD50</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>55E7398660EAF77DEE66B8DD52ECA844</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6A594160B2CD8B75FA2E481081B34717</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>77E15AAADC1C0D659B114D1A9FF5104E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,22 +102,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>94566EEFD0EEA05DBD3D6F54FA0DFA5D</key>
+		<key>B4A12EA88A9FE28A1B25F867B8E904A9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DC10446AC37828681C674878DF1EEBDC</key>
+		<key>CEF8007FDE930E44BEAA7399440B68B7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E96E13C4D3B5B5FC0651440734C2BF4D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

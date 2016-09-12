@@ -21,17 +21,17 @@ class historyManadger {
     
     var request = NSFetchRequest(entityName: "History")
     let managedObjectContext =
-        (UIApplication.sharedApplication().delegate
+        (UIApplication.shared.delegate
             as! AppDelegate).managedObjectContext
     
-    func saveHistory(arrCity: [CityGet], indRow: Int) {
+    func saveHistory(_ arrCity: [CityGet], indRow: Int) {
         
         let entityDescription =
-            NSEntityDescription.entityForName("History",
-                                              inManagedObjectContext: managedObjectContext)
+            NSEntityDescription.entity(forEntityName: "History",
+                                              in: managedObjectContext)
         
         let historyData = History(entity: entityDescription!,
-                                  insertIntoManagedObjectContext: managedObjectContext)
+                                  insertInto: managedObjectContext)
         
         var idCity: String
         var name: String
@@ -55,16 +55,16 @@ class historyManadger {
         }
         
     }
-    func historyDel(arrHistory: Array <CityGet>, ind: Int) {
+    func historyDel(_ arrHistory: Array <CityGet>, ind: Int) {
         
          request.returnsObjectsAsFaults = false
         do {
-            let results = try managedObjectContext.executeFetchRequest(request)
+            let results = try managedObjectContext.fetch(request)
             if results.count > 0 {
                 for result: AnyObject in results{
-                    if let idCity = result.valueForKey("idCity") {
+                    if let idCity = result.value(forKey: "idCity") {
                         if idCity as! String == String(arrHistory[ind].id){
-                            managedObjectContext.deleteObject(result as! NSManagedObject)
+                            managedObjectContext.delete(result as! NSManagedObject)
                             print("idCity - " + (idCity as! String) )}}}
                 do {
                     try managedObjectContext.save()
@@ -85,15 +85,15 @@ class historyManadger {
         var arrHistory: [CityGet] = []
         
         do {
-            let result = try self.managedObjectContext.executeFetchRequest(request)
+            let result = try self.managedObjectContext.fetch(request)
             if (result.count > 0) {
                 arrHistory = result.map{ (his: AnyObject) -> CityGet in
                     let CityD: CityGet = CityGet()
-                    if let idCity =  his.valueForKey("idCity")  {
+                    if let idCity =  his.value(forKey: "idCity")  {
                         CityD.id = Int(idCity as! String)! }
-                    if let name =  his.valueForKey("name")  {
+                    if let name =  his.value(forKey: "name")  {
                         CityD.name = name as! String  }
-                    if let country =  his.valueForKey("country")  {
+                    if let country =  his.value(forKey: "country")  {
                         CityD.country = country as! String  }
                     
                     return CityD

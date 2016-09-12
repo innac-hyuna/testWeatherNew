@@ -1,6 +1,6 @@
 ![Alamofire: Elegant Networking in Swift](https://raw.githubusercontent.com/Alamofire/Alamofire/assets/alamofire.png)
 
-[![Build Status](https://travis-ci.org/Alamofire/Alamofire.svg)](https://travis-ci.org/Alamofire/Alamofire)
+[![Build Status](https://travis-ci.org/Alamofire/Alamofire.svg?branch=master)](https://travis-ci.org/Alamofire/Alamofire)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Alamofire.svg)](https://img.shields.io/cocoapods/v/Alamofire.svg)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Platform](https://img.shields.io/cocoapods/p/Alamofire.svg?style=flat)](http://cocoadocs.org/docsets/Alamofire)
@@ -31,11 +31,13 @@ In order to keep Alamofire focused specifically on core networking implementatio
 
 ## Requirements
 
-- iOS 8.0+ / Mac OS X 10.9+ / tvOS 9.0+ / watchOS 2.0+
-- Xcode 7.3+
+- iOS 9.0+ / Mac OS X 10.11+ / tvOS 9.0+ / watchOS 2.0+
+- Xcode 8.0+
+- Swift 3.0+
 
 ## Migration Guides
 
+- Alamofire 4.0 Migration Guide - COMING SOON!
 - [Alamofire 3.0 Migration Guide](https://github.com/Alamofire/Alamofire/blob/master/Documentation/Alamofire%203.0%20Migration%20Guide.md)
 - [Alamofire 2.0 Migration Guide](https://github.com/Alamofire/Alamofire/blob/master/Documentation/Alamofire%202.0%20Migration%20Guide.md)
 
@@ -67,10 +69,12 @@ To integrate Alamofire into your Xcode project using CocoaPods, specify it in yo
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '9.0'
+platform :ios, '10.0'
 use_frameworks!
 
-pod 'Alamofire', '~> 3.4'
+target '<Your Target Name>' do
+    pod 'Alamofire', '~> 3.5'
+end
 ```
 
 Then, run the following command:
@@ -93,7 +97,7 @@ $ brew install carthage
 To integrate Alamofire into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "Alamofire/Alamofire" ~> 3.4
+github "Alamofire/Alamofire" ~> 3.5
 ```
 
 Run `carthage update` to build the framework and drag the built `Alamofire.framework` into your Xcode project.
@@ -384,6 +388,14 @@ Alamofire.request(.GET, "https://httpbin.org/get", headers: headers)
              debugPrint(response)
          }
 ```
+
+The default Alamofire `Manager` provides a common set of headers for every request. These include:
+
+* `Accept-Encoding`, which defaults to `gzip;q=1.0, compress;q=0.5`, per [RFC7230](https://tools.ietf.org/html/rfc7230#section-4.2.3).
+* `Accept-Language`, which defaults to up to the top 6 preferred languages on the system, formatted like `en;q=1.0`, per [RFC7231](https://tools.ietf.org/html/rfc7231#section-5.3.5).
+* `User-Agent`, which contains versioning information about the current app. For example: `iOS Example/1.0 (com.alamofire.iOS-Example; build:1; iOS 9.3.0) Alamofire/3.4.2`, per [RFC7231](https://tools.ietf.org/html/rfc7231#section-5.5.3).
+
+Customizing these headers, since they need to be added to every request, should be done by creating a customized `Manager` instance and modifying the `defaultHTTPHeaders` dictionary, as shown in the [Modifying Session Configuration](#modifying-session-configuration) section.
 
 ### Caching
 
@@ -711,6 +723,20 @@ Requests can be suspended, resumed, and cancelled:
 
 ### Response Serialization
 
+#### Handling Errors
+
+Before implementing custom response serializers or object serialization methods, it's important to be prepared to handle any errors that may occur. Alamofire recommends handling these through the use of either your own `NSError` creation methods, or a simple `enum` that conforms to `ErrorType`. For example, this `BackendError` type, which will be used in later examples:
+
+```swift
+public enum BackendError: ErrorType {
+    case Network(error: NSError)
+    case DataSerialization(reason: String)
+    case JSONSerialization(error: NSError)
+    case ObjectSerialization(reason: String)
+    case XMLSerialization(error: NSError)
+}
+```
+
 #### Creating a Custom Response Serializer
 
 Alamofire provides built-in response serialization for strings, JSON, and property lists, but others can be added in extensions on `Alamofire.Request`.
@@ -719,26 +745,24 @@ For example, here's how a response handler using [Ono](https://github.com/mattt/
 
 ```swift
 extension Request {
-    public static func XMLResponseSerializer() -> ResponseSerializer<ONOXMLDocument, NSError> {
+    public static func XMLResponseSerializer() -> ResponseSerializer<ONOXMLDocument, BackendError> {
         return ResponseSerializer { request, response, data, error in
-            guard error == nil else { return .Failure(error!) }
+            guard error == nil else { return .Failure(.Network(error: error!)) }
 
             guard let validData = data else {
-                let failureReason = "Data could not be serialized. Input data was nil."
-                let error = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
-                return .Failure(error)
+                return .Failure(.DataSerialization(reason: "Data could not be serialized. Input data was nil."))
             }
 
             do {
                 let XML = try ONOXMLDocument(data: validData)
                 return .Success(XML)
             } catch {
-                return .Failure(error as NSError)
+                return .Failure(.XMLSerialization(error: error as NSError))
             }
         }
     }
 
-    public func responseXMLDocument(completionHandler: Response<ONOXMLDocument, NSError> -> Void) -> Self {
+    public func responseXMLDocument(completionHandler: Response<ONOXMLDocument, BackendError> -> Void) -> Self {
         return response(responseSerializer: Request.XMLResponseSerializer(), completionHandler: completionHandler)
     }
 }
@@ -754,9 +778,9 @@ public protocol ResponseObjectSerializable {
 }
 
 extension Request {
-    public func responseObject<T: ResponseObjectSerializable>(completionHandler: Response<T, NSError> -> Void) -> Self {
-        let responseSerializer = ResponseSerializer<T, NSError> { request, response, data, error in
-            guard error == nil else { return .Failure(error!) }
+    public func responseObject<T: ResponseObjectSerializable>(completionHandler: Response<T, BackendError> -> Void) -> Self {
+        let responseSerializer = ResponseSerializer<T, BackendError> { request, response, data, error in
+            guard error == nil else { return .Failure(.Network(error: error!)) }
 
             let JSONResponseSerializer = Request.JSONResponseSerializer(options: .AllowFragments)
             let result = JSONResponseSerializer.serializeResponse(request, response, data, error)
@@ -769,12 +793,10 @@ extension Request {
                 {
                     return .Success(responseObject)
                 } else {
-                    let failureReason = "JSON could not be serialized into response object: \(value)"
-                    let error = Error.errorWithCode(.JSONSerializationFailed, failureReason: failureReason)
-                    return .Failure(error)
+                    return .Failure(.ObjectSerialization(reason: "JSON could not be serialized into response object: \(value)"))
                 }
             case .Failure(let error):
-                return .Failure(error)
+                return .Failure(.JSONSerialization(error: error))
             }
         }
 
@@ -797,7 +819,7 @@ final class User: ResponseObjectSerializable {
 
 ```swift
 Alamofire.request(.GET, "https://example.com/users/mattt")
-         .responseObject { (response: Response<User, NSError>) in
+         .responseObject { (response: Response<User, BackendError>) in
              debugPrint(response)
          }
 ```
@@ -809,10 +831,26 @@ public protocol ResponseCollectionSerializable {
     static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [Self]
 }
 
+extension ResponseCollectionSerializable where Self: ResponseObjectSerializable {
+    static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [Self] {
+        var collection = [Self]()
+        
+        if let representation = representation as? [[String: AnyObject]] {
+            for itemRepresentation in representation {
+                if let item = Self(response: response, representation: itemRepresentation) {
+                    collection.append(item)
+                }
+            }
+        }
+        
+        return collection
+    }
+}
+
 extension Alamofire.Request {
-    public func responseCollection<T: ResponseCollectionSerializable>(completionHandler: Response<[T], NSError> -> Void) -> Self {
-        let responseSerializer = ResponseSerializer<[T], NSError> { request, response, data, error in
-            guard error == nil else { return .Failure(error!) }
+    public func responseCollection<T: ResponseCollectionSerializable>(completionHandler: Response<[T], BackendError> -> Void) -> Self {
+        let responseSerializer = ResponseSerializer<[T], BackendError> { request, response, data, error in
+            guard error == nil else { return .Failure(.Network(error: error!)) }
 
             let JSONSerializer = Request.JSONResponseSerializer(options: .AllowFragments)
             let result = JSONSerializer.serializeResponse(request, response, data, error)
@@ -822,12 +860,10 @@ extension Alamofire.Request {
                 if let response = response {
                     return .Success(T.collection(response: response, representation: value))
                 } else {
-                    let failureReason = "Response collection could not be serialized due to nil response"
-                    let error = Error.errorWithCode(.JSONSerializationFailed, failureReason: failureReason)
-                    return .Failure(error)
+                    return .Failure(. ObjectSerialization(reason: "Response collection could not be serialized due to nil response"))
                 }
             case .Failure(let error):
-                return .Failure(error)
+                return .Failure(.JSONSerialization(error: error))
             }
         }
 
@@ -845,26 +881,12 @@ final class User: ResponseObjectSerializable, ResponseCollectionSerializable {
         self.username = response.URL!.lastPathComponent!
         self.name = representation.valueForKeyPath("name") as! String
     }
-
-    static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [User] {
-        var users: [User] = []
-
-        if let representation = representation as? [[String: AnyObject]] {
-            for userRepresentation in representation {
-                if let user = User(response: response, representation: userRepresentation) {
-                    users.append(user)
-                }
-            }
-        }
-
-        return users
-    }
 }
 ```
 
 ```swift
 Alamofire.request(.GET, "http://example.com/users")
-         .responseCollection { (response: Response<[User], NSError>) in
+         .responseCollection { (response: Response<[User], BackendError>) in
              debugPrint(response)
          }
 ```
@@ -944,7 +966,7 @@ enum Router: URLRequestConvertible {
     var URLRequest: NSMutableURLRequest {
         let result: (path: String, parameters: [String: AnyObject]) = {
             switch self {
-            case .Search(let query, let page) where page > 1:
+            case .Search(let query, let page) where page > 0:
                 return ("/search", ["q": query, "offset": Router.perPage * page])
             case .Search(let query, _):
                 return ("/search", ["q": query])
@@ -1097,6 +1119,177 @@ Generally, either the default implementation or the override closures should pro
 
 > It is important to keep in mind that the `subdelegates` are initialized and destroyed in the default implementation. Be careful when subclassing to not introduce memory leaks.
 
+### Adapting and Retrying Requests
+
+Most web services these days are behind some sort of authentication system. One of the more common ones today is OAuth. This generally involves generating an access token authorizing your application or user to call the various supported web services. While creating these initial access tokens can be laborsome, it can be even more complicated when your access token expires and you need to fetch a new one. There are many thread-safety issues that need to be considered.
+
+The `RequestAdapter` and `RequestRetrier` protocols were created to make it much easier to create a thread-safe authentication system for a specific set of web services.
+
+#### RequestAdapter
+
+The `RequestAdapter` protocol allows each `Request` made on a `SessionManager` to be inspected and adapted before being created. One very specific way to use an adapter is to append an `Authorization` header to requests behind a certain type of authentication.
+
+```swift
+class AccessTokenAdapter: RequestAdapter {
+	private let accessToken: String
+	
+	init(accessToken: String) {
+		self.accessToken = accessToken
+	}
+
+	func adapt(_ urlRequest: URLRequest) -> URLRequest {
+	    var urlRequest = urlRequest
+
+	    if urlRequest.urlString.hasPrefix("https://httpbin.org") {
+		    urlRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+	    }
+
+	    return urlRequest
+	}
+}
+
+let sessionManager = SessionManager()
+sessionManager.adapter = AccessTokenAdapter(accessToken: "1234")
+
+sessionManager.request("https://httpbin.org/get", withMethod: .get)
+```
+
+#### RequestRetrier
+
+The `RequestRetrier` protocol allows a `Request` that encountered an `Error` while being executed to be retried. When using both the `RequestAdapter` and `RequestRetrier` protocols together, you can create credential refresh systems for OAuth1, OAuth2, Basic Auth and even exponential backoff retry policies. The possibilities are endless. Here's a short example of how you could implement a refresh flow for OAuth2 access tokens.
+
+> Please note that this is not a global `OAuth2` solution. It is merely an example demonstrating how one could use the `RequestAdapter` in conjunction with the `RequestRetrier` to create a thread-safe refresh system. 
+
+> To reiterate, **do NOT copy** this sample code and drop it into a production application. This is merely an example. Each authentication system must be tailored to a particular platform and authentication type.
+
+```swift
+class OAuth2Handler: RequestAdapter, RequestRetrier {
+    private typealias RefreshCompletion = (_ succeeded: Bool, _ accessToken: String?, _ refreshToken: String?) -> Void
+
+    private let sessionManager: SessionManager = {
+        let configuration = URLSessionConfiguration.default
+        configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
+
+        return SessionManager(configuration: configuration)
+    }()
+
+    private let lock = NSLock()
+
+    private var clientID: String
+    private var baseURLString: String
+    private var accessToken: String
+    private var refreshToken: String
+
+    private var isRefreshing = false
+    private var requestsToRetry: [RequestRetryCompletion] = []
+
+    // MARK: - Initialization
+
+    public init(clientID: String, baseURLString: String, accessToken: String, refreshToken: String) {
+        self.clientID = clientID
+        self.baseURLString = baseURLString
+        self.accessToken = accessToken
+        self.refreshToken = refreshToken
+    }
+
+    // MARK: - RequestAdapter
+
+    public func adapt(_ urlRequest: URLRequest) -> URLRequest {
+        if urlRequest.urlString.hasPrefix(baseURLString) {
+            var mutableURLRequest = urlRequest
+            mutableURLRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+            return mutableURLRequest
+        }
+
+        return urlRequest
+    }
+
+    // MARK: - RequestRetrier
+
+    public func should(_ manager: SessionManager, retry request: Request, with error: Error, completion: RequestRetryCompletion) {
+        lock.lock() ; defer { lock.unlock() }
+
+        if let response = request.task.response as? HTTPURLResponse, response.statusCode == 401 {
+            requestsToRetry.append(completion)
+
+            if !isRefreshing {
+                refreshTokens { [weak self] succeeded, accessToken, refreshToken in
+                    guard let strongSelf = self else { return }
+
+                    strongSelf.lock.lock() ; defer { strongSelf.lock.unlock() }
+
+                    if let accessToken = accessToken, let refreshToken = refreshToken {
+                        strongSelf.accessToken = accessToken
+                        strongSelf.refreshToken = refreshToken
+                    }
+
+                    strongSelf.requestsToRetry.forEach { $0(succeeded, 0.0) }
+                    strongSelf.requestsToRetry.removeAll()
+                }
+            }
+        } else {
+            completion(false, 0.0)
+        }
+    }
+
+    // MARK: - Private - Refresh Tokens
+
+    private func refreshTokens(completion: RefreshCompletion) {
+        guard !isRefreshing else { return }
+
+        isRefreshing = true
+
+        let urlString = "\(baseURLString)/oauth2/token"
+
+        let parameters: [String: Any] = [
+            "access_token": accessToken,
+            "refresh_token": refreshToken,
+            "client_id": clientID,
+            "grant_type": "refresh_token"
+        ]
+
+        sessionManager.request(urlString, withMethod: .post, parameters: parameters, encoding: .json).responseJSON { [weak self] response in
+            guard let strongSelf = self else { return }
+
+            if let json = response.result.value as? [String: String] {
+                completion(true, json["access_token"], json["refresh_token"])
+            } else {
+                completion(false, nil, nil)
+            }
+
+            strongSelf.isRefreshing = false
+        }
+    }
+}
+
+let baseURLString = "https://some.domain-behind-oauth2.com"
+
+let oauthHandler = OAuth2Handler(
+    clientID: "12345678",
+    baseURLString: baseURLString,
+    accessToken: "abcd1234",
+    refreshToken: "ef56789a"
+)
+
+let sessionManager = SessionManager()
+sessionManager.adapter = oauthHandler
+sessionManager.retrier = oauthHandler
+
+let urlString = "\(baseURLString)/some/endpoint"
+
+manager.request(urlString, withMethod: .get).validate().responseJSON { response in
+    debugPrint(response)
+}
+```
+
+Once the `OAuth2Handler` is applied as both the `adapter` and `retrier` for the `SessionManager`, it will handle an invalid access token error by automatically refreshing the access token and retrying all failed requests in the same order they failed. 
+
+> If you needed them to execute in the same order they were created, you could instead sort them by their task identifiers. 
+
+The example above only checks for a `401` response code which is not nearly robust enough, but does demonstrate how one could check for an invalid access token error. In a production application, one would want to check the `realm` and most likely the `www-authenticate` header response although it depends on the OAuth2 implementation.
+
+Another important note is that this authentication system could be shared between multiple session managers. For example, you may need to use both a `default` and `ephemeral` session configuration for the same set of web services. The example above allows the same `oauthHandler` instance to be shared across multiple session managers to manage the single refresh flow.
+
 ### Security
 
 Using a secure HTTPS connection when communicating with servers and web services is an important step in securing sensitive data. By default, Alamofire will evaluate the certificate chain provided by the server using Apple's built in validation provided by the Security framework. While this guarantees the certificate chain is valid, it does not prevent man-in-the-middle (MITM) attacks or other potential vulnerabilities. In order to mitigate MITM attacks, applications dealing with sensitive customer data or financial information should use certificate or public key pinning provided by the `ServerTrustPolicy`.
@@ -1248,6 +1441,7 @@ There are some important things to remember when using network reachability to d
 The following rdars have some affect on the current implementation of Alamofire.
 
 * [rdar://21349340](http://www.openradar.me/radar?id=5517037090635776) - Compiler throwing warning due to toll-free bridging issue in test case
+* [rdar://26761490](http://www.openradar.me/radar?id=5010235949318144) - Swift string interpolation causing memory leak with common usage
 
 ## FAQ
 
@@ -1264,6 +1458,20 @@ Alamofire is owned and maintained by the [Alamofire Software Foundation](http://
 ### Security Disclosure
 
 If you believe you have identified a security vulnerability with Alamofire, you should report it as soon as possible via email to security@alamofire.org. Please do not post it to a public issue tracker.
+
+## Donations
+
+The [ASF](https://github.com/Alamofire/Foundation#members) is looking to raise money to officially register as a federal non-profit organization. Registering will allow us members to gain some legal protections and also allow us to put donations to use, tax free. Donating to the ASF will enable us to:
+
+* Pay our legal fees to register as a federal non-profit organization
+* Pay our yearly legal fees to keep the non-profit in good status
+* Pay for our mail servers to help us stay on top of all questions and security issues
+* Potentially fund test servers to make it easier for us to test the edge cases
+* Potentially fund developers to work on one of our projects full-time
+
+The community adoption of the ASF libraries has been amazing. We are greatly humbled by your enthusiam around the projects, and want to continue to do everything we can to move the needle forward. With your continued support, the ASF will be able to improve its reach and also provide better legal safety for the core members. If you use any of our libraries for work, see if your employers would be interested in donating. Our initial goal is to raise $1000 to get all our legal ducks in a row and kickstart this campaign. Any amount you can donate today to help us reach our goal would be greatly appreciated.
+
+<a href='https://pledgie.com/campaigns/31474'><img alt='Click here to lend your support to: Alamofire Software Foundation and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/31474.png?skin_name=chrome' border='0' ></a>
 
 ## License
 

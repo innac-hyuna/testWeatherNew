@@ -21,12 +21,12 @@ class CityGet {
     
     func getCity() -> JSON {
         
-       var dataConvert: NSData?
+       var dataConvert: Data?
         
       if HttpDownloader.loadFileSync("http://bulk.openweathermap.org/sample/city.list.json.gz") {
         
-        let fileManager = NSFileManager.defaultManager()
-        let documentsURL = fileManager.URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)[0]
+        let fileManager = FileManager.default
+        let documentsURL = fileManager.urls(for: .cachesDirectory, in: .userDomainMask)[0]
         
         /* do {
          let documentDirectory = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)[0])
@@ -37,24 +37,24 @@ class CityGet {
          print(error)
          }*/
         
-        let fileURL = documentsURL.URLByAppendingPathComponent("city.list.json.gz")
+        let fileURL = documentsURL.appendingPathComponent("city.list.json.gz")
         
-        guard let data = try? NSData(contentsOfFile: fileURL.path!, options:.DataReadingUncached)   else {
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: fileURL.path), options:.uncached)   else {
             return true
         }
         
-        guard let decompressedData : NSData = try? data.gunzippedData() else {
+        guard let decompressedData : Data = try? data.gunzippedData() else {
             return true
         }
         
-        let resstr = NSString(data: decompressedData, encoding: NSUTF8StringEncoding)
-        let resReplace = "[" + resstr!.stringByReplacingOccurrencesOfString("\n", withString: ",") + "]" as String!
-        dataConvert = resReplace.dataUsingEncoding(NSUTF8StringEncoding)}
+        let resstr = NSString(data: decompressedData, encoding: String.Encoding.utf8.rawValue)
+        let resReplace = "[" + resstr!.replacingOccurrences(of: "\n", with: ",") + "]" as String!
+        dataConvert = resReplace?.data(using: String.Encoding.utf8)}
       else {
-        guard let path = NSBundle.mainBundle().pathForResource("city", ofType: "JSON")  else {
+        guard let path = Bundle.main.path(forResource: "city", ofType: "JSON")  else {
             return true
         }
-        guard let data = try? NSData(contentsOfFile: path, options:.DataReadingUncached)  else {
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: path), options:.uncached)  else {
             return true
         }
            dataConvert = data
@@ -94,7 +94,7 @@ class CityGet {
      
     }
     
-    func filterCity(arrCity: Array<CityGet>, strCity: String = "", arrId: Array<String> = [] ) -> Array<CityGet> {
+    func filterCity(_ arrCity: Array<CityGet>, strCity: String = "", arrId: Array<String> = [] ) -> Array<CityGet> {
         
         var filteredArray:[CityGet] = []
         

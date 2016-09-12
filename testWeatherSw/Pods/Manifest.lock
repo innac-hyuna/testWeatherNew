@@ -1,6 +1,6 @@
 PODS:
-  - Alamofire (3.4.0)
-  - Kingfisher (2.4.1)
+  - Alamofire (4.0.0-beta.2)
+  - Kingfisher (2.5.1)
   - MBProgressHUD (0.9.2)
   - SRKControls (3.0.5):
     - SRKControls/Controls (= 3.0.5)
@@ -9,28 +9,43 @@ PODS:
   - SWSegmentedControl (1.0.1)
 
 DEPENDENCIES:
-  - Alamofire (~> 3.0)
-  - Kingfisher (~> 2.4)
+  - Alamofire (from `https://github.com/Alamofire/Alamofire.git`, branch `swift3-rebased`)
+  - Kingfisher (from `https://github.com/onevcat/Kingfisher.git`, branch `swift3`)
   - MBProgressHUD (~> 0.9.2)
   - SRKControls
-  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `swift3`)
   - SWSegmentedControl
 
 EXTERNAL SOURCES:
+  Alamofire:
+    :branch: swift3-rebased
+    :git: https://github.com/Alamofire/Alamofire.git
+  Kingfisher:
+    :branch: swift3
+    :git: https://github.com/onevcat/Kingfisher.git
   SwiftyJSON:
+    :branch: swift3
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 CHECKOUT OPTIONS:
+  Alamofire:
+    :commit: 2e702055932b9cdce6863d46c25d1770f64f75a6
+    :git: https://github.com/Alamofire/Alamofire.git
+  Kingfisher:
+    :commit: 3ac0dd1a06ec127f3cfd53b423e46884ec872037
+    :git: https://github.com/onevcat/Kingfisher.git
   SwiftyJSON:
-    :commit: 2a5b70f06001316d4fb54501edc70b4084705da0
+    :commit: 1a9755949a652967dc2986cd7f4653496e556715
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
-  Alamofire: c19a627cefd6a95f840401c49ab1f124e07f54ee
-  Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
+  Alamofire: 7f837be535fe424db2b87d9117f13836939719ca
+  Kingfisher: 9b82e0e1f1a296f149a50bbc2214532eaa4df4f1
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   SRKControls: ef82f31f3bdea31ab8ec5d36057f553c8b8815a5
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   SWSegmentedControl: 77624d5f24135aa57f44cbf8999e7b755dd325ec
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 346b94f9fdb5b2577827f690e67d054ca7f76066
+
+COCOAPODS: 1.1.0.beta.2

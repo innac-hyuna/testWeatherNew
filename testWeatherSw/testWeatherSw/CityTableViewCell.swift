@@ -48,8 +48,8 @@ class CityTableViewCell: UITableViewCell {
        
         if his {
             delButton = UIButton()
-            delButton.setTitle("Dell", forState: .Normal)
-            delButton.backgroundColor = UIColor.brownColor()
+            delButton.setTitle("Dell", for: UIControlState())
+            delButton.backgroundColor = UIColor.brown
             contentView.addSubview(delButton)
         }
 
@@ -77,20 +77,20 @@ class CityTableViewCell: UITableViewCell {
           viewsDict.updateValue(delButton, forKey: "del")
         }
         
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-[city]-[country(30)]-[id(40)]" + (his ? "-[del(40)]-0" : "") + "-|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-[city]-|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-[country]-|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-[id]-|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-[city]-[country(30)]-[id(40)]" + (his ? "-[del(40)]-0" : "") + "-|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-[city]-|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-[country]-|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-[id]-|", options: [], metrics: nil, views: viewsDict))
         if his {
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-0-[del]-0-|", options: [], metrics: nil, views: viewsDict))}
+        contentView.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-0-[del]-0-|", options: [], metrics: nil, views: viewsDict))}
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
     }

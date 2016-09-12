@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'D2B5D321AA25293CEB0459CA'
+               BlueprintIdentifier = '110BA9752ADAFD20E821B44CC2E3A6B1'
                BlueprintName = 'SRKControls-SRKControls'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'SRKControls.bundle'>

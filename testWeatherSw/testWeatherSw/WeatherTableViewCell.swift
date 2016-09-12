@@ -65,7 +65,7 @@ class WeatherTableViewCell: UITableViewCell {
         
         weatherImg = UIImageView()
         contentView.addSubview(weatherImg)
-        weatherImg.contentMode = UIViewContentMode.ScaleAspectFit;
+        weatherImg.contentMode = UIViewContentMode.scaleAspectFit;
         weatherImg.translatesAutoresizingMaskIntoConstraints = false
         
         setupLayout()
@@ -83,7 +83,7 @@ class WeatherTableViewCell: UITableViewCell {
         
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
     }
@@ -92,138 +92,138 @@ class WeatherTableViewCell: UITableViewCell {
         
         
         NSLayoutConstraint(item: weatherImg,
-                           attribute: NSLayoutAttribute.TopMargin,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.topMargin,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: contentView,
-                           attribute: NSLayoutAttribute.TopMargin,
+                           attribute: NSLayoutAttribute.topMargin,
                            multiplier: 1.0,
-                           constant: 10).active = true
+                           constant: 10).isActive = true
          NSLayoutConstraint(item: weatherImg,
-                           attribute: NSLayoutAttribute.LeftMargin,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.leftMargin,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: contentView,
-                           attribute: NSLayoutAttribute.LeftMargin,
+                           attribute: NSLayoutAttribute.leftMargin,
                            multiplier: 1.0,
-                           constant: 0).active = true
+                           constant: 0).isActive = true
         NSLayoutConstraint(item: weatherImg,
-                           attribute: NSLayoutAttribute.BottomMargin,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.bottomMargin,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: contentView,
-                           attribute: NSLayoutAttribute.BottomMargin,
+                           attribute: NSLayoutAttribute.bottomMargin,
                            multiplier: 1.0,
-                           constant: 0 ).active = true
+                           constant: 0 ).isActive = true
         
        NSLayoutConstraint(item: dateLabel,
-                           attribute: NSLayoutAttribute.CenterY,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.centerY,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: contentView,
-                           attribute: NSLayoutAttribute.CenterY,
+                           attribute: NSLayoutAttribute.centerY,
                            multiplier: 1.0,
-                           constant: -10).active = true
+                           constant: -10).isActive = true
        NSLayoutConstraint(item: dateLabel,
-                           attribute: NSLayoutAttribute.LeftMargin,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.leftMargin,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: weatherImg,
-                           attribute: NSLayoutAttribute.RightMargin,
+                           attribute: NSLayoutAttribute.rightMargin,
                            multiplier: 1.0,
-                           constant: 15).active = true
+                           constant: 15).isActive = true
         
         NSLayoutConstraint(item: tempView,
-                           attribute: NSLayoutAttribute.CenterY,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.centerY,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: contentView,
-                           attribute: NSLayoutAttribute.CenterY,
+                           attribute: NSLayoutAttribute.centerY,
                            multiplier: 1.0,
-                           constant: -10).active = true
+                           constant: -10).isActive = true
         NSLayoutConstraint(item: tempView,
-                           attribute: NSLayoutAttribute.LeftMargin,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.leftMargin,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: dateLabel,
-                           attribute: NSLayoutAttribute.RightMargin,
+                           attribute: NSLayoutAttribute.rightMargin,
                            multiplier: 1.0,
-                           constant: 20).active = true
+                           constant: 20).isActive = true
         NSLayoutConstraint(item: tempView,
-                           attribute: NSLayoutAttribute.Width,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.width,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: nil,
-                           attribute: NSLayoutAttribute.NotAnAttribute,
+                           attribute: NSLayoutAttribute.notAnAttribute,
                            multiplier: 1.0,
-                           constant: 45).active = true
+                           constant: 45).isActive = true
         
         NSLayoutConstraint(item: mainView,
-                           attribute: NSLayoutAttribute.LeftMargin,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.leftMargin,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: weatherImg,
-                           attribute: NSLayoutAttribute.RightMargin,
+                           attribute: NSLayoutAttribute.rightMargin,
                            multiplier: 1.0,
-                           constant: 30).active = true
+                           constant: 30).isActive = true
         NSLayoutConstraint(item: mainView,
-                           attribute: NSLayoutAttribute.BottomMargin,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.bottomMargin,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: contentView,
-                           attribute: NSLayoutAttribute.BottomMargin,
+                           attribute: NSLayoutAttribute.bottomMargin,
                            multiplier: 1.0,
-                           constant: -10).active = true
+                           constant: -10).isActive = true
         
         NSLayoutConstraint(item: minvalLabel,
-                           attribute: NSLayoutAttribute.CenterY,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.centerY,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: tempView,
-                           attribute: NSLayoutAttribute.CenterY,
+                           attribute: NSLayoutAttribute.centerY,
                            multiplier: 1.0,
-                           constant: 0).active = true
+                           constant: 0).isActive = true
         NSLayoutConstraint(item: minvalLabel,
-                           attribute: NSLayoutAttribute.LeftMargin,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.leftMargin,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: tempView,
-                           attribute: NSLayoutAttribute.LeftMargin,
+                           attribute: NSLayoutAttribute.leftMargin,
                            multiplier: 1.0,
-                           constant: 0).active = true
+                           constant: 0).isActive = true
         
         NSLayoutConstraint(item: maxvalLabel,
-                           attribute: NSLayoutAttribute.CenterY,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.centerY,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: tempView,
-                           attribute: NSLayoutAttribute.CenterY,
+                           attribute: NSLayoutAttribute.centerY,
                            multiplier: 1.0,
-                           constant: 0).active = true
+                           constant: 0).isActive = true
         NSLayoutConstraint(item: maxvalLabel,
-                           attribute: NSLayoutAttribute.LeftMargin,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.leftMargin,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: minvalLabel,
-                           attribute: NSLayoutAttribute.RightMargin,
+                           attribute: NSLayoutAttribute.rightMargin,
                            multiplier: 1.0,
-                           constant: 20).active = true
+                           constant: 20).isActive = true
         
        NSLayoutConstraint(item: mainLabel,
-                           attribute: NSLayoutAttribute.CenterY,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.centerY,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: mainView,
-                           attribute: NSLayoutAttribute.CenterY,
+                           attribute: NSLayoutAttribute.centerY,
                            multiplier: 1.0,
-                           constant: 0).active = true
+                           constant: 0).isActive = true
        NSLayoutConstraint(item: mainLabel,
-                           attribute: NSLayoutAttribute.LeftMargin,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.leftMargin,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: mainView,
-                           attribute: NSLayoutAttribute.LeftMargin,
+                           attribute: NSLayoutAttribute.leftMargin,
                            multiplier: 1.0,
-                           constant: 0).active = true
+                           constant: 0).isActive = true
         
        NSLayoutConstraint(item: windsLabel,
-                          attribute: NSLayoutAttribute.CenterY,
-                          relatedBy: NSLayoutRelation.Equal,
+                          attribute: NSLayoutAttribute.centerY,
+                          relatedBy: NSLayoutRelation.equal,
                           toItem: mainView,
-                          attribute: NSLayoutAttribute.CenterY,
+                          attribute: NSLayoutAttribute.centerY,
                           multiplier: 1.0,
-                          constant: 0).active = true
+                          constant: 0).isActive = true
         NSLayoutConstraint(item: windsLabel,
-                           attribute: NSLayoutAttribute.LeftMargin,
-                           relatedBy: NSLayoutRelation.Equal,
+                           attribute: NSLayoutAttribute.leftMargin,
+                           relatedBy: NSLayoutRelation.equal,
                            toItem: mainLabel,
-                           attribute: NSLayoutAttribute.RightMargin,
+                           attribute: NSLayoutAttribute.rightMargin,
                            multiplier: 1.0,
-                           constant: 25).active = true
+                           constant: 25).isActive = true
     }
     
 }

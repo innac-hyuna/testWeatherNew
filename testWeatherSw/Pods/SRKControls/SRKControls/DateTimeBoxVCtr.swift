@@ -10,34 +10,34 @@ import UIKit
 
 @objc public protocol SRKDateTimeBoxDelegate : NSObjectProtocol {
 	
-	func dateTimeBox(textField:SRKDateTimeBox, didSelectDate date:NSDate)
-	func dateTimeBoxType(textField:SRKDateTimeBox) -> UIDatePickerMode
+	func dateTimeBox(_ textField:SRKDateTimeBox, didSelectDate date:Date)
+	func dateTimeBoxType(_ textField:SRKDateTimeBox) -> UIDatePickerMode
 	
-	func dateTimeBoxMinimumDate(textField:SRKDateTimeBox) -> NSDate?
-	func dateTimeBoxMaximumDate(textField:SRKDateTimeBox) -> NSDate?
+	func dateTimeBoxMinimumDate(_ textField:SRKDateTimeBox) -> Date?
+	func dateTimeBoxMaximumDate(_ textField:SRKDateTimeBox) -> Date?
 	
-	func dateTimeBoxPresentingViewController(textField:SRKDateTimeBox) -> UIViewController
-	func dateTimeBoxRectFromWhereToPresent(textField:SRKDateTimeBox) -> CGRect
+	func dateTimeBoxPresentingViewController(_ textField:SRKDateTimeBox) -> UIViewController
+	func dateTimeBoxRectFromWhereToPresent(_ textField:SRKDateTimeBox) -> CGRect
 	
-	func dateTimeBoxFromBarButton(textField:SRKDateTimeBox) -> UIBarButtonItem?
+	func dateTimeBoxFromBarButton(_ textField:SRKDateTimeBox) -> UIBarButtonItem?
 	
-	func dateTimeBoxTintColor(textField:SRKDateTimeBox) -> UIColor
-	func dateTimeBoxToolbarColor(textField:SRKDateTimeBox) -> UIColor
+	func dateTimeBoxTintColor(_ textField:SRKDateTimeBox) -> UIColor
+	func dateTimeBoxToolbarColor(_ textField:SRKDateTimeBox) -> UIColor
 	
-	func dateTimeBoxDidTappedCancel(textField:SRKDateTimeBox)
-	func dateTimeBoxDidTappedDone(textField:SRKDateTimeBox)
+	func dateTimeBoxDidTappedCancel(_ textField:SRKDateTimeBox)
+	func dateTimeBoxDidTappedDone(_ textField:SRKDateTimeBox)
 }
 
-@objc public class SRKDateTimeBox: UITextField {
-	public weak var delegateForDateTimeBox:SRKDateTimeBoxDelegate?
+@objc open class SRKDateTimeBox: UITextField {
+	open weak var delegateForDateTimeBox:SRKDateTimeBoxDelegate?
 	var objDateTimeBoxVCtr: DateTimeBoxVCtr?
 	
-	public func showOptions() {
-		let podBundle = NSBundle(forClass: self.classForCoder)
-		if let bundleURL = podBundle.URLForResource("SRKControls", withExtension: "bundle") {
-			if let bundle = NSBundle(URL: bundleURL) {
+	open func showOptions() {
+		let podBundle = Bundle(for: self.classForCoder)
+		if let bundleURL = podBundle.url(forResource: "SRKControls", withExtension: "bundle") {
+			if let bundle = Bundle(url: bundleURL) {
 				self.objDateTimeBoxVCtr = DateTimeBoxVCtr(nibName: "DateTimeBoxVCtr", bundle: bundle)
-				self.objDateTimeBoxVCtr?.modalPresentationStyle = .Popover
+				self.objDateTimeBoxVCtr?.modalPresentationStyle = .popover
 				self.objDateTimeBoxVCtr?.popoverPresentationController?.delegate = self.objDateTimeBoxVCtr
 				self.objDateTimeBoxVCtr?.refSRKDateTimeBox = self
 				if let btn = self.delegateForDateTimeBox?.dateTimeBoxFromBarButton(self) {
@@ -46,7 +46,7 @@ import UIKit
 					self.objDateTimeBoxVCtr?.popoverPresentationController?.sourceView = self.delegateForDateTimeBox?.dateTimeBoxPresentingViewController(self).view
 					self.objDateTimeBoxVCtr?.popoverPresentationController?.sourceRect = (self.delegateForDateTimeBox?.dateTimeBoxRectFromWhereToPresent(self))!
 				}
-				self.delegateForDateTimeBox?.dateTimeBoxPresentingViewController(self).presentViewController(self.objDateTimeBoxVCtr!, animated: true, completion: nil)
+				self.delegateForDateTimeBox?.dateTimeBoxPresentingViewController(self).present(self.objDateTimeBoxVCtr!, animated: true, completion: nil)
 			} else {
 				assertionFailure("Could not load the bundle")
 			}
@@ -56,15 +56,15 @@ import UIKit
 	}
 }
 
-@objc public class DateTimeBoxVCtr: UIViewController, UIPopoverPresentationControllerDelegate {
+@objc open class DateTimeBoxVCtr: UIViewController, UIPopoverPresentationControllerDelegate {
 	
 	@IBOutlet weak var pickerView: UIDatePicker!
 	@IBOutlet weak var toolBar: UIToolbar!
 	weak var refSRKDateTimeBox:SRKDateTimeBox?
 	
-	override public func viewDidLoad() {
+	override open func viewDidLoad() {
 		super.viewDidLoad()
-		self.preferredContentSize = CGSizeMake(320, 260)
+		self.preferredContentSize = CGSize(width: 320, height: 260)
 		if let clr = self.refSRKDateTimeBox?.delegateForDateTimeBox?.dateTimeBoxTintColor(self.refSRKDateTimeBox!) {
 			self.toolBar.tintColor = clr
 		}
@@ -84,25 +84,25 @@ import UIKit
 		self.pickerView.datePickerMode = (self.refSRKDateTimeBox?.delegateForDateTimeBox?.dateTimeBoxType(self.refSRKDateTimeBox!))!
 	}
 	
-	override public func didReceiveMemoryWarning() {
+	override open func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 	}
 	
-	@IBAction public func dateChanged(sender: UIDatePicker) {
+	@IBAction open func dateChanged(_ sender: UIDatePicker) {
 		self.refSRKDateTimeBox?.delegateForDateTimeBox?.dateTimeBox(self.refSRKDateTimeBox!, didSelectDate: sender.date)
 	}
 	
-	@IBAction public func btnDoneTapped(sender: UIBarButtonItem) {
+	@IBAction open func btnDoneTapped(_ sender: UIBarButtonItem) {
 		self.refSRKDateTimeBox?.delegateForDateTimeBox?.dateTimeBoxDidTappedDone(self.refSRKDateTimeBox!)
-		self.dismissViewControllerAnimated(true, completion: nil)
+		self.dismiss(animated: true, completion: nil)
 	}
 	
-	@IBAction public func btnCancelTapped(sender: UIBarButtonItem) {
+	@IBAction open func btnCancelTapped(_ sender: UIBarButtonItem) {
 		self.refSRKDateTimeBox?.delegateForDateTimeBox?.dateTimeBoxDidTappedCancel(self.refSRKDateTimeBox!)
-		self.dismissViewControllerAnimated(true, completion: nil)
+		self.dismiss(animated: true, completion: nil)
 	}
 	
-	public func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-		return UIModalPresentationStyle.None
+	open func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+		return UIModalPresentationStyle.none
 	}
 }

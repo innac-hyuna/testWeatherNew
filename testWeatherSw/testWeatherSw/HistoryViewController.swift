@@ -18,7 +18,7 @@ class HistoryViewController: UIViewController {
     let his = historyManadger()
 
     let managedObjectContext =
-        (UIApplication.sharedApplication().delegate
+        (UIApplication.shared.delegate
             as! AppDelegate).managedObjectContext
 
     override func viewDidLoad() {
@@ -28,7 +28,7 @@ class HistoryViewController: UIViewController {
         tableView =  UITableView()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerClass(CityTableViewCell.self, forCellReuseIdentifier: "CellHistory")
+        tableView.register(CityTableViewCell.self, forCellReuseIdentifier: "CellHistory")
         setupLayout()
         arrHistory = his.historyGetArray()
     
@@ -39,7 +39,7 @@ class HistoryViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidDisappear(animated: Bool) {        
+    override func viewDidDisappear(_ animated: Bool) {        
        
     }
     
@@ -51,19 +51,19 @@ class HistoryViewController: UIViewController {
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
-         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-0-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
-         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-60-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
+         view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-0-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
+         view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-60-[tableView]-0-|", options: [], metrics: nil, views: viewsDict))
     }
     
-    func delClick (sender: UIButton) {
+    func delClick (_ sender: UIButton) {
         
         let ind = sender.tag
         
         his.historyDel(arrHistory, ind: ind)
         
-        arrHistory.removeAtIndex(ind)
+        arrHistory.remove(at: ind)
         tableView.reloadData()
 }
     
@@ -72,29 +72,29 @@ class HistoryViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension HistoryViewController: UITableViewDataSource {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return arrHistory.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell:CityTableViewCell  = tableView.dequeueReusableCellWithIdentifier("CellHistory", forIndexPath: indexPath) as! CityTableViewCell
+        let cell:CityTableViewCell  = tableView.dequeueReusableCell(withIdentifier: "CellHistory", for: indexPath) as! CityTableViewCell
         
-            cell.cityLabel.text = arrHistory[indexPath.row].name;
-            cell.countryLabel.text = arrHistory[indexPath.row].country;
-            cell.idLabel.text = String(arrHistory[indexPath.row].id);
-            cell.delButton.addTarget(self, action: #selector(HistoryViewController.delClick(_:)), forControlEvents: .TouchUpInside)
-            cell.delButton.tag  = indexPath.row
+            cell.cityLabel.text = arrHistory[(indexPath as NSIndexPath).row].name;
+            cell.countryLabel.text = arrHistory[(indexPath as NSIndexPath).row].country;
+            cell.idLabel.text = String(arrHistory[(indexPath as NSIndexPath).row].id);
+            cell.delButton.addTarget(self, action: #selector(HistoryViewController.delClick(_:)), for: .touchUpInside)
+            cell.delButton.tag  = (indexPath as NSIndexPath).row
        
         return cell
     }
     
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let MyDetView: WeatherCityViewController = WeatherCityViewController()
-        MyDetView.cityId = arrHistory[indexPath.row].id
+        MyDetView.cityId = arrHistory[(indexPath as NSIndexPath).row].id
         navigationController?.pushViewController(MyDetView, animated: true)
         
     }
@@ -104,7 +104,7 @@ extension HistoryViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension HistoryViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return 50
         

@@ -23,21 +23,21 @@ class WeatherNowGet {
     var imgW: String = ""
     
   
-    func getWeatherCity(cityID: Int, lat: Double, lon: Double) {
+    func getWeatherCity(_ cityID: Int, lat: Double, lon: Double) {
         
-        let url = NSURL(string: stringWeather(cityID, lat: lat, lon: lon)!)        
-        let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
-        let task = session.dataTaskWithURL(url!) { [unowned self] (data, response, error) -> Void in
+        let url = URL(string: stringWeather(cityID, lat: lat, lon: lon)!)        
+        let session = URLSession(configuration: URLSessionConfiguration.default)
+        let task = session.dataTask(with: url!) { [unowned self] (data, response, error) -> Void in
             if error != nil {
                 print("Error: \(error?.localizedDescription)")
                 return
             }
-            if let httpResponse = response as? NSHTTPURLResponse {// where httpResponse.statusCode == 200 {                
+            if let httpResponse = response as? HTTPURLResponse {// where httpResponse.statusCode == 200 {                
                 if httpResponse.statusCode == 200 {
                     let parsedData = self.getDataFromJson(data!)
                     
-                    dispatch_async(dispatch_get_main_queue()) {
-                        NSNotificationCenter.defaultCenter().postNotificationName(constNotification.WeatherNowChange, object: parsedData, userInfo: nil)
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: constNotification.WeatherNowChange), object: parsedData, userInfo: nil)
                     }
                 }
             }            
@@ -46,7 +46,7 @@ class WeatherNowGet {
         task.resume()
     }
     
-    func getDataFromJson(data: NSData) -> WeatherNowGet  {
+    func getDataFromJson(_ data: Data) -> WeatherNowGet  {
         
         
         let json = JSON(data: data)
@@ -79,7 +79,7 @@ class WeatherNowGet {
     }
     
       
-    private func stringWeather(cityID: Int, lat: Double, lon: Double) -> String? {
+    fileprivate func stringWeather(_ cityID: Int, lat: Double, lon: Double) -> String? {
         
         var requestString = ""
         

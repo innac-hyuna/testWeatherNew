@@ -24,25 +24,25 @@ class WeatherGet {
     var date: String = String()
     var imgW: String = ""
     
-    func getWeatherCity(cityID: Int, dayCount: String, view: UIView, lat: Double, lon: Double) {
-        let url = NSURL(string: stringWeather(cityID, dayCount: dayCount, lat: lat, lon: lon)!)
+    func getWeatherCity(_ cityID: Int, dayCount: String, view: UIView, lat: Double, lon: Double) {
+        let url = URL(string: stringWeather(cityID, dayCount: dayCount, lat: lat, lon: lon)!)
         
-        let progressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
-        progressHUD.labelText = "Loading..."
-        let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
-        let task = session.dataTaskWithURL(url!) { [unowned self] (data, response, error) -> Void in
+        let progressHUD = MBProgressHUD.showAdded(to: view, animated: true)
+        progressHUD?.labelText = "Loading..."
+        let session = URLSession(configuration: URLSessionConfiguration.default)
+        let task = session.dataTask(with: url!) { [unowned self] (data, response, error) -> Void in
             if error != nil {
                 print("Error: \(error?.localizedDescription)")
                 return
             }
-        if let httpResponse = response as? NSHTTPURLResponse {
+        if let httpResponse = response as? HTTPURLResponse {
         if httpResponse.statusCode == 200 {
                    
                     let parsedData = self.getDataFromJson(data!)
                     
-                    dispatch_async(dispatch_get_main_queue()) {
-                        NSNotificationCenter.defaultCenter().postNotificationName(constNotification.WeatherChange, object: parsedData, userInfo: nil)
-                        MBProgressHUD.hideAllHUDsForView(view, animated: true)
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: constNotification.WeatherChange), object: parsedData, userInfo: nil)
+                        MBProgressHUD.hideAllHUDs(for: view, animated: true)
                     }
                     
                 }
@@ -55,7 +55,7 @@ class WeatherGet {
     }
     
     
-    func getDataFromJson(data: NSData) -> Array  <WeatherGet> {
+    func getDataFromJson(_ data: Data) -> Array  <WeatherGet> {
         
         
         let json = JSON(data: data)
@@ -94,7 +94,7 @@ class WeatherGet {
    }
    
         
-    private func stringWeather(cityID: Int,  dayCount: String, lat: Double, lon: Double) -> String? {
+    fileprivate func stringWeather(_ cityID: Int,  dayCount: String, lat: Double, lon: Double) -> String? {
         
         var requestString = ""
         
@@ -111,31 +111,31 @@ class WeatherGet {
 }
 
 // MARK: - NSDate
-extension NSDate {
-    convenience init?(jsonDate: String) {
+extension Date {
+    init?(jsonDate: String) {
         
         let prefix = "/DateOptional("
         let suffix = ")/"
         // Check for correct format:
         if jsonDate.hasPrefix(prefix) && jsonDate.hasSuffix(suffix) {
             // Extract the number as a string:
-            let from = jsonDate.startIndex.advancedBy(prefix.characters.count)
-            let to = jsonDate.endIndex.advancedBy(-suffix.characters.count)
+            let from = jsonDate.characters.index(jsonDate.startIndex, offsetBy: prefix.characters.count)
+            let to = jsonDate.characters.index(jsonDate.endIndex, offsetBy: -suffix.characters.count)
             // Convert milleseconds to double
             guard let milliSeconds = Double(jsonDate[from ..< to]) else {
                 return nil
             }
             // Create NSDate with this UNIX timestamp
-            self.init(timeIntervalSince1970: milliSeconds)
+            (self as NSDate).init(timeIntervalSince1970: milliSeconds)
         } else {
             return nil
         }
     }
     
-    func dateStringWithFormat(format: String) -> String {
-        let dateFormatter = NSDateFormatter()
+    func dateStringWithFormat(_ format: String) -> String {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
-        return dateFormatter.stringFromDate(self)
+        return dateFormatter.string(from: self)
     }
     
 }

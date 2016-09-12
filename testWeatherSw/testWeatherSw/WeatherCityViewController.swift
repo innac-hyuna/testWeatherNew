@@ -45,7 +45,7 @@ class WeatherCityViewController:  UIViewController{
     getWeather = WeatherGet()
     getWeatherNow = WeatherNowGet()
     
-    navigationBar = UINavigationBar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44))
+    navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 44))
     let navigationItem = UINavigationItem()
     navigationBar.items = [navigationItem]
     view.addSubview(navigationBar)
@@ -55,7 +55,7 @@ class WeatherCityViewController:  UIViewController{
     tableViewWeather.delegate = self
     tableViewWeather.dataSource = self
     tableViewWeather.separatorColor = UIColor.sepColor()
-    tableViewWeather.registerClass(WeatherTableViewCell.self, forCellReuseIdentifier: "CellWeather")
+    tableViewWeather.register(WeatherTableViewCell.self, forCellReuseIdentifier: "CellWeather")
     view.addSubview(tableViewWeather)
     tableViewWeather.translatesAutoresizingMaskIntoConstraints = false
     
@@ -68,7 +68,7 @@ class WeatherCityViewController:  UIViewController{
     weatherImg.translatesAutoresizingMaskIntoConstraints = false
     
     weathrSwitch = SWSegmentedControl(items: ["C", "F"])
-    weathrSwitch.addTarget(self, action: #selector(WeatherCityViewController.switchIsChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+    weathrSwitch.addTarget(self, action: #selector(WeatherCityViewController.switchIsChanged(_:)), for: UIControlEvents.valueChanged)
     view.addSubview(weathrSwitch)
     weathrSwitch.translatesAutoresizingMaskIntoConstraints = false
     
@@ -97,7 +97,7 @@ class WeatherCityViewController:  UIViewController{
     myComboBox.text = arrayForComboBox[0]
     myComboBox.setBorder()
     myComboBox.textColor = UIColor.onBlackTextColor()
-    myComboBox.textAlignment =  NSTextAlignment.Center
+    myComboBox.textAlignment =  NSTextAlignment.center
     view.addSubview(myComboBox)
     myComboBox.translatesAutoresizingMaskIntoConstraints = false
   
@@ -106,23 +106,23 @@ class WeatherCityViewController:  UIViewController{
     setLayout()
     }
     
-    func pressed(sender: UIButton) {
+    func pressed(_ sender: UIButton) {
         
         let newVC = CitySViewController()
         navigationController?.pushViewController(newVC, animated: true)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(true)
         getWeatherNow.getWeatherCity(cityId, lat: lat, lon: lon)
         setupObserversNow()
         reloadData()
      }
 
-    override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         //if traitCollection.horizontalSizeClass = UIUserInterfaceSizeClass.Compact
-        NSLayoutConstraint.activateConstraints(compactConstraints)
+        NSLayoutConstraint.activate(compactConstraints)
         
     }
     
@@ -130,203 +130,203 @@ class WeatherCityViewController:  UIViewController{
     
    let topBar = self.topLayoutGuide
     NSLayoutConstraint(item: navigationBar,
-                       attribute: NSLayoutAttribute.TopMargin,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.topMargin,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: view,
-                       attribute: NSLayoutAttribute.TopMargin,
+                       attribute: NSLayoutAttribute.topMargin,
                        multiplier: 1.0,
-                       constant: 10).active = true
+                       constant: 10).isActive = true
     
     compactConstraints.append( NSLayoutConstraint(item: navigationBar,
-                       attribute: NSLayoutAttribute.Height,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.height,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: topBar,
-                       attribute: NSLayoutAttribute.Height,
+                       attribute: NSLayoutAttribute.height,
                        multiplier: 1.0,
                        constant: 0))
     
     NSLayoutConstraint(item: wnowView,
-                       attribute: NSLayoutAttribute.TopMargin,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.topMargin,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: navigationBar,
-                       attribute: NSLayoutAttribute.BottomMargin,
+                       attribute: NSLayoutAttribute.bottomMargin,
                        multiplier: 1.0,
-                       constant: 15).active = true
+                       constant: 15).isActive = true
     NSLayoutConstraint(item: wnowView,
-                       attribute: NSLayoutAttribute.Width,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.width,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: view,
-                       attribute: NSLayoutAttribute.Width,
+                       attribute: NSLayoutAttribute.width,
                        multiplier: 1.0,
-                       constant: -130 ).active = true
+                       constant: -130 ).isActive = true
     NSLayoutConstraint(item: wnowView,
-                       attribute: NSLayoutAttribute.LeftMargin,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.leftMargin,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: view,
-                       attribute: NSLayoutAttribute.LeftMargin,
+                       attribute: NSLayoutAttribute.leftMargin,
                        multiplier: 1.0,
-                       constant: 0).active = true
+                       constant: 0).isActive = true
     NSLayoutConstraint(item: wnowView,
-                       attribute: NSLayoutAttribute.Height,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.height,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: nil,
-                       attribute: NSLayoutAttribute.NotAnAttribute,
+                       attribute: NSLayoutAttribute.notAnAttribute,
                        multiplier: 1.0,
-                       constant: 40).active = true
+                       constant: 40).isActive = true
     
     NSLayoutConstraint(item: weathrSwitch,
-                       attribute: NSLayoutAttribute.TopMargin,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.topMargin,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: navigationBar,
-                       attribute: NSLayoutAttribute.BottomMargin,
+                       attribute: NSLayoutAttribute.bottomMargin,
                        multiplier: 1.0,
-                       constant: 15).active = true
+                       constant: 15).isActive = true
     NSLayoutConstraint(item: weathrSwitch,
-                       attribute: NSLayoutAttribute.LeftMargin,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.leftMargin,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: wnowView,
-                       attribute: NSLayoutAttribute.RightMargin,
+                       attribute: NSLayoutAttribute.rightMargin,
                        multiplier: 1.0,
-                       constant: 10).active = true
+                       constant: 10).isActive = true
     NSLayoutConstraint(item: weathrSwitch,
-                       attribute: NSLayoutAttribute.Height,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.height,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: nil,
-                       attribute: NSLayoutAttribute.NotAnAttribute,
+                       attribute: NSLayoutAttribute.notAnAttribute,
                        multiplier: 1.0,
-                       constant: 40).active = true
+                       constant: 40).isActive = true
     
     NSLayoutConstraint(item: dayLabel,
-                       attribute: NSLayoutAttribute.TopMargin,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.topMargin,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: navigationBar,
-                       attribute: NSLayoutAttribute.BottomMargin,
+                       attribute: NSLayoutAttribute.bottomMargin,
                        multiplier: 1.0,
-                       constant: 15).active = true
+                       constant: 15).isActive = true
     NSLayoutConstraint(item: dayLabel,
-                       attribute: NSLayoutAttribute.LeftMargin,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.leftMargin,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: weathrSwitch,
-                       attribute: NSLayoutAttribute.RightMargin,
+                       attribute: NSLayoutAttribute.rightMargin,
                        multiplier: 1.0,
-                       constant: 15).active = true
+                       constant: 15).isActive = true
     NSLayoutConstraint(item: dayLabel,
-                       attribute: NSLayoutAttribute.Height,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.height,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: nil,
-                       attribute: NSLayoutAttribute.NotAnAttribute,
+                       attribute: NSLayoutAttribute.notAnAttribute,
                        multiplier: 1.0,
-                       constant: 40).active = true
+                       constant: 40).isActive = true
     
     NSLayoutConstraint(item: myComboBox,
-                       attribute: NSLayoutAttribute.TopMargin,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.topMargin,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: navigationBar,
-                       attribute: NSLayoutAttribute.BottomMargin,
+                       attribute: NSLayoutAttribute.bottomMargin,
                        multiplier: 1.0,
-                       constant: 25).active = true
+                       constant: 25).isActive = true
     NSLayoutConstraint(item: myComboBox,
-                       attribute: NSLayoutAttribute.LeftMargin,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.leftMargin,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: dayLabel,
-                       attribute: NSLayoutAttribute.RightMargin,
+                       attribute: NSLayoutAttribute.rightMargin,
                        multiplier: 1.0,
-                       constant: 20).active = true
+                       constant: 20).isActive = true
     NSLayoutConstraint(item: myComboBox,
-                       attribute: NSLayoutAttribute.Width,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.width,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: nil,
-                       attribute: NSLayoutAttribute.NotAnAttribute,
+                       attribute: NSLayoutAttribute.notAnAttribute,
                        multiplier: 1.0,
-                       constant: 20).active = true
+                       constant: 20).isActive = true
     NSLayoutConstraint(item: myComboBox,
-                       attribute: NSLayoutAttribute.Height,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.height,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: nil,
-                       attribute: NSLayoutAttribute.NotAnAttribute,
+                       attribute: NSLayoutAttribute.notAnAttribute,
                        multiplier: 1.0,
-                       constant: 20).active = true
+                       constant: 20).isActive = true
     
     NSLayoutConstraint(item: tableViewWeather,
-                       attribute: NSLayoutAttribute.TopMargin,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.topMargin,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: myComboBox,
-                       attribute: NSLayoutAttribute.BottomMargin,
+                       attribute: NSLayoutAttribute.bottomMargin,
                        multiplier: 1.0,
-                       constant: 25).active = true
+                       constant: 25).isActive = true
     NSLayoutConstraint(item: tableViewWeather,
-                       attribute: NSLayoutAttribute.Width,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.width,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: view,
-                       attribute: NSLayoutAttribute.Width,
+                       attribute: NSLayoutAttribute.width,
                        multiplier: 1.0,
-                       constant: 0).active = true
+                       constant: 0).isActive = true
     NSLayoutConstraint(item: tableViewWeather,
-                       attribute: NSLayoutAttribute.BottomMargin,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.bottomMargin,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: view,
-                       attribute: NSLayoutAttribute.BottomMargin,
+                       attribute: NSLayoutAttribute.bottomMargin,
                        multiplier: 1.0,
-                       constant: 0).active = true
+                       constant: 0).isActive = true
     
     NSLayoutConstraint(item: weatherImg,
-                       attribute: NSLayoutAttribute.CenterY,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.centerY,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: wnowView,
-                       attribute: NSLayoutAttribute.CenterY,
+                       attribute: NSLayoutAttribute.centerY,
                        multiplier: 1.0,
-                       constant: 0).active = true
+                       constant: 0).isActive = true
     NSLayoutConstraint(item: weatherImg,
-                       attribute: NSLayoutAttribute.LeftMargin,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.leftMargin,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: wnowView,
-                       attribute: NSLayoutAttribute.LeftMargin,
+                       attribute: NSLayoutAttribute.leftMargin,
                        multiplier: 1.0,
-                       constant: 0).active = true
+                       constant: 0).isActive = true
     
     NSLayoutConstraint(item: tempLabel,
-                       attribute: NSLayoutAttribute.CenterY,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.centerY,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: wnowView,
-                       attribute: NSLayoutAttribute.CenterY,
+                       attribute: NSLayoutAttribute.centerY,
                        multiplier: 1.0,
-                       constant: 0).active = true
+                       constant: 0).isActive = true
     NSLayoutConstraint(item: tempLabel,
-                       attribute: NSLayoutAttribute.LeftMargin,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.leftMargin,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: nameCityLabel,
-                       attribute: NSLayoutAttribute.RightMargin,
+                       attribute: NSLayoutAttribute.rightMargin,
                        multiplier: 1.0,
-                       constant: 25).active = true
+                       constant: 25).isActive = true
     NSLayoutConstraint(item: tempLabel,
-                       attribute: NSLayoutAttribute.Width,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.width,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: nil,
-                       attribute: NSLayoutAttribute.NotAnAttribute,
+                       attribute: NSLayoutAttribute.notAnAttribute,
                        multiplier: 1.0,
-                       constant: 30).active = true
+                       constant: 30).isActive = true
     
     NSLayoutConstraint(item: nameCityLabel,
-                       attribute: NSLayoutAttribute.CenterY,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.centerY,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: wnowView,
-                       attribute: NSLayoutAttribute.CenterY,
+                       attribute: NSLayoutAttribute.centerY,
                        multiplier: 1.0,
-                       constant: 0).active = true
+                       constant: 0).isActive = true
     NSLayoutConstraint(item: nameCityLabel,
-                       attribute: NSLayoutAttribute.LeftMargin,
-                       relatedBy: NSLayoutRelation.Equal,
+                       attribute: NSLayoutAttribute.leftMargin,
+                       relatedBy: NSLayoutRelation.equal,
                        toItem: weatherImg,
-                       attribute: NSLayoutAttribute.RightMargin,
+                       attribute: NSLayoutAttribute.rightMargin,
                        multiplier: 1.0,
-                       constant: 20).active = true
+                       constant: 20).isActive = true
     NSLayoutConstraint(item: nameCityLabel,
-                       attribute: NSLayoutAttribute.Width,
-                       relatedBy: NSLayoutRelation.LessThanOrEqual,
+                       attribute: NSLayoutAttribute.width,
+                       relatedBy: NSLayoutRelation.lessThanOrEqual,
                        toItem: wnowView,
-                       attribute: NSLayoutAttribute.Width,
+                       attribute: NSLayoutAttribute.width,
                        multiplier: 1.0,
-                       constant: -110).active = true
+                       constant: -110).isActive = true
     
  }
 
@@ -337,18 +337,18 @@ class WeatherCityViewController:  UIViewController{
     
      }
     
-    private func setupObservers() {
+    fileprivate func setupObservers() {
        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WeatherCityViewController.weatherData(_:)), name: constNotification.WeatherChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WeatherCityViewController.weatherData(_:)), name: NSNotification.Name(rawValue: constNotification.WeatherChange), object: nil)
      }
     
-    private func setupObserversNow() {
+    fileprivate func setupObserversNow() {
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WeatherCityViewController.weatherNowData(_:)), name: constNotification.WeatherNowChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WeatherCityViewController.weatherNowData(_:)), name: NSNotification.Name(rawValue: constNotification.WeatherNowChange), object: nil)
       
      }
     
-    func weatherData(notificaion: NSNotification) {
+    func weatherData(_ notificaion: Notification) {
         
         guard let arrWeather = notificaion.object as? Array<WeatherGet> else {
             return
@@ -359,7 +359,7 @@ class WeatherCityViewController:  UIViewController{
          
      }
     
-    func weatherNowData(notificaion: NSNotification) {
+    func weatherNowData(_ notificaion: Notification) {
         
         guard let arrWeather = notificaion.object as? WeatherNowGet else {
             return
@@ -375,14 +375,14 @@ class WeatherCityViewController:  UIViewController{
           nameCityLabel.text = arrWNow.name
           tempLabel.text =  convertToTemp(Int(arrWNow.maxValue))
        
-           if let URL =  NSURL(string: arrWNow.imgW ) {
+           if let URL =  URL(string: arrWNow.imgW ) {
             let resource = Resource(downloadURL: URL, cacheKey: arrWNow.imgW)
              weatherImg.kf_setImageWithResource(resource)
         }
      }
     
   
-    func convertToTemp(kelvin: Int) -> String {
+    func convertToTemp(_ kelvin: Int) -> String {
         
         if weathrSwitch.selectedSegmentIndex == 1 {
             return String(format:"%.0f F", Double(kelvin) * 9.0/5.0 - 459.67) // F
@@ -392,7 +392,7 @@ class WeatherCityViewController:  UIViewController{
         }
     }
     
-    func switchIsChanged(weathrSwitch: UISwitch) {
+    func switchIsChanged(_ weathrSwitch: UISwitch) {
         tempLabel.text =  convertToTemp(Int(arrWNow.maxValue))
         tableViewWeather.reloadData()
     }
@@ -403,22 +403,22 @@ class WeatherCityViewController:  UIViewController{
 // MARK: - UITableViewDelegate
 extension WeatherCityViewController: UITableViewDataSource {
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return arrW.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell:WeatherTableViewCell  = tableView.dequeueReusableCellWithIdentifier("CellWeather", forIndexPath: indexPath) as! WeatherTableViewCell
-        let weatherDay = arrW[indexPath.row]        
+        let cell:WeatherTableViewCell  = tableView.dequeueReusableCell(withIdentifier: "CellWeather", for: indexPath) as! WeatherTableViewCell
+        let weatherDay = arrW[(indexPath as NSIndexPath).row]        
         
-        if (indexPath.row%2 == 0) {
+        if ((indexPath as NSIndexPath).row%2 == 0) {
             cell.backgroundColor = UIColor.oneCellColor()
         } else {
             cell.backgroundColor = UIColor.twoCellColor()}
         
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         cell.dateLabel.text =  weatherDay.date;
         cell.minvalLabel.text = "Min t : " + convertToTemp(
             Int(weatherDay.minValue));
@@ -426,7 +426,7 @@ extension WeatherCityViewController: UITableViewDataSource {
             Int(weatherDay.maxValue));
         cell.mainLabel.text = weatherDay.main + " : " + weatherDay.desription
         cell.windsLabel.text = "Wind speed : " +  String(format:"%.0f",  weatherDay.windS)        
-        if let URL = NSURL(string: weatherDay.imgW) {
+        if let URL = URL(string: weatherDay.imgW) {
         let resource = Resource(downloadURL: URL, cacheKey: weatherDay.imgW)
             cell.weatherImg.kf_setImageWithResource(resource, placeholderImage: UIImage(named:"placeholder.png"))}
         
@@ -438,7 +438,7 @@ extension WeatherCityViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension WeatherCityViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return 50
     }    
@@ -448,7 +448,7 @@ extension WeatherCityViewController: UITableViewDelegate {
 // MARK: - UITextFieldDelegate
 extension WeatherCityViewController: UITextFieldDelegate {
     
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if let txt = textField as? SRKComboBox {
             txt.delegateForComboBox = self
             txt.showOptions()
@@ -462,13 +462,13 @@ extension WeatherCityViewController: UITextFieldDelegate {
 // MARK: - SRKComboBoxDelegate
 extension WeatherCityViewController: SRKComboBoxDelegate {
     
-    func comboBox(textField: SRKComboBox, didSelectRow row: Int) {
+    func comboBox(_ textField: SRKComboBox, didSelectRow row: Int) {
         if textField == self.myComboBox {
             self.myComboBox.text = self.arrayForComboBox[row]
         }
     }
     
-    func comboBoxNumberOfRows(textField: SRKComboBox) -> Int {
+    func comboBoxNumberOfRows(_ textField: SRKComboBox) -> Int {
         if textField == self.myComboBox {
             return self.arrayForComboBox.count
         } else {
@@ -476,7 +476,7 @@ extension WeatherCityViewController: SRKComboBoxDelegate {
         }
     }
     
-    func comboBox(textField:SRKComboBox, textForRow row: Int) -> String {
+    func comboBox(_ textField:SRKComboBox, textForRow row: Int) -> String {
         if textField == self.myComboBox {
             return self.arrayForComboBox[row]
         } else {
@@ -484,31 +484,31 @@ extension WeatherCityViewController: SRKComboBoxDelegate {
         }
     }
     
-    func comboBoxPresentingViewController(textField: SRKComboBox) -> UIViewController {
+    func comboBoxPresentingViewController(_ textField: SRKComboBox) -> UIViewController {
         return self
     }
     
-    func comboBoxRectFromWhereToPresent(textField: SRKComboBox) -> CGRect {
+    func comboBoxRectFromWhereToPresent(_ textField: SRKComboBox) -> CGRect {
         return textField.frame
     }
     
-    func comboBoxFromBarButton(textField: SRKComboBox) -> UIBarButtonItem? {
+    func comboBoxFromBarButton(_ textField: SRKComboBox) -> UIBarButtonItem? {
         return nil
     }
     
-    func comboBoxTintColor(textField: SRKComboBox) -> UIColor {
+    func comboBoxTintColor(_ textField: SRKComboBox) -> UIColor {
         return UIColor.twoCellColor()
     }
     
-    func comboBoxToolbarColor(textField:SRKComboBox) -> UIColor {
+    func comboBoxToolbarColor(_ textField:SRKComboBox) -> UIColor {
         return UIColor.oneCellColor()
     }
     
-    func comboBoxDidTappedCancel(textField:SRKComboBox) {
+    func comboBoxDidTappedCancel(_ textField:SRKComboBox) {
         textField.text = ""
     }
     
-    func comboBoxDidTappedDone(textField:SRKComboBox) {
+    func comboBoxDidTappedDone(_ textField:SRKComboBox) {
         
         reloadData()
     }
