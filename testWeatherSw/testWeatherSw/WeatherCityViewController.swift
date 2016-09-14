@@ -376,10 +376,11 @@ class WeatherCityViewController:  UIViewController{
           tempLabel.text =  convertToTemp(Int(arrWNow.maxValue))
        
            if let URL =  URL(string: arrWNow.imgW ) {
-            let resource = Resource(downloadURL: URL, cacheKey: arrWNow.imgW)
-             weatherImg.kf_setImageWithResource(resource)
+            let resource =  ImageResource(downloadURL: URL, cacheKey: arrWNow.imgW)
+             weatherImg.kf_setImage(with: resource)
         }
-     }
+        
+    }
     
   
     func convertToTemp(_ kelvin: Int) -> String {
@@ -427,9 +428,9 @@ extension WeatherCityViewController: UITableViewDataSource {
         cell.mainLabel.text = weatherDay.main + " : " + weatherDay.desription
         cell.windsLabel.text = "Wind speed : " +  String(format:"%.0f",  weatherDay.windS)        
         if let URL = URL(string: weatherDay.imgW) {
-        let resource = Resource(downloadURL: URL, cacheKey: weatherDay.imgW)
-            cell.weatherImg.kf_setImageWithResource(resource, placeholderImage: UIImage(named:"placeholder.png"))}
-        
+        let resource = ImageResource(downloadURL: URL, cacheKey: weatherDay.imgW)
+            cell.weatherImg.kf_setImage(with: resource, placeholder:  UIImage(named:"placeholder.png"))
+        }
         return cell
     }    
 

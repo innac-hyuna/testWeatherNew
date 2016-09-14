@@ -10,6 +10,7 @@
 		110809976AB7D9DEE2DC3D9F /* Pods_testWeatherSwUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D91D7275E482F9E71B9CC51 /* Pods_testWeatherSwUITests.framework */; };
 		4CBE04EA23501FB83218534E /* Pods_testWeatherSw.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DFE9397E5FE302F3BDA7BE4 /* Pods_testWeatherSw.framework */; };
 		CB12C024600DC7E2F47D23C9 /* Pods_testWeatherSwTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 558F8EB58959F30C87F528B6 /* Pods_testWeatherSwTests.framework */; };
+		DA1704331D89839200D8BB9D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD1CFA51CE07E2A0086F511 /* libz.tbd */; };
 		DA2F00801CD203F1005ACCC2 /* WeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F007F1CD203F1005ACCC2 /* WeatherTableViewCell.swift */; };
 		DA2F00871CD2720B005ACCC2 /* WeatherNowGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F00861CD2720B005ACCC2 /* WeatherNowGet.swift */; };
 		DA4E45541CCFA24D00F44E81 /* WeatherGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4E45531CCFA24D00F44E81 /* WeatherGet.swift */; };
@@ -26,7 +27,6 @@
 		DAD13A181CCF5C470035AE55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAD13A171CCF5C470035AE55 /* Assets.xcassets */; };
 		DAD13A261CCF5C470035AE55 /* testWeatherSwTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD13A251CCF5C470035AE55 /* testWeatherSwTests.swift */; };
 		DAD13A311CCF5C470035AE55 /* testWeatherSwUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD13A301CCF5C470035AE55 /* testWeatherSwUITests.swift */; };
-		DAD1CFB01CE08BA10086F511 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD1CFA51CE07E2A0086F511 /* libz.tbd */; };
 		DAD41DB51CF6F9B70078ED02 /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD41DB41CF6F9B70078ED02 /* Design.swift */; };
 		DAD4C7731CE9BB7800DB62F9 /* DiskStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD4C7721CE9BB7800DB62F9 /* DiskStatus.swift */; };
 		DAE8153E1CEB082D00D984F2 /* History.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DAE8153C1CEB082D00D984F2 /* History.xcdatamodeld */; };
@@ -89,7 +89,7 @@
 		DAD1CFB41CE08D3A0086F511 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DAD41DB41CF6F9B70078ED02 /* Design.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		DAD4C7721CE9BB7800DB62F9 /* DiskStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskStatus.swift; sourceTree = "<group>"; };
-		DADF4C991D870BF70062420A /* testWeatherSwTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "testWeatherSwTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		DADF4C991D870BF70062420A /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		DADF4C9B1D870D370062420A /* testWeatherSwUITests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "testWeatherSwUITests-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		DAE8153D1CEB082D00D984F2 /* History.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = History.xcdatamodel; sourceTree = "<group>"; };
 		DAEF74141CD0DC6B00CCB88F /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAD1CFB01CE08BA10086F511 /* libz.tbd in Frameworks */,
+				DA1704331D89839200D8BB9D /* libz.tbd in Frameworks */,
 				4CBE04EA23501FB83218534E /* Pods_testWeatherSw.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -172,7 +172,7 @@
 				DAD13A0E1CCF5C470035AE55 /* Products */,
 				F3817E45A54D70D27F78BDF6 /* Frameworks */,
 				3F4EB33DF51823FDC7E8B771 /* Pods */,
-				DADF4C991D870BF70062420A /* testWeatherSwTests-Bridging-Header.h */,
+				DADF4C991D870BF70062420A /* Bridging-Header.h */,
 				DADF4C9B1D870D370062420A /* testWeatherSwUITests-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";

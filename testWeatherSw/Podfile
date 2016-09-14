@@ -7,7 +7,7 @@ target ‘testWeatherSw’ do
        pod 'Kingfisher', :git => 'https://github.com/onevcat/Kingfisher.git', :branch => 'swift3'
        pod 'MBProgressHUD', '~> 0.9.2'
        #  pod 'ProgressKit', :git => 'https://github.com/kaunteya/ProgressKit.git', :branch => 'swift-3'
-       pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'swift3'
+       pod 'SwiftyJSON', git: 'https://github.com/BaiduHiDeviOS/SwiftyJSON.git', branch: 'swift3'
        pod 'SWSegmentedControl'
        pod 'SRKControls'
 end

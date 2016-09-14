@@ -211,7 +211,7 @@ extension CitySViewController: UITableViewDataSource {
         return cell
       }
         
-      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+      @objc(tableView:didSelectRowAtIndexPath:) func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             
           let MyDetView: WeatherCityViewController = WeatherCityViewController()
                  

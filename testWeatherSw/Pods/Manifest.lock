@@ -13,7 +13,7 @@ DEPENDENCIES:
   - Kingfisher (from `https://github.com/onevcat/Kingfisher.git`, branch `swift3`)
   - MBProgressHUD (~> 0.9.2)
   - SRKControls
-  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `swift3`)
+  - SwiftyJSON (from `https://github.com/BaiduHiDeviOS/SwiftyJSON.git`, branch `swift3`)
   - SWSegmentedControl
 
 EXTERNAL SOURCES:
@@ -25,7 +25,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/onevcat/Kingfisher.git
   SwiftyJSON:
     :branch: swift3
-    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+    :git: https://github.com/BaiduHiDeviOS/SwiftyJSON.git
 
 CHECKOUT OPTIONS:
   Alamofire:
@@ -35,17 +35,17 @@ CHECKOUT OPTIONS:
     :commit: 3ac0dd1a06ec127f3cfd53b423e46884ec872037
     :git: https://github.com/onevcat/Kingfisher.git
   SwiftyJSON:
-    :commit: 1a9755949a652967dc2986cd7f4653496e556715
-    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+    :commit: de5dc3b1b421805769590d331178551bbb0e5733
+    :git: https://github.com/BaiduHiDeviOS/SwiftyJSON.git
 
 SPEC CHECKSUMS:
   Alamofire: 7f837be535fe424db2b87d9117f13836939719ca
   Kingfisher: 9b82e0e1f1a296f149a50bbc2214532eaa4df4f1
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   SRKControls: ef82f31f3bdea31ab8ec5d36057f553c8b8815a5
-  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  SwiftyJSON: 6118fb49d7519c4d31a0c1f3d5af936e9047b556
   SWSegmentedControl: 77624d5f24135aa57f44cbf8999e7b755dd325ec
 
-PODFILE CHECKSUM: 346b94f9fdb5b2577827f690e67d054ca7f76066
+PODFILE CHECKSUM: 1eb71a0768852222b2f277e43cc746d109e3390b
 
-COCOAPODS: 1.1.0.beta.2
+COCOAPODS: 1.1.0.rc.1

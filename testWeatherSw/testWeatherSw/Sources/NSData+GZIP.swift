@@ -91,7 +91,7 @@ public enum GzipError: Error {
     
     fileprivate init(code: Int32, msg: UnsafePointer<CChar>)
     {
-        let message =  String(cString: msg) ?? "Unknown error"
+        let message =  String(cString: msg) 
         
         switch code {
         case Z_STREAM_ERROR:
@@ -151,7 +151,8 @@ public extension Data
                 data.length += CHUNK_SIZE
             }
             
-            stream.next_out = UnsafeMutablePointer<Bytef>(data.mutableBytes).advanced(by: Int(stream.total_out))
+            
+            stream.next_out = UnsafeMutablePointer<Bytef>(data.mutableBytes.assumingMemoryBound(to: Bytef.IntegerLiteralType.self)).advanced(by: Int(stream.total_out))
             stream.avail_out = uInt(data.length) - uInt(stream.total_out)
             
             deflate(&stream, Z_FINISH)
@@ -198,7 +199,7 @@ public extension Data
                 data.length += self.count / 2;
             }
             
-            stream.next_out = UnsafeMutablePointer<Bytef>(data.mutableBytes).advanced(by: Int(stream.total_out))
+            stream.next_out = UnsafeMutablePointer<Bytef>(data.mutableBytes.assumingMemoryBound(to: Bytef.IntegerLiteralType.self)).advanced(by: Int(stream.total_out))
             stream.avail_out = uInt(data.length) - uInt(stream.total_out)
             
             status = inflate(&stream, Z_SYNC_FLUSH)

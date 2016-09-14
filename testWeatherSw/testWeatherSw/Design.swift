@@ -18,7 +18,7 @@ extension UIFont{
 extension UIColor{
     // Creates a UIColor from a Hex string.
     convenience init(hexString: String) {
-        var cString: String = hexString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).uppercased()
+        var cString: String = hexString.trim().uppercased()
         
         if (cString.hasPrefix("#")) {
             cString = (cString as NSString).substring(from: 1)
@@ -78,5 +78,11 @@ extension UITextField  {
         self.layer.masksToBounds = true
     }
     
+}
+
+extension String  {
+    func trim() -> String {
+      return  self.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
+    }
 }
 

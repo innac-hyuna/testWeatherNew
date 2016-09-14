@@ -91,7 +91,7 @@ extension HistoryViewController: UITableViewDataSource {
     }
     
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    @objc(tableView:didSelectRowAtIndexPath:) func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let MyDetView: WeatherCityViewController = WeatherCityViewController()
         MyDetView.cityId = arrHistory[(indexPath as NSIndexPath).row].id
