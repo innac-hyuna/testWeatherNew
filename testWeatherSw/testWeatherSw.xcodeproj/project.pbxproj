@@ -17,7 +17,6 @@
 		DA4E45561CCFA36E00F44E81 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4E45551CCFA36E00F44E81 /* Const.swift */; };
 		DA4E455E1CCFAB0900F44E81 /* WeatherCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4E455D1CCFAB0900F44E81 /* WeatherCityViewController.swift */; };
 		DA4E45671CCFC62900F44E81 /* CityGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4E45661CCFC62900F44E81 /* CityGet.swift */; };
-		DA4E456B1CCFCF3B00F44E81 /* city.JSON in Resources */ = {isa = PBXBuildFile; fileRef = DA4E456A1CCFCF3B00F44E81 /* city.JSON */; };
 		DA6BAF561CD0EB72005DF506 /* CitySViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6BAF551CD0EB72005DF506 /* CitySViewController.swift */; };
 		DA729F891CDB9DA100683417 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA729F881CDB9DA100683417 /* Downloader.swift */; };
 		DA748AC41CEA298500198DC7 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA748AC31CEA298500198DC7 /* HistoryViewController.swift */; };
@@ -29,6 +28,7 @@
 		DAD13A311CCF5C470035AE55 /* testWeatherSwUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD13A301CCF5C470035AE55 /* testWeatherSwUITests.swift */; };
 		DAD41DB51CF6F9B70078ED02 /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD41DB41CF6F9B70078ED02 /* Design.swift */; };
 		DAD4C7731CE9BB7800DB62F9 /* DiskStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD4C7721CE9BB7800DB62F9 /* DiskStatus.swift */; };
+		DAE62DE51D8A8D73009CCC81 /* city.json in Resources */ = {isa = PBXBuildFile; fileRef = DAE62DE41D8A8D73009CCC81 /* city.json */; };
 		DAE8153E1CEB082D00D984F2 /* History.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DAE8153C1CEB082D00D984F2 /* History.xcdatamodeld */; };
 		DAEF74151CD0DC6B00CCB88F /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF74141CD0DC6B00CCB88F /* CityTableViewCell.swift */; };
 		DAEFAA021CE471940089D299 /* NSData+GZIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEFAA011CE471940089D299 /* NSData+GZIP.swift */; };
@@ -66,7 +66,6 @@
 		DA4E45551CCFA36E00F44E81 /* Const.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		DA4E455D1CCFAB0900F44E81 /* WeatherCityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherCityViewController.swift; sourceTree = "<group>"; };
 		DA4E45661CCFC62900F44E81 /* CityGet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityGet.swift; sourceTree = "<group>"; };
-		DA4E456A1CCFCF3B00F44E81 /* city.JSON */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = city.JSON; sourceTree = "<group>"; };
 		DA6BAF551CD0EB72005DF506 /* CitySViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitySViewController.swift; sourceTree = "<group>"; };
 		DA729F881CDB9DA100683417 /* Downloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		DA748AC31CEA298500198DC7 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +90,7 @@
 		DAD4C7721CE9BB7800DB62F9 /* DiskStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskStatus.swift; sourceTree = "<group>"; };
 		DADF4C991D870BF70062420A /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		DADF4C9B1D870D370062420A /* testWeatherSwUITests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "testWeatherSwUITests-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		DAE62DE41D8A8D73009CCC81 /* city.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = city.json; sourceTree = "<group>"; };
 		DAE8153D1CEB082D00D984F2 /* History.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = History.xcdatamodel; sourceTree = "<group>"; };
 		DAEF74141CD0DC6B00CCB88F /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
 		DAEFAA011CE471940089D299 /* NSData+GZIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSData+GZIP.swift"; path = "Sources/NSData+GZIP.swift"; sourceTree = "<group>"; };
@@ -157,7 +157,7 @@
 		DA4E455F1CCFC24200F44E81 /* JSON */ = {
 			isa = PBXGroup;
 			children = (
-				DA4E456A1CCFCF3B00F44E81 /* city.JSON */,
+				DAE62DE41D8A8D73009CCC81 /* city.json */,
 			);
 			name = JSON;
 			sourceTree = "<group>";
@@ -330,7 +330,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = courses;
 				TargetAttributes = {
 					DAD13A0C1CCF5C470035AE55 = {
@@ -376,7 +376,7 @@
 			files = (
 				DABFA3461CDB4F4900E38332 /* Default-568h@2x.png in Resources */,
 				DAEFAA061CE473050089D299 /* zlib in Resources */,
-				DA4E456B1CCFCF3B00F44E81 /* city.JSON in Resources */,
+				DAE62DE51D8A8D73009CCC81 /* city.json in Resources */,
 				DAD13A181CCF5C470035AE55 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -605,8 +605,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -630,10 +632,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = testWeatherSw/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = main.testWeatherSw;
 				PRODUCT_NAME = testWeatherSw;
 				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
@@ -661,8 +663,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -680,9 +684,9 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = testWeatherSw/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = main.testWeatherSw;
 				PRODUCT_NAME = testWeatherSw;
 				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
@@ -691,7 +695,7 @@
 				SWIFT_INCLUDE_PATHS = zlib;
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Jomedia/Documents/Swift3/testWeatherSw/testWeatherSwTests-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "";
 			};
@@ -701,6 +705,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D8BD66E048260D68DD239C29 /* Pods-testWeatherSw.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = testWeatherSw/Info.plist;
@@ -721,6 +726,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FF0E8DEED8240E950A5E173B /* Pods-testWeatherSw.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = testWeatherSw/Info.plist;

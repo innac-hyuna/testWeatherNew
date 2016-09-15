@@ -104,7 +104,7 @@
                   moduleName = "SRKControls"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jomedia/Documents/Swift3/testWeatherSw/Pods/SRKControls/SRKControls/CustomComboBoxVCtr.swift"
-                  timestampString = "495552201.054659"
+                  timestampString = "495619356.381706"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -119,7 +119,7 @@
                   moduleName = "SRKControls"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jomedia/Documents/Swift3/testWeatherSw/Pods/SRKControls/SRKControls/CustomComboBoxVCtr.swift"
-                  timestampString = "495552201.057824"
+                  timestampString = "495619356.385427"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "31"
@@ -134,7 +134,7 @@
                   moduleName = "SRKControls"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jomedia/Documents/Swift3/testWeatherSw/Pods/SRKControls/SRKControls/CustomComboBoxVCtr.swift"
-                  timestampString = "495552201.060707"
+                  timestampString = "495619356.388807"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -149,7 +149,7 @@
                   moduleName = "SRKControls"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Jomedia/Documents/Swift3/testWeatherSw/Pods/SRKControls/SRKControls/CustomComboBoxVCtr.swift"
-                  timestampString = "495552201.064017"
+                  timestampString = "495619356.392564"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -204,165 +204,6 @@
             startingLineNumber = "87"
             endingLineNumber = "87"
             landmarkName = "parse(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "testWeatherSw/AppDelegate.swift"
-            timestampString = "495550085.637339"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "testWeatherSw.AppDelegate.applicationWillTerminate (__ObjC.UIApplication) -&gt; ()"
-                  moduleName = "testWeatherSw"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Jomedia/Documents/Swift3/testWeatherSw/testWeatherSw/AppDelegate.swift"
-                  timestampString = "495552201.077159"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "51"
-                  endingLineNumber = "51"
-                  offsetFromSymbolStart = "9">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "@objc testWeatherSw.AppDelegate.applicationWillTerminate (__ObjC.UIApplication) -&gt; ()"
-                  moduleName = "testWeatherSw"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Jomedia/Documents/Swift3/testWeatherSw/testWeatherSw/AppDelegate.swift"
-                  timestampString = "495552201.079126"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "51"
-                  endingLineNumber = "51"
-                  offsetFromSymbolStart = "29">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "testWeatherSw/CityGet.swift"
-            timestampString = "495550092.133081"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "getCity()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "testWeatherSw/CitySViewController.swift"
-            timestampString = "495550676.760779"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "testWeatherSw/Sources/NSData+GZIP.swift"
-            timestampString = "495550879.532309"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
-            landmarkName = "init(code:msg:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(extension in testWeatherSw):Foundation.Data.gzippedData () throws -&gt; Foundation.Data"
-                  moduleName = "testWeatherSw"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Jomedia/Documents/Swift3/testWeatherSw/testWeatherSw/Sources/NSData+GZIP.swift"
-                  timestampString = "495552201.090194"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "97"
-                  endingLineNumber = "97"
-                  offsetFromSymbolStart = "435">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(extension in testWeatherSw):Foundation.Data.gunzippedData () throws -&gt; Foundation.Data"
-                  moduleName = "testWeatherSw"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Jomedia/Documents/Swift3/testWeatherSw/testWeatherSw/Sources/NSData+GZIP.swift"
-                  timestampString = "495552201.092025"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "97"
-                  endingLineNumber = "97"
-                  offsetFromSymbolStart = "418">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(extension in testWeatherSw):Foundation.Data.gunzippedData () throws -&gt; Foundation.Data"
-                  moduleName = "testWeatherSw"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Jomedia/Documents/Swift3/testWeatherSw/testWeatherSw/Sources/NSData+GZIP.swift"
-                  timestampString = "495552201.093851"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "97"
-                  endingLineNumber = "97"
-                  offsetFromSymbolStart = "1130">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "testWeatherSw/Sources/NSData+GZIP.swift"
-            timestampString = "495550885.236181"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "gzippedData()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
