@@ -75,8 +75,8 @@ class WeatherGet {
             if let windS = subJson["speed"].double {
                 weatherD.windS = windS
             }
-            if let date = Date.init(jsonDate: "/Date\(String(describing: subJson["dt"].int))/") {
-                weatherD.date = date.dateStringWithFormat("yyyy-MM-dd")
+            if let date = subJson["dt"].int {
+                weatherD.date = (Date(jsonDate:String(date))?.dateStringWithFormat("yyyy-MM-dd"))!
             }
             if let weatherMain = subJson["weather"][0]["main"].string {
                 weatherD.main = weatherMain
@@ -87,12 +87,11 @@ class WeatherGet {
             if let weatherImg =  "http://openweathermap.org/img/w/\(subJson["weather"][0]["icon"].string!).png" as String? {
                 weatherD.imgW = weatherImg
             }
-            
+            print(weatherD.date)
             return weatherD
         }
      
-   }
-   
+   }   
         
     fileprivate func stringWeather(_ cityID: Int,  dayCount: String, lat: Double, lon: Double) -> String? {
         
@@ -113,23 +112,7 @@ class WeatherGet {
 // MARK: - NSDate
 extension Date {
     init?(jsonDate: String) {
-        
-        let prefix = "/DateOptional("
-        let suffix = ")/"
-        // Check for correct format:
-        if jsonDate.hasPrefix(prefix) && jsonDate.hasSuffix(suffix) {
-            // Extract the number as a string:
-            let from = jsonDate.characters.index(jsonDate.startIndex, offsetBy: prefix.characters.count)
-            let to = jsonDate.characters.index(jsonDate.endIndex, offsetBy: -suffix.characters.count)
-            // Convert milleseconds to double
-            guard let milliSeconds = Double(jsonDate[from ..< to]) else {
-                return nil
-            }
-            // Create NSDate with this UNIX timestamp
-           self.init(timeIntervalSince1970: milliSeconds)
-        } else {
-            return nil
-        }
+           self.init(timeIntervalSince1970: Double(jsonDate)!)      
     }
     
     func dateStringWithFormat(_ format: String) -> String {

@@ -150,7 +150,7 @@ public extension Data
             if Int(stream.total_out) >= data.length {
                 data.length += CHUNK_SIZE
             }
-                        
+            
             stream.next_out = UnsafeMutablePointer<Bytef>(data.mutableBytes.assumingMemoryBound(to: Bytef.IntegerLiteralType.self)).advanced(by: Int(stream.total_out))
             stream.avail_out = uInt(data.length) - uInt(stream.total_out)
             
